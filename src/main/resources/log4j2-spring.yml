@@ -1,0 +1,132 @@
+Configuration:
+  status: OFF
+  name: YAMLConfigTest
+  properties:
+    property:
+      name: filename
+      value: target/test-yaml.log
+  thresholdFilter:
+    level: debug
+  appenders:
+    #只接受程序中DEBUG级别的日志进行处理
+    Console:
+      name: Console
+      target: SYSTEM_OUT
+      ThresholdFilter:
+        level: DEBUG
+        onMatch: ACCEPT
+        onMismatch: DENY
+      PatternLayout:
+        #让highlight生效
+        disableAnsi: false
+        Pattern: "%d %highlight{%-5level}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White} %style{[%t]}{bright,magenta} %style{%c{1.}.%M(%L)}{cyan}: %msg%n"
+    #处理DEBUG级别的日志，并把该日志放到logs/debug.log文件中
+    RollingFile:
+      #打印出DEBUG级别日志，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档
+      - name: RollingFileDebug
+        fileName: ./logs/debug.log
+        filePattern: "logs/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log.gz"
+        PatternLayout:
+          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+        Filters:
+          ThresholdFilter:
+            - level: DEBUG
+            - level: INFO
+              onMatch: DENY
+              onMismatch: NEUTRAL
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 512MB
+      #处理INFO级别的日志，并把该日志放到logs/info.log文件中
+      - name: RollingFileInfo
+        fileName: ./logs/info.log
+        filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
+        PatternLayout:
+          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+        Filters:
+          #只接受INFO级别的日志，其余的全部拒绝处理
+          ThresholdFilter:
+            - level: INFO
+            - level: WARN
+              onMatch: DENY
+              onMismatch: NEUTRAL
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 512MB
+      #处理WARN级别的日志，并把该日志放到logs/warn.log文件中
+      - name: RollingFileWarn
+        fileName: ./logs/warn.log
+        filePattern: "logs/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz"
+        PatternLayout:
+          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+        Filters:
+          ThresholdFilter:
+            - level: WARN
+            - level: ERROR
+              onMatch: DENY
+              onMismatch: NEUTRAL
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 512MB
+      #处理error级别的日志，并把该日志放到logs/error.log文件中
+      - name: RollingFileError
+        fileName: ./logs/error.log
+        filePattern: "logs/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz"
+        PatternLayout:
+          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+        ThresholdFilter:
+          level: ERROR
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 512MB
+      #druid的日志记录追加器
+      - name: druidSqlRollingFile
+        fileName: ./logs/druid-sql.log
+        filePattern: "logs/$${date:yyyy-MM}/api-%d{yyyy-MM-dd}-%i.log.gz"
+        PatternLayout:
+          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %L %M - %msg%xEx%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 512MB
+  loggers:
+    logger:
+      #记录druid-sql的记录
+      name: druid.sql.Statement
+      level: debug
+      additivity: false
+      appender-ref:
+        ref: druidSqlRollingFile
+    #log4j2 自带过滤日志
+    Logger:
+      - name: org.apache.catalina.startup.DigesterFactory
+        level: error
+      - name: org.apache.catalina.util.LifecycleBase
+        level: error
+      - name: org.apache.coyote.http11.Http11NioProtocol
+        level: warn
+      - name: org.apache.sshd.common.util.SecurityUtils
+        level: warn
+      - name: org.apache.tomcat.util.net.NioSelectorPool
+        level: warn
+      - name: org.crsh.plugin
+        level: warn
+      - name: org.crsh.ssh
+        level: warn
+      - name: org.eclipse.jetty.util.component.AbstractLifeCycle
+        level: error
+      - name: org.hibernate.validator.internal.util.Version
+        level: warn
+      - name: org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration
+        level: warn
+      - name: org.springframework.boot.actuate.endpoint.jmx
+        level: warn
+      - name: org.thymeleaf
+        level: warn
+    root:
+      level: DEBUG
+      appender-ref:
+        - ref: Console
+        - ref: RollingFileInfo
+        - ref: RollingFileWarn
+        - ref: RollingFileError
+        - ref: RollingFileDebug

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Long.JavaWiki.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.Long.JavaWiki.pojo.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,`name`,age, email
+    </sql>
+
+    <!-- 查询用户 -->
+    <select id="selectUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+    </select>
+
+</mapper>

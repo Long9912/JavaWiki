@@ -30,7 +30,7 @@ public class CodeGenerator {
         gc.setAuthor("Long9912");
         gc.setOpen(false);
         //是否覆盖
-        gc.setFileOverride(false);
+        gc.setFileOverride(true);
         //去Service的I前缀
         gc.setServiceName("%sService");
         gc.setIdType(IdType.ASSIGN_ID);
@@ -40,6 +40,7 @@ public class CodeGenerator {
         gc.setBaseResultMap(true);
         //是否要有基础的列
         gc.setBaseColumnList(true);
+        gc.setDateType(DateType.TIME_PACK);
         mpg.setGlobalConfig(gc);
         //2、设置数据源
         DataSourceConfig dsc = new DataSourceConfig();
@@ -61,7 +62,7 @@ public class CodeGenerator {
         //4、策略配置
         StrategyConfig strategy = new StrategyConfig();
         //设置要映射的表名
-        strategy.setInclude("user");
+        strategy.setInclude("ebook");
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         //自动lombok；

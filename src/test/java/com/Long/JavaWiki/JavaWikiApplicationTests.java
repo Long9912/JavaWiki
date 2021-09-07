@@ -1,7 +1,9 @@
 package com.Long.JavaWiki;
 
 import com.Long.JavaWiki.config.JavaWikiApplication;
+import com.Long.JavaWiki.entity.Ebook;
 import com.Long.JavaWiki.entity.User;
+import com.Long.JavaWiki.mapper.EbookMapper;
 import com.Long.JavaWiki.mapper.UserMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,6 +21,9 @@ class JavaWikiApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private EbookMapper ebookMapper;
 
     @Test
     public void testSelect() {
@@ -112,4 +117,12 @@ class JavaWikiApplicationTests {
         System.out.println(count);
     }
 
+    @Test
+    void InsertEbook(){
+        Ebook ebook = new Ebook();
+        ebook.setId(4L);
+        ebook.setName("Swagger 入门教程");
+        ebook.setDescription("企业级应用开发最佳首选框架");
+        ebookMapper.insert(ebook);
+    }
 }

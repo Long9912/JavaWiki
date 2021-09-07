@@ -64,6 +64,10 @@ spring:
           log-slow-sql: true
       max-pool-prepared-statement-per-connection-size: 20
       use-global-data-source-stat: true
+  #时间格式化
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 
 mybatis-plus:
   global-config:

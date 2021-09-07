@@ -4,6 +4,9 @@ server:
 logging:
   config: classpath:log4j2-spring.yml
 
+swagger:
+  enable: true
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/wiki?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8

@@ -1,8 +1,8 @@
 package com.Long.JavaWiki;
 
 import com.Long.JavaWiki.config.JavaWikiApplication;
+import com.Long.JavaWiki.entity.User;
 import com.Long.JavaWiki.mapper.UserMapper;
-import com.Long.JavaWiki.pojo.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
@@ -108,7 +108,7 @@ class JavaWikiApplicationTests {
                 .likeRight("email","q");
         List<Map<String, Object>> maps = userMapper.selectMaps(wrapper);
         maps.forEach(System.out::println);
-        Long count = userMapper.selectCount(wrapper);// 查询结果数
+        int count = userMapper.selectCount(wrapper);// 查询结果数
         System.out.println(count);
     }
 

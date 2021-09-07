@@ -1,13 +1,12 @@
 package com.Long.JavaWiki.controller;
 
 import com.Long.JavaWiki.mapper.UserMapper;
-import com.Long.JavaWiki.pojo.User;
+import com.Long.JavaWiki.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Api("用户控制类")

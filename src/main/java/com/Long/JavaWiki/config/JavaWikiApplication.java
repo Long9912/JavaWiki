@@ -1,6 +1,5 @@
 package com.Long.JavaWiki.config;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 @ComponentScan("com.Long")
-@MapperScan("com.Long.JavaWiki.mapper")
 @SpringBootApplication
 public class JavaWikiApplication {
     private static final Logger LOG = LoggerFactory.getLogger(JavaWikiApplication.class);

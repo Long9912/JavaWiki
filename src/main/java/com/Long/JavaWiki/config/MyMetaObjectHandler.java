@@ -1,4 +1,4 @@
-package com.Long.JavaWiki.handler;
+package com.Long.JavaWiki.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;

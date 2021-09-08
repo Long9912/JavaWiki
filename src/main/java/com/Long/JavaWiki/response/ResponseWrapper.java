@@ -1,5 +1,6 @@
-package com.Long.JavaWiki.Response;
+package com.Long.JavaWiki.response;
 
+import com.Long.JavaWiki.exception.EnumCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.MethodParameter;
@@ -26,10 +27,10 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request, ServerHttpResponse response) {
         //responseObject是否为null
         if (null == responseObject) {
-            return ResponseData.success("response is empty.");
+            return ResponseData.success("响应结果为空");
         }
         if (returnType.getMethod().getReturnType().isAssignableFrom(Void.TYPE)) {
-            return ResponseData.success("response is empty.");
+            return ResponseData.success("响应结果为空");
         }
         //responseObject是否是文件
         if (responseObject instanceof Resource) {

@@ -1,4 +1,4 @@
-package com.Long.JavaWiki.Response;
+package com.Long.JavaWiki.exception;
 public enum EnumCode {
     // 这里的代码相当于：public static  final DataEnumCode SUCCESS = new DataEnumCode(0,“ok”)调用类有参构造传值
     // 定义成功的枚举常量，状态码，和描述

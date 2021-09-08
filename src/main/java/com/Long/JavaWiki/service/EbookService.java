@@ -1,7 +1,11 @@
 package com.Long.JavaWiki.service;
 
 import com.Long.JavaWiki.entity.Ebook;
+import com.Long.JavaWiki.response.EbookQueryResp;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EbookService extends IService<Ebook> {
 
+    List<EbookQueryResp> listByName(QueryWrapper<Ebook> wrapper);
 }

@@ -1,4 +1,4 @@
-package com.Long.JavaWiki.Response;
+package com.Long.JavaWiki.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 //自定义异常类，封装异常信息
-public class ExceptionResponseResult {
+public class ExceptionResponse {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date timestamp;      // 时间
     private String respMsg;      // 给用户看的描述信息

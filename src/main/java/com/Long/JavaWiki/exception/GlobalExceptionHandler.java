@@ -1,8 +1,6 @@
-package com.Long.JavaWiki.handler;
+package com.Long.JavaWiki.exception;
 
-import com.Long.JavaWiki.Response.EnumCode;
-import com.Long.JavaWiki.Response.ExceptionResponseResult;
-import com.Long.JavaWiki.Response.ResponseData;
+import com.Long.JavaWiki.response.ResponseData;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,7 +18,7 @@ public class GlobalExceptionHandler {
     // 该注解用于指定异常处理方法执行后响应页面的HTTP状态码，HttpStatus是Spring内置的一个状态码枚举类，内定了详细的状态码及描述，当前获取的是500
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)// 响应500
     public Object exceptionResponse(Exception ex, HttpServletRequest request) {
-        ExceptionResponseResult resultError = new ExceptionResponseResult();
+        ExceptionResponse resultError = new ExceptionResponse();
         if (ex instanceof NullPointerException) {               // 如果捕获的异常为空指针异常
             resultError.setRespMsg("服务器发生空指针异常，请稍后...");// 用户看到的异常信息
         } else if (ex instanceof ArithmeticException) {

@@ -1,5 +1,6 @@
-package com.Long.JavaWiki.Response;
+package com.Long.JavaWiki.response;
 
+import com.Long.JavaWiki.exception.EnumCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

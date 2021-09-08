@@ -1,6 +1,6 @@
 package com.Long.JavaWiki.controller;
 
-import com.Long.JavaWiki.Response.ResponseData;
+import com.Long.JavaWiki.response.ResponseData;
 import com.Long.JavaWiki.mapper.UserMapper;
 import com.Long.JavaWiki.entity.User;
 import io.swagger.annotations.Api;

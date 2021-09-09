@@ -4,14 +4,12 @@
       <a-layout-sider width="200" style="background: #fff">
         <a-menu
             mode="inline"
-            v-model:selectedKeys="selectedKeys2"
-            v-model:openKeys="openKeys"
             :style="{ height: '100%', borderRight: 0 }"
         >
           <a-sub-menu key="sub1">
             <template #title>
               <span>
-                <user-outlined />
+                <user-outlined/>
                 subnav 1
               </span>
             </template>
@@ -23,7 +21,7 @@
           <a-sub-menu key="sub2">
             <template #title>
               <span>
-                <laptop-outlined />
+                <laptop-outlined/>
                 subnav 2
               </span>
             </template>
@@ -35,7 +33,7 @@
           <a-sub-menu key="sub3">
             <template #title>
               <span>
-                <notification-outlined />
+                <notification-outlined/>
                 subnav 3
               </span>
             </template>
@@ -50,7 +48,7 @@
         <a-layout-content
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
         >
-          Content
+          <pre>{{ content }}</pre>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -58,12 +56,25 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {defineComponent, onMounted, ref} from 'vue';
+import service from '../util/request.js'
 
 export default defineComponent({
   name: 'Home',
-  components: {
-
+  setup() {
+    //响应式数据
+    const content = ref();
+    onMounted(() =>
+        service.get('/ebook/list/name/入门').then((response => {
+          const data = response.data;
+          content.value = data.content;
+        }))
+    )
+    return{
+      //返回数据
+      content
+    }
   },
+  components: {},
 });
 </script>

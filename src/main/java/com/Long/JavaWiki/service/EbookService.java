@@ -16,6 +16,6 @@ import java.util.List;
  * @since 2021-09-07
  */
 public interface EbookService extends IService<Ebook> {
-
+    List<EbookQueryResp> bookList();
     List<EbookQueryResp> listByName(QueryWrapper<Ebook> wrapper);
 }

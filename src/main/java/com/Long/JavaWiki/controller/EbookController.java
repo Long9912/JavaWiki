@@ -30,11 +30,11 @@ public class EbookController {
     EbookService ebookService;
 
     @GetMapping("/list")
-    public List<Ebook> list(){
-        return ebookService.list();
+    public List<EbookQueryResp> list(){
+        return ebookService.bookList();
     }
 
-    @GetMapping("/list/name/{name}")
+    @GetMapping("/list/{name}")
     public List<EbookQueryResp> listByName(@PathVariable String name){
         QueryWrapper<Ebook> wrapper = new QueryWrapper<>();
         wrapper.like("name",name);

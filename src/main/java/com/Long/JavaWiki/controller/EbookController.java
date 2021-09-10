@@ -1,18 +1,14 @@
 package com.Long.JavaWiki.controller;
 
 
-import com.Long.JavaWiki.entity.Ebook;
+import com.Long.JavaWiki.request.EbookQueryReq;
 import com.Long.JavaWiki.response.EbookQueryResp;
+import com.Long.JavaWiki.response.PageResp;
 import com.Long.JavaWiki.service.EbookService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * <p>
@@ -30,19 +26,9 @@ public class EbookController {
     EbookService ebookService;
 
     @GetMapping("/list")
-    public List<EbookQueryResp> list(){
-        return ebookService.bookList();
-    }
-
-    @GetMapping("/list/{name}")
-    public List<EbookQueryResp> listByName(@PathVariable String name){
-        QueryWrapper<Ebook> wrapper = new QueryWrapper<>();
-        wrapper.like("name",name);
-        List<EbookQueryResp> list = ebookService.listByName(wrapper);
-        if (list.isEmpty()){
-            return null;
-        }
-        return list;
+    public PageResp<EbookQueryResp> list(EbookQueryReq req) {
+        PageResp<EbookQueryResp> list = ebookService.bookList(req);
+        return list.getList().isEmpty() ? null : list;
     }
 }
 

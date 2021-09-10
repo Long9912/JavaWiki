@@ -41,7 +41,7 @@
       <a-layout style="padding: 0 24px 24px">
         <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
             <a-list item-layout="vertical" size="large" :data-source="ebooks"
-                :grid="{ gutter: 45,column:3 }">
+                :grid="{ gutter: 45, xs: 1, md: 2, xl: 3}">
               <template #renderItem="{ item }">
                 <a-list-item key="item.name">
                   <template #actions>

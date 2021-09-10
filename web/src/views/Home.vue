@@ -69,7 +69,7 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue';
-import service from '../util/request.js'
+import axios from "axios";
 
 export default defineComponent({
   name: 'Home',
@@ -77,7 +77,7 @@ export default defineComponent({
     //响应式数据
     const ebooks = ref();
     onMounted(() =>
-        service.get('/ebook/list').then((response => {
+        axios.get('/ebook/list').then((response => {
           const data = response.data;
           ebooks.value = data.content;
         }))

@@ -15,7 +15,7 @@
           </template>
           <template v-slot:action="{ text, record }">
             <a-space size="small">
-              <a-button type="primary">
+              <a-button type="primary" @click="edit">
                 编辑
               </a-button>
               <a-button type="danger">
@@ -26,6 +26,14 @@
         </a-table>
       </a-layout-content>
     </a-layout>
+    <a-modal
+        title="电子书表单"
+        v-model:visible="modalVisible"
+        :confirm-loading="modalLoading"
+        @ok="handleModalOk"
+    >
+      <p>{{ modalText }}</p>
+    </a-modal>
   </div>
 </template>
 
@@ -90,9 +98,9 @@ export default defineComponent({
     const handleQuery = (params: any) => {
       loading.value = true;
       axios.get("/ebook/list", {
-        params : {
-          page : params.page,
-          size : params.size
+        params: {
+          page: params.page,
+          size: params.size
         }
       }).then((response) => {
         loading.value = false;
@@ -118,6 +126,27 @@ export default defineComponent({
       });
     };
 
+    //----------表单-----------
+    const modalText = ref<string>('Content of the modal');
+    const modalVisible = ref<boolean>(false);
+    const modalLoading = ref<boolean>(false);
+
+    /**
+     * 编辑
+     */
+    const edit = () => {
+      modalVisible.value = true;
+    };
+
+    const handleModalOk = () => {
+      modalText.value = 'The modal will be closed after two seconds';
+      modalLoading.value = true;
+      setTimeout(() => {
+        modalVisible.value = false;
+        modalLoading.value = false;
+      }, 2000);
+    };
+
     onMounted(() => {
       handleQuery({
         page: 1,
@@ -131,6 +160,11 @@ export default defineComponent({
       pagination,
       columns,
       loading,
+      modalText,
+      modalVisible,
+      modalLoading,
+      edit,
+      handleModalOk,
       handleTableChange
     }
   }

@@ -15,7 +15,7 @@
           </template>
           <template v-slot:action="{ text, record }">
             <a-space size="small">
-              <a-button type="primary" @click="edit">
+              <a-button type="primary" @click="edit(record)">
                 编辑
               </a-button>
               <a-button type="danger">
@@ -32,7 +32,23 @@
         :confirm-loading="modalLoading"
         @ok="handleModalOk"
     >
-      <p>{{ modalText }}</p>
+      <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+        <a-form-item label="封面">
+          <a-input v-model:value="ebook.cover" />
+        </a-form-item>
+        <a-form-item label="名称">
+          <a-input v-model:value="ebook.name" />
+        </a-form-item>
+        <a-form-item label="分类1">
+          <a-input v-model:value="ebook.category1Id" />
+        </a-form-item>
+        <a-form-item label="分类2">
+          <a-input v-model:value="ebook.category2Id" />
+        </a-form-item>
+        <a-form-item label="描述">
+          <a-input v-model:value="ebook.description" type="textarea" />
+        </a-form-item>
+      </a-form>
     </a-modal>
   </div>
 </template>
@@ -127,19 +143,20 @@ export default defineComponent({
     };
 
     //----------表单-----------
-    const modalText = ref<string>('Content of the modal');
+    const ebook = ref({});
     const modalVisible = ref<boolean>(false);
     const modalLoading = ref<boolean>(false);
 
     /**
      * 编辑
      */
-    const edit = () => {
+    const edit = (record: any) => {
       modalVisible.value = true;
+      //获取当前列的参数
+      ebook.value=record;
     };
 
     const handleModalOk = () => {
-      modalText.value = 'The modal will be closed after two seconds';
       modalLoading.value = true;
       setTimeout(() => {
         modalVisible.value = false;
@@ -160,7 +177,7 @@ export default defineComponent({
       pagination,
       columns,
       loading,
-      modalText,
+      ebook,
       modalVisible,
       modalLoading,
       edit,

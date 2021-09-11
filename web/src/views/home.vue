@@ -77,7 +77,7 @@ export default defineComponent({
     //响应式数据
     const ebooks = ref();
     onMounted(() =>
-        axios.get('/ebook/list').then((response => {
+        axios.get('/ebook/all',).then((response => {
           const data = response.data;
           ebooks.value = data.content;
         }))

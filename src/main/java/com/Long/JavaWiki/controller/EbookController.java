@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
  * 电子书 前端控制器
@@ -24,6 +26,11 @@ public class EbookController {
 
     @Autowired
     EbookService ebookService;
+
+    @GetMapping("/all")
+    public List<EbookQueryResp> all(EbookQueryReq req) {
+        return ebookService.all(req);
+    }
 
     @GetMapping("/list")
     public PageResp<EbookQueryResp> list(EbookQueryReq req) {

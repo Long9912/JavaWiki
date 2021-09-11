@@ -30,6 +30,12 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
     EbookMapper ebookMapper;
 
     @Override
+    public List<EbookQueryResp> all(EbookQueryReq req) {
+        List<Ebook> ebookList = ebookMapper.selectList(null);
+        return CopyUtil.copyList(ebookList, EbookQueryResp.class);
+    }
+
+    @Override
     public PageResp<EbookQueryResp> bookList(EbookQueryReq req) {
         QueryWrapper<Ebook> wrapper = new QueryWrapper<>();
         //传入参数有name时模糊查询

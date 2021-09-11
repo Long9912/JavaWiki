@@ -6,6 +6,8 @@ import com.Long.JavaWiki.response.EbookQueryResp;
 import com.Long.JavaWiki.response.PageResp;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 电子书 服务类
@@ -15,5 +17,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-09-07
  */
 public interface EbookService extends IService<Ebook> {
+    List<EbookQueryResp> all(EbookQueryReq req);
+
     PageResp<EbookQueryResp> bookList(EbookQueryReq req);
+
 }

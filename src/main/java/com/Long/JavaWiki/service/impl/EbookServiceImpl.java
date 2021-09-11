@@ -31,7 +31,7 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
     EbookMapper ebookMapper;
 
     @Override
-    public List<EbookQueryResp> all(EbookQueryReq req) {
+    public List<EbookQueryResp> all() {
         List<Ebook> ebookList = ebookMapper.selectList(null);
         return CopyUtil.copyList(ebookList, EbookQueryResp.class);
     }

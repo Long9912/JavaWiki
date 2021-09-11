@@ -34,19 +34,19 @@
     >
       <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
         <a-form-item label="封面">
-          <a-input v-model:value="ebook.cover" />
+          <a-input v-model:value="ebook.cover"/>
         </a-form-item>
         <a-form-item label="名称">
-          <a-input v-model:value="ebook.name" />
+          <a-input v-model:value="ebook.name"/>
         </a-form-item>
         <a-form-item label="分类1">
-          <a-input v-model:value="ebook.category1Id" />
+          <a-input v-model:value="ebook.category1Id"/>
         </a-form-item>
         <a-form-item label="分类2">
-          <a-input v-model:value="ebook.category2Id" />
+          <a-input v-model:value="ebook.category2Id"/>
         </a-form-item>
         <a-form-item label="描述">
-          <a-input v-model:value="ebook.description" type="textarea" />
+          <a-input v-model:value="ebook.description" type="textarea"/>
         </a-form-item>
       </a-form>
     </a-modal>
@@ -121,7 +121,7 @@ export default defineComponent({
       }).then((response) => {
         loading.value = false;
         const data = response.data;
-        if (data.code === 2000) {
+        if (data.code == process.env.VUE_APP_SUCCESS) {
           ebooks.value = data.content.list;
           // 重置分页按钮
           pagination.value.current = params.page;
@@ -153,15 +153,25 @@ export default defineComponent({
     const edit = (record: any) => {
       modalVisible.value = true;
       //获取当前列的参数
-      ebook.value=record;
+      ebook.value = record;
     };
 
     const handleModalOk = () => {
       modalLoading.value = true;
-      setTimeout(() => {
-        modalVisible.value = false;
-        modalLoading.value = false;
-      }, 2000);
+      axios.post("/ebook/save", ebook.value).then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          modalVisible.value = false;
+          modalLoading.value = false;
+          //重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize
+          });
+        } else {
+          message.error(data.message);
+        }
+      });
     };
 
     onMounted(() => {

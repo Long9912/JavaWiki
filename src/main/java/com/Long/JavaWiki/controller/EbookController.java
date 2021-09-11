@@ -2,13 +2,12 @@ package com.Long.JavaWiki.controller;
 
 
 import com.Long.JavaWiki.request.EbookQueryReq;
+import com.Long.JavaWiki.request.EbookSaveReq;
 import com.Long.JavaWiki.response.EbookQueryResp;
 import com.Long.JavaWiki.response.PageResp;
 import com.Long.JavaWiki.service.EbookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +35,12 @@ public class EbookController {
     public PageResp<EbookQueryResp> list(EbookQueryReq req) {
         PageResp<EbookQueryResp> list = ebookService.bookList(req);
         return list.getList().isEmpty() ? null : list;
+    }
+
+    @PostMapping("/save")
+    public String save(@RequestBody EbookSaveReq req) {
+        ebookService.saveOrUpdate(req);
+        return "保存成功";
     }
 }
 

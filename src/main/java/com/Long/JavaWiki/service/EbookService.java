@@ -2,6 +2,7 @@ package com.Long.JavaWiki.service;
 
 import com.Long.JavaWiki.entity.Ebook;
 import com.Long.JavaWiki.request.EbookQueryReq;
+import com.Long.JavaWiki.request.EbookSaveReq;
 import com.Long.JavaWiki.response.EbookQueryResp;
 import com.Long.JavaWiki.response.PageResp;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -21,4 +22,5 @@ public interface EbookService extends IService<Ebook> {
 
     PageResp<EbookQueryResp> bookList(EbookQueryReq req);
 
+    boolean saveOrUpdate(EbookSaveReq req);
 }

@@ -3,6 +3,7 @@ package com.Long.JavaWiki.service.impl;
 import com.Long.JavaWiki.entity.Ebook;
 import com.Long.JavaWiki.mapper.EbookMapper;
 import com.Long.JavaWiki.request.EbookQueryReq;
+import com.Long.JavaWiki.request.EbookSaveReq;
 import com.Long.JavaWiki.response.EbookQueryResp;
 import com.Long.JavaWiki.response.PageResp;
 import com.Long.JavaWiki.service.EbookService;
@@ -53,4 +54,9 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         return new PageResp<>(pageTotal, list);
     }
 
+    @Override
+    public boolean saveOrUpdate(EbookSaveReq req) {
+        Ebook ebook=CopyUtil.copy(req,Ebook.class);
+        return super.saveOrUpdate(ebook);
+    }
 }

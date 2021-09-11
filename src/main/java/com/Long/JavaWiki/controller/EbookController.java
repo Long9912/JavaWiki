@@ -42,5 +42,11 @@ public class EbookController {
         ebookService.saveOrUpdate(req);
         return "保存成功";
     }
+
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        ebookService.removeById(id);
+        return "删除成功";
+    }
 }
 

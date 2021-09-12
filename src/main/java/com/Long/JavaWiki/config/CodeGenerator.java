@@ -30,7 +30,7 @@ public class CodeGenerator {
         gc.setAuthor("Long9912");
         gc.setOpen(false);
         //是否覆盖
-        gc.setFileOverride(true);
+        gc.setFileOverride(false);
         //去Service的I前缀
         gc.setServiceName("%sService");
         gc.setIdType(IdType.ASSIGN_ID);
@@ -62,7 +62,7 @@ public class CodeGenerator {
         //4、策略配置
         StrategyConfig strategy = new StrategyConfig();
         //设置要映射的表名
-        strategy.setInclude("ebook");
+        strategy.setInclude("category");
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         //自动lombok；

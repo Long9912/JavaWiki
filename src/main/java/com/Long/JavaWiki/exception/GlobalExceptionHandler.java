@@ -53,7 +53,6 @@ public class GlobalExceptionHandler {
      * 校验异常统一处理
      */
     @ExceptionHandler(value = BindException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)// 响应500
     public ResponseData validExceptionHandler(BindException ex, HttpServletRequest request) {
         LOG.warn("参数校验失败：{}", ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
         String message = (ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());

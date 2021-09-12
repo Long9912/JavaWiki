@@ -11,11 +11,36 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 10/09/2021 21:58:22
+ Date: 12/09/2021 11:43:15
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category`  (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `parent` bigint(255) NOT NULL DEFAULT 0 COMMENT '父id',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `sort` int(11) NULL DEFAULT NULL COMMENT '顺序',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '分类' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `category` VALUES (100, 0, '前端开发', 100);
+INSERT INTO `category` VALUES (101, 100, 'html&css', 101);
+INSERT INTO `category` VALUES (102, 100, 'Vue', 102);
+INSERT INTO `category` VALUES (200, 0, 'Java', 200);
+INSERT INTO `category` VALUES (201, 200, '基础应用', 201);
+INSERT INTO `category` VALUES (202, 200, '框架应用', 202);
+INSERT INTO `category` VALUES (300, 0, '数据库', 300);
+INSERT INTO `category` VALUES (301, 300, 'Mysql', 301);
+INSERT INTO `category` VALUES (302, 300, 'MySQLPlus', 302);
 
 -- ----------------------------
 -- Table structure for ebook
@@ -41,11 +66,13 @@ CREATE TABLE `ebook`  (
 -- ----------------------------
 -- Records of ebook
 -- ----------------------------
-INSERT INTO `ebook` VALUES (1, 'Spring Boot 入门教程', 1, 2, '企业级应用开发最佳首选框架', '/image/1.png', 3, 0, 0, 1, 0, '2021-09-07 21:29:15', NULL);
+INSERT INTO `ebook` VALUES (1, 'Spring Boot 入门教程', 11, 22, '企业级应用开发最佳首选框架', '/image/1.png', 3, 0, 0, 1, 0, '2021-09-07 21:29:15', '2021-09-11 13:11:31');
 INSERT INTO `ebook` VALUES (2, 'Vue 入门教程', NULL, NULL, '企业级应用开发最佳首选框架', '/image/2.png', 0, 0, 0, 1, 0, '2021-09-07 21:30:25', NULL);
 INSERT INTO `ebook` VALUES (3, 'MySQL 入门教程', NULL, NULL, '企业级应用开发最佳首选框架', '/image/5.png', 0, 0, 0, 1, 0, '2021-09-07 21:30:55', NULL);
-INSERT INTO `ebook` VALUES (4, 'Swagger 入门教程', NULL, NULL, '企业级应用开发最佳首选框架', '/image/4.png', 0, 0, 0, 1, 0, '2021-09-07 21:34:40', NULL);
-INSERT INTO `ebook` VALUES (5, 'MyBatisPlus 入门教程', NULL, NULL, '企业级应用开发最佳首选框架', '/image/5.png', 0, 0, 0, 1, 0, '2021-09-07 21:32:06', NULL);
+INSERT INTO `ebook` VALUES (4, 'Swagger 入门教程', 1, 2, '企业级应用开发最佳首选框架', '/image/4.png', 0, 0, 0, 1, 0, '2021-09-07 21:34:40', '2021-09-11 13:11:42');
+INSERT INTO `ebook` VALUES (5, 'MyBatisPlus 入门教程', 1, 2, '企业级应用开发最佳首选框架', '/image/5.png', 0, 0, 0, 1, 0, '2021-09-07 21:32:06', '2021-09-11 14:44:37');
+INSERT INTO `ebook` VALUES (1436589909073756161, 'Spring 入门教程', 1, 2, '入门', '/image/1.png', 0, 0, 0, 1, 0, '2021-09-11 15:18:20', '2021-09-11 15:48:05');
+INSERT INTO `ebook` VALUES (1436599062148247554, 'MyBatis 入门教程', 1, 2, NULL, '/image/5.png', 0, 0, 0, 1, 0, '2021-09-11 15:54:42', '2021-09-11 15:54:58');
 
 -- ----------------------------
 -- Table structure for user

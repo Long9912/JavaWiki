@@ -2,9 +2,26 @@
   <div>
     <a-layout style="padding: 0 24px 24px">
       <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-        <a-button type="primary" @click="add" size="large">
-          新增
-        </a-button>
+        <a-form layout="inline" :model="queryParam">
+          <a-form-item>
+            <a-input v-model:value="queryParam.name" placeholder="名称">
+              <template #prefix><SearchOutlined /></template>
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-button @click="handleQuery({page: 1,size: pagination.pageSize})">
+              <template #icon><SearchOutlined /></template>
+              查询
+            </a-button>
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" @click="add">
+              <template #icon><PlusSquareOutlined /></template>
+              新增
+            </a-button>
+          </a-form-item>
+        </a-form>
+
         <a-table
             :columns="columns"
             :row-key="record => record.id"
@@ -19,6 +36,7 @@
           <template v-slot:action="{ text, record }">
             <a-space size="small">
               <a-button type="primary" @click="edit(record)">
+                <template #icon><EditOutlined /></template>
                 编辑
               </a-button>
               <a-popconfirm
@@ -28,6 +46,7 @@
                   @confirm="handleDelete(record.id)"
               >
                 <a-button type="danger" >
+                  <template #icon><DeleteOutlined /></template>
                   删除
                 </a-button>
               </a-popconfirm>
@@ -74,8 +93,8 @@ import {message} from 'ant-design-vue';
 export default defineComponent({
   name: 'AdminEbook',
   setup() {
-    const param = ref();
-    param.value = {};
+    const queryParam = ref();
+    queryParam.value = {};
     const ebooks = ref();
     const pagination = ref({
       current: 1,
@@ -129,7 +148,8 @@ export default defineComponent({
       axios.get("/ebook/list", {
         params: {
           page: params.page,
-          size: params.size
+          size: params.size,
+          name: queryParam.value.name
         }
       }).then((response) => {
         loading.value = false;
@@ -217,12 +237,13 @@ export default defineComponent({
     });
 
     return {
-      param,
+      queryParam,
       ebooks,
       pagination,
       columns,
       loading,
       handleTableChange,
+      handleQuery,
 
       add,
       edit,
@@ -232,7 +253,8 @@ export default defineComponent({
       handleModalOk,
       handleDelete
     }
-  }
+  },
+  components: {}
 });
 </script>
 

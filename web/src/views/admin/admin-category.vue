@@ -4,12 +4,7 @@
       <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
         <a-form layout="inline" :model="queryParam">
           <a-form-item>
-            <a-input v-model:value="queryParam.name" placeholder="名称">
-              <template #prefix><SearchOutlined /></template>
-            </a-input>
-          </a-form-item>
-          <a-form-item>
-            <a-button @click="handleQuery({page: 1,size: pagination.pageSize})">
+            <a-button @click="handleQuery()">
               <template #icon><SearchOutlined /></template>
               查询
             </a-button>
@@ -25,9 +20,9 @@
         <a-table
             :columns="columns"
             :row-key="record => record.id"
-            :data-source="categorys"
-            :pagination="pagination"
+            :data-source="level1"
             :loading="loading"
+            :pagination="false"
             @change="handleTableChange"
         >
           <template #cover="{ text: cover }">
@@ -92,11 +87,6 @@ export default defineComponent({
     const queryParam = ref();
     queryParam.value = {};
     const categorys = ref();
-    const pagination = ref({
-      current: 1,
-      pageSize: 5,
-      total: 0
-    });
     const loading = ref(false);
 
     const columns = [
@@ -124,37 +114,37 @@ export default defineComponent({
     ];
 
     /**
+     * 一级分类树，children属性就是二级分类
+     * [{
+     *   id: "",
+     *   name: "",
+     *   children: [{
+     *     id: "",
+     *     name: "",
+     *   }]
+     * }]
+     */
+    const level1 = ref(); // 一级分类树，children属性就是二级分类
+    level1.value = [];
+
+    /**
      * 数据查询
      **/
-    const handleQuery = (params: any) => {
+    const handleQuery = () => {
       loading.value = true;
-      axios.get("/category/list", {
-        params: {
-          page: params.page,
-          size: params.size,
-          name: queryParam.value.name
-        }
-      }).then((response) => {
+      axios.get("/category/all").then((response) => {
         loading.value = false;
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
-          categorys.value = data.content.list;
-          // 重置分页按钮
-          pagination.value.current = params.page;
-          pagination.value.total = data.content.total;
+          categorys.value = data.content;
+
+          level1.value = [];
+          //使用递归将数组转为树形结构
+          level1.value = Tool.array2Tree(categorys.value, 0);
+          console.log("树形结构：", level1);
         } else {
           message.error(data.content.respMsg);
         }
-      });
-    };
-
-    /**
-     * 表格点击页码时触发
-     */
-    const handleTableChange = (pagination: any) => {
-      handleQuery({
-        page: pagination.current,
-        size: pagination.pageSize
       });
     };
 
@@ -188,10 +178,7 @@ export default defineComponent({
         if (data.code == process.env.VUE_APP_SUCCESS) {
           modalVisible.value = false;
           //重新加载列表
-          handleQuery({
-            page: pagination.value.current,
-            size: pagination.value.pageSize
-          });
+          handleQuery();
         } else {
           modalVisible.value = false;
           message.error(data.content.respMsg);
@@ -204,29 +191,22 @@ export default defineComponent({
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
           //重新加载列表
-          handleQuery({
-            page: pagination.value.current,
-            size: pagination.value.pageSize
-          });
+          handleQuery();
         } else {
           message.error(data.message);
         }
       });
     };
     onMounted(() => {
-      handleQuery({
-        page: 1,
-        size: pagination.value.pageSize
-      });
+      handleQuery();
     });
 
     return {
       queryParam,
       categorys,
-      pagination,
+      level1,
       columns,
       loading,
-      handleTableChange,
       handleQuery,
 
       add,

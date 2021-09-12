@@ -31,13 +31,18 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public List<CategoryQueryResp> all() {
-        List<Category> categoryList = categoryMapper.selectList(null);
+        QueryWrapper<Category> wrapper = new QueryWrapper<>();
+        //根据sort排序
+        wrapper.orderByAsc("sort");
+        List<Category> categoryList = categoryMapper.selectList(wrapper);
         return CopyUtil.copyList(categoryList, CategoryQueryResp.class);
     }
 
     @Override
     public PageResp<CategoryQueryResp> list(CategoryQueryReq req) {
         QueryWrapper<Category> wrapper = new QueryWrapper<>();
+        //根据sort排序
+        wrapper.orderByAsc("sort");
         //传入参数有name时模糊查询
         if (req.getName() != null) {
             wrapper.like("name", req.getName());

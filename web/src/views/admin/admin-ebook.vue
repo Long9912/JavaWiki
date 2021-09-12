@@ -71,11 +71,12 @@
         <a-form-item label="名称">
           <a-input v-model:value="ebook.name"/>
         </a-form-item>
-        <a-form-item label="分类1">
-          <a-input v-model:value="ebook.category1Id"/>
-        </a-form-item>
-        <a-form-item label="分类2">
-          <a-input v-model:value="ebook.category2Id"/>
+        <a-form-item label="分类">
+          <a-cascader
+              v-model:value="categoryIds"
+              :field-names="{ label: 'name', value: 'id', children: 'children' }"
+              :options="level1"
+          />
         </a-form-item>
         <a-form-item label="描述">
           <a-input v-model:value="ebook.description" type="textarea"/>
@@ -178,29 +179,18 @@ export default defineComponent({
     };
 
     //----------表单-----------
-    const ebook = ref({});
+    /**
+     * 数组，[100, 101]对应：前端开发 / Vue
+     */
+    const categoryIds = ref();
+    const ebook = ref();
     const modalVisible = ref<boolean>(false);
     const modalLoading = ref<boolean>(false);
 
-    /**
-     * 新增
-     */
-    const add = () => {
-      modalVisible.value = true;
-      ebook.value = {};
-    };
-
-    /**
-     * 编辑
-     */
-    const edit = (record: any) => {
-      modalVisible.value = true;
-      //复制当前列的参数
-      ebook.value = Tool.copy(record);
-    };
-
     const handleModalOk = () => {
       modalLoading.value = true;
+      ebook.value.category1Id = categoryIds.value[0];
+      ebook.value.category2Id = categoryIds.value[1];
       axios.post("/ebook/save", ebook.value).then((response) => {
         modalLoading.value = false;
         const data = response.data;
@@ -217,6 +207,24 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 新增
+     */
+    const add = () => {
+      modalVisible.value = true;
+      ebook.value = {};
+    };
+
+    /**
+     * 编辑
+     */
+    const edit = (record: any) => {
+      modalVisible.value = true;
+      //复制当前列的参数
+      ebook.value = Tool.copy(record);
+      categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
+    };
+
     const handleDelete = (id:string) => {
       axios.delete("/ebook/delete/"+id).then((response) => {
         const data = response.data;
@@ -231,7 +239,30 @@ export default defineComponent({
         }
       });
     };
+
+    const level1 = ref(); // 一级分类树，children属性就是二级分类
+    /**
+     * 查询所有分类
+     **/
+    const handleQueryCategory = () => {
+      loading.value = true;
+      axios.get("/category/all").then((response) => {
+        loading.value = false;
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          const categorys = data.content;
+
+          level1.value = [];
+          //使用递归将数组转为树形结构
+          level1.value = Tool.array2Tree(categorys, 0);
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    };
+
     onMounted(() => {
+      handleQueryCategory();
       handleQuery({
         page: 1,
         size: pagination.value.pageSize
@@ -247,9 +278,12 @@ export default defineComponent({
       handleTableChange,
       handleQuery,
 
+
       add,
       edit,
       ebook,
+      categoryIds,
+      level1,
       modalVisible,
       modalLoading,
       handleModalOk,

@@ -89,6 +89,7 @@
 import {defineComponent, onMounted, ref} from 'vue';
 import axios from "axios";
 import {message} from 'ant-design-vue';
+import {Tool} from "@/util/tool";
 
 export default defineComponent({
   name: 'AdminEbook',
@@ -193,8 +194,8 @@ export default defineComponent({
      */
     const edit = (record: any) => {
       modalVisible.value = true;
-      //获取当前列的参数
-      ebook.value = record;
+      //复制当前列的参数
+      ebook.value = Tool.copy(record);
     };
 
     const handleModalOk = () => {

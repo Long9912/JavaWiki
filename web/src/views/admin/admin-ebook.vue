@@ -38,7 +38,7 @@
           </template>
           <template v-slot:action="{ text, record }">
             <a-space size="small">
-              <router-link to="/admin/doc">
+              <router-link :to="'/admin/doc?ebookId=' + record.id+ '&name=' +record.name">
                 <a-button type="primary">
                   <template #icon><FileTextOutlined /></template>
                   文档管理

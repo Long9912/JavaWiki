@@ -1,6 +1,12 @@
 <template>
   <div>
     <a-layout style="padding: 0 24px 24px">
+        <a-page-header
+            style="border: 1px solid rgb(235, 237, 240)"
+            title="文档管理"
+            :sub-title="bookName"
+            @back="back"
+        />
       <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
         <a-form layout="inline" :model="queryParam">
           <a-form-item>
@@ -91,11 +97,15 @@ import {defineComponent, onMounted, ref} from 'vue';
 import axios from "axios";
 import {message} from 'ant-design-vue';
 import {Tool} from "@/util/tool";
+import {useRoute} from "vue-router";
+import router from "@/router";
 
 export default defineComponent({
   name: 'AdminCategory',
 
   setup() {
+    const route =useRoute();
+    const bookName =ref();
     const queryParam = ref();
     queryParam.value = {};
     const docs = ref();
@@ -164,6 +174,13 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 编辑
+     */
+    const back = () => {
+      router.push({path: "/admin/ebook"});
+    };
+
     //----------表单-----------
     // 因为树选择组件的属性状态，会随当前编辑的节点而变化，所以单独声明一个响应式变量
     const treeSelectData = ref();
@@ -205,7 +222,9 @@ export default defineComponent({
      */
     const add = () => {
       modalVisible.value = true;
-      doc.value = {};
+      doc.value = {
+        ebookId: route.query.ebookId
+      };
 
       treeSelectData.value = Tool.copy(level1.value);
       // 为选择树添加一个"无"
@@ -253,8 +272,10 @@ export default defineComponent({
         }
       });
     };
+
     onMounted(() => {
       handleQuery();
+      bookName.value=route.query.name;
     });
 
     return {
@@ -267,7 +288,9 @@ export default defineComponent({
 
       add,
       edit,
+      back,
       doc,
+      bookName,
       treeSelectData,
       modalVisible,
       modalLoading,

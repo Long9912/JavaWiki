@@ -110,7 +110,6 @@ export default defineComponent({
         if (data.code == process.env.VUE_APP_SUCCESS) {
           ebooks.value = data.content;
         } else {
-          ebooks.value = null;
           message.error(data.message);
         }
       }))

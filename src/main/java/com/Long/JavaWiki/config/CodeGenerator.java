@@ -3,7 +3,9 @@ package com.Long.JavaWiki.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
@@ -17,9 +19,26 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 //代码生成器
 public class CodeGenerator {
+
+    //读取控制台内容
+    public static String scanner(String tip) {
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder help = new StringBuilder();
+        help.append("请输入" + tip + "：");
+        System.out.println(help.toString());
+        if (scanner.hasNext()) {
+            String ipt = scanner.next();
+            if (StringUtils.isNotBlank(ipt)) {
+                return ipt;
+            }
+        }
+        throw new MybatisPlusException("请输入正确的" + tip + "！");
+    }
+
     public static void main(String[] args) {
         AutoGenerator mpg = new AutoGenerator();
         //配置策略
@@ -62,7 +81,7 @@ public class CodeGenerator {
         //4、策略配置
         StrategyConfig strategy = new StrategyConfig();
         //设置要映射的表名
-        strategy.setInclude("category");
+        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         //自动lombok；

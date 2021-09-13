@@ -20,7 +20,8 @@ import java.util.List;
 public interface EbookService extends IService<Ebook> {
     List<EbookQueryResp> all(EbookQueryReq req);
 
-    PageResp<EbookQueryResp> bookList(EbookQueryReq req);
+    PageResp<EbookQueryResp> getList(EbookQueryReq req);
 
     boolean saveOrUpdate(EbookSaveReq req);
+
 }

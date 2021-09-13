@@ -42,7 +42,7 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
     }
 
     @Override
-    public PageResp<EbookQueryResp> bookList(EbookQueryReq req) {
+    public PageResp<EbookQueryResp> getList(EbookQueryReq req) {
         QueryWrapper<Ebook> wrapper = new QueryWrapper<>();
         //传入参数有name时模糊查询
         if (req.getName() != null) {

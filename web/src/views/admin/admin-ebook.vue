@@ -38,6 +38,12 @@
           </template>
           <template v-slot:action="{ text, record }">
             <a-space size="small">
+              <router-link to="/admin/doc">
+                <a-button type="primary">
+                  <template #icon><FileTextOutlined /></template>
+                  文档管理
+                </a-button>
+              </router-link>
               <a-button type="primary" @click="edit(record)">
                 <template #icon><EditOutlined /></template>
                 编辑

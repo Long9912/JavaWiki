@@ -42,7 +42,7 @@ public class EbookController {
     @ApiImplicitParam(name = "req", value = "传入分页参数,如果有传入书名则模糊查询电子书", required = true, dataType = "EbookQueryReq", paramType = "query")
     @GetMapping("/list")
     public PageResp<EbookQueryResp> list(@Validated EbookQueryReq req) {
-        PageResp<EbookQueryResp> list = ebookService.bookList(req);
+        PageResp<EbookQueryResp> list = ebookService.getList(req);
         return list.getList().isEmpty() ? null : list;
     }
 

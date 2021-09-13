@@ -31,8 +31,13 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
     EbookMapper ebookMapper;
 
     @Override
-    public List<EbookQueryResp> all() {
-        List<Ebook> ebookList = ebookMapper.selectList(null);
+    public List<EbookQueryResp> all(EbookQueryReq req) {
+        QueryWrapper<Ebook> wrapper = new QueryWrapper<>();
+        //传入参数有CategoryId2时按分类id查询
+        if (req.getCategoryId2() != null) {
+            wrapper.eq("category2_id", req.getCategoryId2());
+        }
+        List<Ebook> ebookList = ebookMapper.selectList(wrapper);
         return CopyUtil.copyList(ebookList, EbookQueryResp.class);
     }
 

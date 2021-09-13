@@ -16,10 +16,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @RestControllerAdvice(basePackages = "com.Long.JavaWiki.controller")
 public class ResponseWrapper implements ResponseBodyAdvice<Object> {
 
+    //这个方法的返回值，决定是否启动结果响应拦截，当返回为true是，表示拦截
+    @Override
+    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        return true;
+    }
+
     /**
      * 被拦截的响应，立即执行该方法。
-     *
-     * @param responseObject ：是请求控制器方法接口后，响应的内容。（其他参数不用了解）
+     * @param responseObject ：是请求控制器方法接口后，响应的内容。
      */
     @Override
     public Object beforeBodyWrite(Object responseObject, MethodParameter returnType, MediaType mediaType,
@@ -27,10 +32,10 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request, ServerHttpResponse response) {
         //responseObject是否为null
         if (null == responseObject) {
-            return ResponseData.success("响应结果为空");
+            return ResponseData.error(EnumCode.DATA_EMPTY_ERROR,null);
         }
         if (returnType.getMethod().getReturnType().isAssignableFrom(Void.TYPE)) {
-            return ResponseData.success("响应结果为空");
+            return ResponseData.error(EnumCode.DATA_EMPTY_ERROR,null);
         }
         //responseObject是否是文件
         if (responseObject instanceof Resource) {
@@ -55,12 +60,6 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
             }
         }
         return ResponseData.success(responseObject);
-    }
-
-    //这个方法的返回值，决定是否启动结果响应拦截，当返回为true是，表示拦截
-    @Override
-    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return true;
     }
 }
 

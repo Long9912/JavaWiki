@@ -31,10 +31,11 @@ public class EbookController {
     @Autowired
     EbookService ebookService;
 
-    @ApiOperation("查询全部电子书")
+    @ApiOperation("默认查询全部电子书,传入分类id时查询分类下电子书")
     @GetMapping("/all")
-    public List<EbookQueryResp> all() {
-        return ebookService.all();
+    public List<EbookQueryResp> all(EbookQueryReq req) {
+        List<EbookQueryResp> list = ebookService.all(req);
+        return list.isEmpty() ? null : list;
     }
 
     @ApiOperation("分页查询电子书")

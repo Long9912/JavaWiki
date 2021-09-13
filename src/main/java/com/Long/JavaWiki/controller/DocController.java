@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -50,11 +51,13 @@ public class DocController {
         return "保存成功";
     }
 
-    @ApiOperation("通过id逻辑删除文档")
-    @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "Long", paramType = "path")
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        docService.removeById(id);
+    @ApiOperation("通过一个或多个id逻辑删除文档")
+    @ApiImplicitParam(name = "id", value = "传入一个或多个ID", required = true, dataType = "Long", paramType = "path")
+    @DeleteMapping("/delete/{idsStr}")
+    public String delete(@PathVariable String idsStr) {
+        //将string通过逗号分割成字符数组,再转为List
+        List<String> ids = Arrays.asList(idsStr.split(","));
+        docService.removeByIds(ids);
         return "删除成功";
     }
 }

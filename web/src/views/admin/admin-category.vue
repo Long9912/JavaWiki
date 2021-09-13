@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-layout style="padding: 0 24px 24px">
+    <a-layout>
       <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
         <a-form layout="inline" :model="queryParam">
           <a-form-item>
@@ -146,7 +146,6 @@ export default defineComponent({
           level1.value = [];
           //使用递归将数组转为树形结构
           level1.value = Tool.array2Tree(categorys.value, 0);
-          console.log("树形结构：", level1);
         } else {
           message.error(data.content.respMsg);
         }

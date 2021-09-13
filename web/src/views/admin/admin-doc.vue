@@ -1,8 +1,8 @@
 <template>
   <div>
-    <a-layout style="padding: 0 24px 24px">
+    <a-layout>
         <a-page-header
-            style="border: 1px solid rgb(235, 237, 240)"
+            style="border: 1px solid rgb(235, 237, 240);height: 60px"
             title="文档管理"
             :sub-title="bookName"
             @back="back"
@@ -167,7 +167,6 @@ export default defineComponent({
           level1.value = [];
           //使用递归将数组转为树形结构
           level1.value = Tool.array2Tree(docs.value, 0);
-          console.log("树形结构：", level1);
         } else {
           message.error(data.content.respMsg);
         }
@@ -212,6 +211,39 @@ export default defineComponent({
           const children = node.children;
           if (Tool.isNotEmpty(children)) {
             setDisable(children, id);
+          }
+        }
+      }
+    };
+
+    const deleteIds: Array<string> = [];
+    const deleteNames: Array<string> = [];
+    /**
+     * 删除时查找整根树枝,删除当前节点及其子节点
+     */
+    const getDeleteIds = (treeSelectData: any, id: any) => {
+      // 遍历数组，即遍历某一层节点
+      for (let i = 0; i < treeSelectData.length; i++) {
+        const node = treeSelectData[i];
+        if (node.id === id) {
+          // 如果当前节点就是目标节点
+          console.log("delete", node);
+          // 将目标ID放入结果集ids
+          deleteIds.push(id);
+          deleteNames.push(node.name);
+
+          // 遍历所有子节点
+          const children = node.children;
+          if (Tool.isNotEmpty(children)) {
+            for (let j = 0; j < children.length; j++) {
+              getDeleteIds(children, children[j].id)
+            }
+          }
+        } else {
+          // 如果当前节点不是目标节点，则到其子节点再找找看。
+          const children = node.children;
+          if (Tool.isNotEmpty(children)) {
+            getDeleteIds(children, id);
           }
         }
       }
@@ -262,7 +294,11 @@ export default defineComponent({
     };
 
     const handleDelete = (id:string) => {
-      axios.delete("/doc/delete/"+id).then((response) => {
+      // 清空数组，否则多次删除时，数组会一直增加
+      deleteIds.length = 0;
+      deleteNames.length = 0;
+      getDeleteIds(level1.value,id);
+      axios.delete("/doc/delete/"+deleteIds.join(",")).then((response) => {
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
           //重新加载列表

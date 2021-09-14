@@ -1,99 +1,99 @@
 <template>
   <div>
     <a-layout>
-        <a-page-header
-            style="border: 1px solid rgb(235, 237, 240);height: 60px"
-            title="文档管理"
-            :sub-title="bookName"
-            @back="back"
-        />
-      <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-        <a-form layout="inline" :model="queryParam">
-          <a-form-item>
-            <a-button @click="handleQuery()">
-              <template #icon><SearchOutlined /></template>
-              查询
-            </a-button>
-          </a-form-item>
-          <a-form-item>
-            <a-button type="primary" @click="add">
-              <template #icon><PlusSquareOutlined /></template>
-              新增
-            </a-button>
-          </a-form-item>
-        </a-form>
-
-        <a-table
-            :columns="columns"
-            :row-key="record => record.id"
-            :data-source="level1"
-            :loading="loading"
-            :pagination="false"
-            @change="handleTableChange"
-        >
-          <template #cover="{ text: cover }">
-            <img v-if="cover" :src="cover" alt="avatar"/>
-          </template>
-          <template v-slot:action="{ text, record }">
-            <a-space size="small">
-              <a-button type="primary" @click="edit(record)">
-                <template #icon><EditOutlined /></template>
-                编辑
-              </a-button>
-              <a-popconfirm
-                  title="确认删除文档及其子文档?"
-                  ok-text="Yes"
-                  cancel-text="No"
-                  @confirm="handleDelete(record.id)"
-              >
-                <a-button type="danger" >
-                  <template #icon><DeleteOutlined /></template>
-                  删除
+      <a-row :gutter="16">
+        <a-col :span="8">
+          <a-page-header
+              style="height: 60px"
+              title="文档管理"
+              :sub-title="bookName"
+              @back="back"
+          />
+          <a-layout-content :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
+            <a-form layout="inline" :model="queryParam">
+              <a-form-item>
+                <a-button @click="handleQuery()">
+                  <template #icon><SearchOutlined /></template>
+                  查询
                 </a-button>
-              </a-popconfirm>
-            </a-space>
-          </template>
-        </a-table>
-      </a-layout-content>
-    </a-layout>
-    <a-modal
-        title="文档表单"
-        v-model:visible="modalVisible"
-        :confirm-loading="modalLoading"
-        @ok="handleModalOk"
-    >
-      <a-form :model="doc" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-        <a-form-item label="id">
-          <a-input v-model:value="doc.id" disabled="true"/>
-        </a-form-item>
-        <a-form-item label="电子书ID">
-          <a-input v-model:value="doc.ebookId"/>
-        </a-form-item>
-        <a-form-item label="名称">
-          <a-input v-model:value="doc.name"/>
-        </a-form-item>
-        <a-form-item label="父文档">
-          <a-tree-select
-              v-model:value="doc.parent"
-              style="width: 100%"
-              :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-              :tree-data="treeSelectData"
-              placeholder="请选择父文档"
-              tree-default-expand-all
-              :replaceFields="{title: 'name', key:'id',value:'id'}"
-          >
-          </a-tree-select>
-        </a-form-item>
-        <a-form-item label="顺序">
-          <a-input v-model:value="doc.sort"/>
-        </a-form-item>
-        <a-form-item label="内容">
-          <div id="content">
+              </a-form-item>
+              <a-form-item>
+                <a-button type="primary" @click="add">
+                  <template #icon><PlusSquareOutlined /></template>
+                  新增
+                </a-button>
+              </a-form-item>
+            </a-form>
 
-          </div>
-        </a-form-item>
-      </a-form>
-    </a-modal>
+            <a-table
+                v-if="level1.length > 0"
+                :columns="columns"
+                :row-key="record => record.id"
+                :data-source="level1"
+                :loading="loading"
+                :pagination="false"
+                @change="handleTableChange"
+                size="small"
+                :default-expand-all-rows="true"
+            >
+              <template #name="{ text, record }">
+                {{record.sort}} - {{text}}
+              </template>
+              <template v-slot:action="{ text, record }">
+                <a-space size="small">
+                  <a-button type="primary" @click="edit(record)" size="small">
+                    <template #icon><EditOutlined /></template>
+                    编辑
+                  </a-button>
+                  <a-popconfirm
+                      title="确认删除文档及其子文档?"
+                      ok-text="Yes"
+                      cancel-text="No"
+                      @confirm="handleDelete(record.id)"
+                  >
+                    <a-button type="danger" size="small">
+                      <template #icon><DeleteOutlined /></template>
+                      删除
+                    </a-button>
+                  </a-popconfirm>
+                </a-space>
+              </template>
+            </a-table>
+          </a-layout-content>
+        </a-col>
+        <a-col :span="16">
+          <a-form :model="doc" layout="vertical" style="margin-top:10px" >
+            <a-form-item>
+              <a-button type="primary" @click="handleSave()">
+                <template #icon><SaveOutlined/></template>
+                保存
+              </a-button>
+            </a-form-item>
+            <a-form-item >
+              <a-input v-model:value="doc.name" placeholder="名称"/>
+            </a-form-item>
+            <a-form-item>
+              <a-tree-select
+                  v-model:value="doc.parent"
+                  style="width: 100%"
+                  :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                  :tree-data="treeSelectData"
+                  placeholder="请选择父文档"
+                  tree-default-expand-all
+                  :replaceFields="{title: 'name', key:'id',value:'id'}"
+              >
+              </a-tree-select>
+            </a-form-item>
+            <a-form-item >
+              <a-input v-model:value="doc.sort" placeholder="顺序"/>
+            </a-form-item>
+            <a-form-item>
+              <div id="content"></div>
+            </a-form-item>
+          </a-form>
+        </a-col>
+      </a-row>
+    </a-layout>
   </div>
 </template>
 
@@ -120,27 +120,12 @@ export default defineComponent({
 
     const columns = [
       {
-        title: 'Id',
-        dataIndex: 'id'
-      },
-      {
-        title: '电子书Id',
-        dataIndex: 'ebookId'
-      },
-      {
         title: '名称',
-        dataIndex: 'name'
+        dataIndex: 'name',
+        slots: {customRender: 'name'}
       },
       {
-        title: '父文档',
-        dataIndex: 'parent'
-      },
-      {
-        title: '顺序',
-        dataIndex: 'sort'
-      },
-      {
-        title: 'Action',
+        title: '操作',
         key: 'action',
         slots: {customRender: 'action'}
       }
@@ -191,10 +176,8 @@ export default defineComponent({
     // 因为树选择组件的属性状态，会随当前编辑的节点而变化，所以单独声明一个响应式变量
     const treeSelectData = ref();
     treeSelectData.value=[];
-    let editor;
     const doc = ref({});
-    const modalVisible = ref<boolean>(false);
-    const modalLoading = ref<boolean>(false);
+    let editor;
 
     /**
      * 将某节点及其子孙节点全部置为disabled
@@ -261,7 +244,6 @@ export default defineComponent({
      * 新增
      */
     const add = () => {
-      modalVisible.value = true;
       doc.value = {
         ebookId: route.query.ebookId
       };
@@ -269,15 +251,12 @@ export default defineComponent({
       treeSelectData.value = Tool.copy(level1.value);
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
-      editor = new Editor('#content');
-      editor.create();
     };
 
     /**
      * 编辑
      */
     const edit = (record: any) => {
-      modalVisible.value = true;
       //复制当前列的参数
       doc.value = Tool.copy(record);
       // 不能选择当前节点及其所有子孙节点，作为父节点，会使树断开
@@ -286,17 +265,13 @@ export default defineComponent({
 
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
-      editor = new Editor('#content');
-      editor.create();
     };
 
-    const handleModalOk = () => {
-      modalLoading.value = true;
+    const handleSave = () => {
       axios.post("/doc/save", doc.value).then((response) => {
-        modalLoading.value = false;
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
-          modalVisible.value = false;
+          message.success(data.content);
           //重新加载列表
           handleQuery();
         } else {
@@ -335,6 +310,9 @@ export default defineComponent({
     onMounted(() => {
       handleQuery();
       bookName.value=route.query.name;
+      editor = new Editor('#content');
+      editor.config.zIndex=0;
+      editor.create();
     });
 
     return {
@@ -351,9 +329,7 @@ export default defineComponent({
       doc,
       bookName,
       treeSelectData,
-      modalVisible,
-      modalLoading,
-      handleModalOk,
+      handleSave,
       handleDelete
     }
   },

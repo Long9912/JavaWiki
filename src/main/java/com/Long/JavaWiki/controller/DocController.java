@@ -5,6 +5,7 @@ import com.Long.JavaWiki.request.DocQueryReq;
 import com.Long.JavaWiki.request.DocSaveReq;
 import com.Long.JavaWiki.response.DocQueryResp;
 import com.Long.JavaWiki.response.PageResp;
+import com.Long.JavaWiki.service.ContentService;
 import com.Long.JavaWiki.service.DocService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -28,6 +30,9 @@ import java.util.List;
 public class DocController {
     @Autowired
     DocService docService;
+
+    @Autowired
+    ContentService contentService;
 
     @ApiOperation("默认查询全部文档,传入分类id时查询分类下文档")
     @GetMapping("/all")
@@ -59,6 +64,17 @@ public class DocController {
         List<String> ids = Arrays.asList(idsStr.split(","));
         docService.removeByIds(ids);
         return "删除成功";
+    }
+
+    @ApiOperation("通过id查找文档内容")
+    @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "Long", paramType = "path")
+    @GetMapping("/findContent/{id}")
+    public String findContent(@PathVariable Long id) {
+        //获取文档文本,使用Optional包装处理 null,
+        Optional<String> text=Optional
+                .ofNullable(contentService.getById(id))
+                .map(content -> content.getContent());
+        return text.orElse("文档内容为空");
     }
 }
 

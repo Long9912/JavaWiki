@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-layout>
-      <a-row :gutter="16">
+      <a-row>
         <a-col :span="8">
           <a-page-header
               style="height: 60px"
@@ -62,7 +62,7 @@
           </a-layout-content>
         </a-col>
         <a-col :span="16">
-          <a-form :model="doc" layout="vertical" style="margin-top:10px" >
+          <a-form :model="doc" layout="vertical" style="margin-top:10px;margin-left: 10px" >
             <a-form-item>
               <a-button type="primary" @click="handleSave()">
                 <template #icon><SaveOutlined/></template>
@@ -166,6 +166,22 @@ export default defineComponent({
     };
 
     /**
+     * 内容查询
+     **/
+    const handleQueryContent = () => {
+      axios.get("/doc/findContent/"+doc.value.id).then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          docs.value = data.content;
+
+          editor.txt.html(data.content);
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    };
+
+    /**
      * 编辑
      */
     const back = () => {
@@ -248,7 +264,8 @@ export default defineComponent({
       doc.value = {
         ebookId: route.query.ebookId
       };
-
+      //清空内容
+      editor.txt.clear()
       treeSelectData.value = Tool.copy(level1.value);
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
@@ -260,6 +277,8 @@ export default defineComponent({
     const edit = (record: any) => {
       //复制当前列的参数
       doc.value = Tool.copy(record);
+      //查询文档内容
+      handleQueryContent();
       // 不能选择当前节点及其所有子孙节点，作为父节点，会使树断开
       treeSelectData.value = Tool.copy(level1.value);
       setDisable(treeSelectData.value, record.id);

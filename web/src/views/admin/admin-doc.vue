@@ -41,7 +41,7 @@
                 编辑
               </a-button>
               <a-popconfirm
-                  title="确认删除文档?"
+                  title="确认删除文档及其子文档?"
                   ok-text="Yes"
                   cancel-text="No"
                   @confirm="handleDelete(record.id)"
@@ -93,9 +93,10 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue';
+import {createVNode, defineComponent, onMounted, ref} from 'vue';
 import axios from "axios";
-import {message} from 'ant-design-vue';
+import {message, Modal} from 'ant-design-vue';
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import {Tool} from "@/util/tool";
 import {useRoute} from "vue-router";
 import router from "@/router";
@@ -298,14 +299,25 @@ export default defineComponent({
       deleteIds.length = 0;
       deleteNames.length = 0;
       getDeleteIds(level1.value,id);
-      axios.delete("/doc/delete/"+deleteIds.join(",")).then((response) => {
-        const data = response.data;
-        if (data.code == process.env.VUE_APP_SUCCESS) {
-          //重新加载列表
-          handleQuery();
-        } else {
-          message.error(data.message);
-        }
+      Modal.confirm({
+        title: () => { return '重要提醒' },
+        icon: () => { return createVNode(ExclamationCircleOutlined); },
+        content: () => { return createVNode('div', {style: 'color:red;'},
+            '将删除:[' + deleteNames.join(",") + "],确认删除?");},
+        okText: () => { return '确认' },
+        cancelText: () => { return '取消' },
+        onOk() {
+          axios.delete("/doc/delete/"+deleteIds.join(",")).then((response) => {
+            const data = response.data;
+            if (data.code == process.env.VUE_APP_SUCCESS) {
+              message.success("已删除:["+deleteNames.join(",")+"]");
+              //重新加载列表
+              handleQuery();
+            } else {
+              message.error(data.message);
+            }
+          });
+        },
       });
     };
 

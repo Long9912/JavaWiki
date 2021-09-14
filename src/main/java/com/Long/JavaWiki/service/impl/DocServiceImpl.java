@@ -1,6 +1,8 @@
 package com.Long.JavaWiki.service.impl;
 
+import com.Long.JavaWiki.entity.Content;
 import com.Long.JavaWiki.entity.Doc;
+import com.Long.JavaWiki.mapper.ContentMapper;
 import com.Long.JavaWiki.mapper.DocMapper;
 import com.Long.JavaWiki.request.DocQueryReq;
 import com.Long.JavaWiki.request.DocSaveReq;
@@ -28,6 +30,9 @@ import java.util.List;
 public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocService {
     @Autowired
     DocMapper docMapper;
+
+    @Autowired
+    ContentMapper contentMapper;
 
     @Override
     public List<DocQueryResp> all() {
@@ -61,6 +66,17 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     @Override
     public boolean saveOrUpdate(DocSaveReq req) {
         Doc doc=CopyUtil.copy(req,Doc.class);
-        return super.saveOrUpdate(doc);
+        Content content=CopyUtil.copy(req,Content.class);
+        //保存文档和文档内容
+        super.saveOrUpdate(doc);
+        //获取到文档的雪花id,再保存到单独文档内容表
+        content.setId(doc.getId());
+        //尝试更新
+        int count = contentMapper.updateById(content);
+        //文档内容表没有此数据时插入新数据
+        if (count == 0){
+            contentMapper.insert(content);
+        }
+        return true;
     }
 }

@@ -87,6 +87,11 @@
         <a-form-item label="顺序">
           <a-input v-model:value="doc.sort"/>
         </a-form-item>
+        <a-form-item label="内容">
+          <div id="content">
+
+          </div>
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -100,6 +105,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import {Tool} from "@/util/tool";
 import {useRoute} from "vue-router";
 import router from "@/router";
+import Editor from "wangeditor"
 
 export default defineComponent({
   name: 'AdminCategory',
@@ -185,6 +191,7 @@ export default defineComponent({
     // 因为树选择组件的属性状态，会随当前编辑的节点而变化，所以单独声明一个响应式变量
     const treeSelectData = ref();
     treeSelectData.value=[];
+    let editor;
     const doc = ref({});
     const modalVisible = ref<boolean>(false);
     const modalLoading = ref<boolean>(false);
@@ -262,6 +269,8 @@ export default defineComponent({
       treeSelectData.value = Tool.copy(level1.value);
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
+      editor = new Editor('#content');
+      editor.create();
     };
 
     /**
@@ -277,6 +286,8 @@ export default defineComponent({
 
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
+      editor = new Editor('#content');
+      editor.create();
     };
 
     const handleModalOk = () => {

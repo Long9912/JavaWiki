@@ -5,18 +5,15 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.Long.JavaWiki.entity.User">
         <id column="id" property="id" />
+        <result column="login_name" property="loginName" />
         <result column="name" property="name" />
-        <result column="age" property="age" />
-        <result column="email" property="email" />
-        <result column="version" property="version" />
+        <result column="password" property="password" />
         <result column="deleted" property="deleted" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, age, email, version, deleted, create_time, update_time
+        id, login_name, name, password, deleted
     </sql>
 
 </mapper>

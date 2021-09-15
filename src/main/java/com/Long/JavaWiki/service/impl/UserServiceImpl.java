@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 用户 服务实现类
  * </p>
  *
  * @author Long9912
- * @since 2021-09-07
+ * @since 2021-09-15
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {

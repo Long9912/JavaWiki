@@ -13,15 +13,13 @@
         <result column="doc_count" property="docCount" />
         <result column="view_count" property="viewCount" />
         <result column="vote_count" property="voteCount" />
-        <result column="version" property="version" />
         <result column="deleted" property="deleted" />
         <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, category1_id, category2_id, description, cover, doc_count, view_count, vote_count, version, deleted, create_time, update_time
+        id, name, category1_id, category2_id, description, cover, doc_count, view_count, vote_count, deleted, create_time
     </sql>
 
 </mapper>

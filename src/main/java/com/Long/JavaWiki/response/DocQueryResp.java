@@ -2,6 +2,8 @@ package com.Long.JavaWiki.response;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class DocQueryResp {
 
@@ -18,5 +20,9 @@ public class DocQueryResp {
     private Integer viewCount;
 
     private Integer voteCount;
+
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 
 }

@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 15/09/2021 16:25:13
+ Date: 15/09/2021 20:46:14
 */
 
 SET NAMES utf8mb4;
@@ -60,8 +60,6 @@ INSERT INTO `content` VALUES (1, '<p>12312345</p>', 0);
 INSERT INTO `content` VALUES (2, '<p>12345678</p>', 0);
 INSERT INTO `content` VALUES (1438000187241934850, '<blockquote><h1><font size=\"5\">这里是 Ant Design 的 Vue 实现，开发和服务于企业级后台产品。</font></h1></blockquote><p><br/></p><p><img src=\"https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg\" width=\"167.43\" height=\"167.43\"/>&nbsp; &nbsp;&nbsp;<font size=\"5\">+&nbsp; &nbsp;&nbsp;</font><img src=\"https://qn.antdv.com/vue.png\" width=\"158.43\" height=\"158.43\"/><br/></p><p>特性</p><ul><li>提炼自企业级中后台产品的交互语言和视觉风格。</li><li>开箱即用的高质量 Vue 组件。</li><li>共享<a href=\"http://ant-design.gitee.io/docs/spec/introduce-cn\" target=\"_blank\">Ant Design of React</a>设计工具体系。</li></ul>', 0);
 INSERT INTO `content` VALUES (1438000644823724034, '<p>众所周知，Ant Design 作为一门设计语言面世，经历过多年的迭代和积累，它对 UI 的设计思想已经成为一套事实标准，受到众多前端开发者及企业的追捧和喜爱，也是 React 开发者手中的神兵利器。希望 ant-design-vue 能够让 Vue 开发者也享受到 Ant Design 的优秀设计。</p><p>ant-design-vue 是 Ant Design 的 Vue 实现，组件的风格与 Ant Design 保持同步，组件的 html 结构和 css 样式也保持一致，真正做到了样式 0 修改，组件 API 也尽量保持了一致。</p><p>Ant Design Vue 致力于提供给程序员<strong>愉悦</strong>的开发体验。</p>', 0);
-INSERT INTO `content` VALUES (1438046672264376321, '<p>测试新增</p>', 1);
-INSERT INTO `content` VALUES (1438053818599223298, '<p>3435</p>', 1);
 
 -- ----------------------------
 -- Table structure for doc
@@ -76,21 +74,23 @@ CREATE TABLE `doc`  (
   `view_count` int(255) NULL DEFAULT 0 COMMENT '阅读数',
   `vote_count` int(255) NULL DEFAULT 0 COMMENT '点赞数',
   `deleted` int(1) NULL DEFAULT 0 COMMENT '逻辑删除',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of doc
 -- ----------------------------
-INSERT INTO `doc` VALUES (1, 1, 0, '文档1', 1, 0, 0, 0);
-INSERT INTO `doc` VALUES (2, 1, 1, '文档1.1', 1, 0, 0, 0);
-INSERT INTO `doc` VALUES (3, 1, 0, '文档2', 2, 0, 0, 0);
-INSERT INTO `doc` VALUES (4, 1, 3, '文档2.1', 2, 0, 0, 0);
-INSERT INTO `doc` VALUES (5, 1, 1437317930831314945, '文档3.1', 2, 0, 0, 0);
-INSERT INTO `doc` VALUES (6, 1, 5, '文档3.1.1', 1, 0, 0, 0);
-INSERT INTO `doc` VALUES (1437317930831314945, 1, 0, '文档3', 3, 0, 0, 0);
-INSERT INTO `doc` VALUES (1438000187241934850, 2, 0, 'Ant Design of Vue', 1, 0, 0, 0);
-INSERT INTO `doc` VALUES (1438000644823724034, 2, 1438000187241934850, '关于ant-design-vue', 2, 0, 0, 0);
+INSERT INTO `doc` VALUES (1, 1, 0, '文档1', 1, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (2, 1, 1, '文档1.1', 1, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (3, 1, 0, '文档2', 2, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (4, 1, 3, '文档2.1', 2, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (5, 1, 1437317930831314945, '文档3.1', 2, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (6, 1, 5, '文档3.1.1', 1, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (1437317930831314945, 1, 0, '文档3', 3, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (1438000187241934850, 2, 0, 'Ant Design of Vue', 1, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (1438000644823724034, 2, 1438000187241934850, '关于ant-design-vue', 2, 0, 0, 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for ebook
@@ -106,23 +106,21 @@ CREATE TABLE `ebook`  (
   `doc_count` int(255) NULL DEFAULT 0 COMMENT '文档数',
   `view_count` int(255) NULL DEFAULT 0 COMMENT '阅读数',
   `vote_count` int(255) NULL DEFAULT 0 COMMENT '点赞数',
-  `version` int(255) NULL DEFAULT 1 COMMENT '乐观锁',
   `deleted` int(1) NULL DEFAULT 0 COMMENT '逻辑删除',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电子书' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ebook
 -- ----------------------------
-INSERT INTO `ebook` VALUES (1, 'Spring Boot 入门教程', 200, 202, '企业级应用开发最佳首选框架', '/image/1.png', 3, 0, 0, 1, 0, '2021-09-07 21:29:15', '2021-09-12 16:23:52');
-INSERT INTO `ebook` VALUES (2, 'Vue 入门教程', 100, 102, '企业级应用开发最佳首选框架', '/image/2.png', 0, 0, 0, 1, 0, '2021-09-07 21:30:25', '2021-09-12 16:16:31');
-INSERT INTO `ebook` VALUES (3, 'MySQL 入门教程', 300, 301, '企业级应用开发最佳首选框架', '/image/5.png', 0, 0, 0, 1, 0, '2021-09-07 21:30:55', '2021-09-12 16:17:25');
-INSERT INTO `ebook` VALUES (4, 'Swagger 入门教程', 200, 202, '企业级应用开发最佳首选框架', '/image/4.png', 0, 0, 0, 1, 0, '2021-09-07 21:34:40', '2021-09-15 16:21:15');
-INSERT INTO `ebook` VALUES (5, 'MyBatisPlus 入门教程', 1, 2, '企业级应用开发最佳首选框架', '/image/5.png', 0, 0, 0, 1, 0, '2021-09-07 21:32:06', '2021-09-11 14:44:37');
-INSERT INTO `ebook` VALUES (1436589909073756161, 'Spring 入门教程', 1, 2, '入门', '/image/1.png', 0, 0, 0, 1, 0, '2021-09-11 15:18:20', '2021-09-12 16:22:26');
-INSERT INTO `ebook` VALUES (1436599062148247554, 'MyBatis 入门教程', 1, 2, NULL, '/image/5.png', 0, 0, 0, 1, 0, '2021-09-11 15:54:42', '2021-09-11 15:54:58');
+INSERT INTO `ebook` VALUES (1, 'Spring Boot 入门教程', 200, 202, '企业级应用开发最佳首选框架', '/image/1.png', 3, 0, 0, 0, '2021-09-07 21:29:15');
+INSERT INTO `ebook` VALUES (2, 'Vue 入门教程', 100, 102, '企业级应用开发最佳首选框架', '/image/2.png', 0, 0, 0, 0, '2021-09-07 21:30:25');
+INSERT INTO `ebook` VALUES (3, 'MySQL 入门教程', 300, 301, '企业级应用开发最佳首选框架', '/image/5.png', 0, 0, 0, 0, '2021-09-07 21:30:55');
+INSERT INTO `ebook` VALUES (4, 'Swagger 入门教程', 200, 202, '企业级应用开发最佳首选框架', '/image/4.png', 0, 0, 0, 0, '2021-09-07 21:34:40');
+INSERT INTO `ebook` VALUES (5, 'MyBatisPlus 入门教程', 1, 2, '企业级应用开发最佳首选框架', '/image/5.png', 0, 0, 0, 0, '2021-09-07 21:32:06');
+INSERT INTO `ebook` VALUES (1436589909073756161, 'Spring 入门教程', 1, 2, '入门', '/image/1.png', 0, 0, 0, 0, '2021-09-11 15:18:20');
+INSERT INTO `ebook` VALUES (1436599062148247554, 'MyBatis 入门教程', 1, 2, NULL, '/image/5.png', 0, 0, 0, 0, '2021-09-11 15:54:42');
 
 -- ----------------------------
 -- Table structure for user
@@ -130,25 +128,23 @@ INSERT INTO `ebook` VALUES (1436599062148247554, 'MyBatis 入门教程', 1, 2, N
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` bigint(20) NOT NULL COMMENT '主键ID',
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '姓名',
-  `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
-  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `version` int(255) NULL DEFAULT 1 COMMENT '乐观锁',
+  `login_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登陆名',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
+  `password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
   `deleted` int(1) NULL DEFAULT 0 COMMENT '逻辑删除',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `login_name_uindex`(`login_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'Jone', 18, 'test1@baomidou.com', 1, 0, '2021-09-06 20:14:28', '2021-09-06 20:15:06');
-INSERT INTO `user` VALUES (2, 'Jack', 20, 'test2@baomidou.com', 1, 1, '2021-09-06 20:14:28', '2021-09-06 20:15:06');
-INSERT INTO `user` VALUES (3, 'Tom', 28, 'test3@baomidou.com', 1, 0, '2021-09-06 20:14:28', '2021-09-06 20:15:06');
-INSERT INTO `user` VALUES (4, 'Sandy', 21, 'test4@baomidou.com', 1, 0, '2021-09-06 20:14:28', '2021-09-06 20:15:06');
-INSERT INTO `user` VALUES (5, 'Long12', 24, 'qq.com', 2, 0, '2021-09-06 20:14:28', '2021-09-06 21:00:05');
-INSERT INTO `user` VALUES (1434857573659443201, 'Long', 18, 'qq.com', 1, 0, NULL, NULL);
-INSERT INTO `user` VALUES (1434858980412280833, 'Long', 18, 'qq.com', 1, 0, '2021-09-06 20:40:14', NULL);
+INSERT INTO `user` VALUES (1, 'long1', 'Jone', '123', 0);
+INSERT INTO `user` VALUES (2, 'long2', 'Jack', '123', 0);
+INSERT INTO `user` VALUES (3, 'long3', 'Tom', '123', 0);
+INSERT INTO `user` VALUES (4, 'long4', 'Sandy', '123', 0);
+INSERT INTO `user` VALUES (5, 'long5', 'Long12', '123', 0);
+INSERT INTO `user` VALUES (1434857573659443201, 'long6', 'Long', '123', 0);
+INSERT INTO `user` VALUES (1434858980412280833, 'long7', 'Long', '123', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

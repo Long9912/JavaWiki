@@ -64,6 +64,7 @@ public class DocController {
         //将string通过逗号分割成字符数组,再转为List
         List<String> ids = Arrays.asList(idsStr.split(","));
         docService.removeByIds(ids);
+        contentService.removeByIds(ids);
         return "删除成功";
     }
 

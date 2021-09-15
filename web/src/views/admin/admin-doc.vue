@@ -62,13 +62,22 @@
           </a-layout-content>
         </a-col>
         <a-col :span="16">
-          <a-form :model="doc" layout="vertical" style="margin-top:10px;margin-left: 10px" >
+          <a-form layout="inline" style="margin-top:10px;margin-left: 10px">
             <a-form-item>
-              <a-button type="primary" @click="handleSave()">
-                <template #icon><SaveOutlined/></template>
-                保存
+              <a-button v-if="addStatus" type="primary" @click="handleAdd()">
+                <template #icon><FileAddOutlined /></template>
+                新增文档
               </a-button>
             </a-form-item>
+            <a-form-item>
+              <a-button v-if="!addStatus" type="primary" @click="handleSave()">
+                <template #icon><SaveOutlined/></template>
+                更新
+              </a-button>
+            </a-form-item>
+          </a-form>
+          <a-form :model="doc" layout="vertical" style="margin-top:10px;margin-left: 10px" >
+
             <a-form-item >
               <a-input v-model:value="doc.name" placeholder="名称"/>
             </a-form-item>
@@ -128,6 +137,7 @@ export default defineComponent({
     queryParam.value = {};
     const docs = ref();
     const loading = ref(false);
+    const addStatus =ref(false);
     // 因为树选择组件的属性状态，会随当前编辑的节点而变化，所以单独声明一个响应式变量
     const treeSelectData = ref();
     treeSelectData.value=[];
@@ -279,8 +289,11 @@ export default defineComponent({
      * 新增
      */
     const add = () => {
+      addStatus.value=true;
       //清空内容
       editor.txt.clear();
+      doc.value={};
+      doc.value.ebookId=ebookId.value;
       treeSelectData.value = Tool.copy(level1.value);
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
@@ -290,6 +303,7 @@ export default defineComponent({
      * 编辑
      */
     const edit = (record: any) => {
+      addStatus.value=false;
       //复制当前列的参数
       doc.value = Tool.copy(record);
       //查询文档内容
@@ -314,6 +328,12 @@ export default defineComponent({
           message.error(data.content.respMsg);
         }
       });
+    };
+
+    const handleAdd = () => {
+      handleSave();
+      //保存后调用add方法清空数据防止重复添加
+      add();
     };
 
     const handleDelete = (id:string) => {
@@ -377,9 +397,11 @@ export default defineComponent({
       add,
       edit,
       back,
+      addStatus,
       doc,
       bookName,
       treeSelectData,
+      handleAdd,
       handleSave,
       handleDelete,
 

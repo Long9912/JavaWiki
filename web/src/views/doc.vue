@@ -4,16 +4,18 @@
       <a-row>
         <a-col :span="6">
           <a-page-header
-              style="border: 2px solid rgb(235, 237, 240);height: 70px"
+              style="height: 70px"
               :title="bookName"
               @back="back"
           />
+          <h3 v-if="level1.length === 0">对不起，找不到相关文档！</h3>
           <a-tree
               v-if="level1.length > 0"
               :tree-data="level1"
               @select="onSelect"
               :replaceFields="{title:'name', key:'id',value:'id'}"
               :defaultExpandAll="true"
+              :defaultSelectedKeys="defaultSelectedKeys"
           >
           </a-tree>
         </a-col>
@@ -42,6 +44,8 @@ export default defineComponent({
     const ebookId = ref();
     const docs = ref();
     const html = ref();
+    const defaultSelectedKeys = ref();
+    defaultSelectedKeys.value = [];
 
     /**
      * 一级文档树，children属性就是二级文档
@@ -58,6 +62,20 @@ export default defineComponent({
     level1.value = [];
 
     /**
+     * 内容查询
+     **/
+    const handleQueryContent = (id: string) => {
+      axios.get("/doc/findContent/" + id).then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          html.value = data.content;
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    };
+
+    /**
      * 数据查询
      **/
     const handleQuery = () => {
@@ -69,20 +87,11 @@ export default defineComponent({
           level1.value = [];
           //使用递归将数组转为树形结构
           level1.value = Tool.array2Tree(docs.value, 0);
-        } else {
-          message.error(data.content.respMsg);
-        }
-      });
-    };
 
-    /**
-     * 内容查询
-     **/
-    const handleQueryContent = (id: string) => {
-      axios.get("/doc/findContent/" + id).then((response) => {
-        const data = response.data;
-        if (data.code == process.env.VUE_APP_SUCCESS) {
-          html.value = data.content;
+          if (Tool.isNotEmpty(level1)) {
+            defaultSelectedKeys.value = [level1.value[0].id];
+            handleQueryContent(level1.value[0].id);
+          }
         } else {
           message.error(data.content.respMsg);
         }
@@ -118,6 +127,7 @@ export default defineComponent({
       level1,
       bookName,
       html,
+      defaultSelectedKeys,
       back,
       onSelect,
     }

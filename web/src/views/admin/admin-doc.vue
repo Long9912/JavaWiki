@@ -169,7 +169,9 @@ export default defineComponent({
           // 为选择树添加一个"无"
           treeSelectData.value.unshift({id: 0, name: '无'});
         } else {
-          message.error(data.content.respMsg);
+          message.error(data.message);
+          // 为选择树添加一个"无"
+          treeSelectData.value.unshift({id: 0, name: '无'});
         }
       });
     };
@@ -267,9 +269,6 @@ export default defineComponent({
      * 新增
      */
     const add = () => {
-      doc.value = {
-        ebookId: ebookId.value
-      };
       //清空内容
       editor.txt.clear();
       treeSelectData.value = Tool.copy(level1.value);
@@ -338,6 +337,7 @@ export default defineComponent({
       bookName.value=route.query.name;
       ebookId.value=route.query.ebookId;
       handleQuery();
+      doc.value.ebookId=ebookId.value;
       //初始化富文本框
       editor = new Editor('#content');
       editor.config.zIndex=0;

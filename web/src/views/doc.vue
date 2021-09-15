@@ -4,7 +4,7 @@
       <a-row>
         <a-col :span="6">
           <a-page-header
-              style="height: 60px"
+              style="border: 2px solid rgb(235, 237, 240);height: 70px"
               :title="bookName"
               @back="back"
           />

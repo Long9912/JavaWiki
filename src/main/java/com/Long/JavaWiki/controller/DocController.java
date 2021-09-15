@@ -34,10 +34,11 @@ public class DocController {
     @Autowired
     ContentService contentService;
 
-    @ApiOperation("默认查询全部文档,传入分类id时查询分类下文档")
-    @GetMapping("/all")
-    public List<DocQueryResp> all() {
-        List<DocQueryResp> list = docService.all();
+    @ApiOperation("传入电子书id查询电子书的文档")
+    @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
+    @GetMapping("/all/{ebookId}")
+    public List<DocQueryResp> all(@PathVariable String ebookId) {
+        List<DocQueryResp> list = docService.all(ebookId);
         return list.isEmpty() ? null : list;
     }
 
@@ -57,7 +58,7 @@ public class DocController {
     }
 
     @ApiOperation("通过一个或多个id逻辑删除文档")
-    @ApiImplicitParam(name = "id", value = "传入一个或多个ID", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "传入一个或多个ID", required = true, dataType = "String", paramType = "path")
     @DeleteMapping("/delete/{idsStr}")
     public String delete(@PathVariable String idsStr) {
         //将string通过逗号分割成字符数组,再转为List
@@ -67,9 +68,9 @@ public class DocController {
     }
 
     @ApiOperation("通过id查找文档内容")
-    @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/findContent/{id}")
-    public String findContent(@PathVariable Long id) {
+    public String findContent(@PathVariable String id) {
         //获取文档文本,使用Optional包装处理 null,
         Optional<String> text=Optional
                 .ofNullable(contentService.getById(id))

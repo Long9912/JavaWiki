@@ -108,11 +108,12 @@ import router from "@/router";
 import Editor from "wangeditor"
 
 export default defineComponent({
-  name: 'AdminCategory',
+  name: 'AdminDoc',
 
   setup() {
     const route =useRoute();
     const bookName =ref();
+    const ebookId =ref();
     const queryParam = ref();
     queryParam.value = {};
     const docs = ref();
@@ -150,7 +151,7 @@ export default defineComponent({
      **/
     const handleQuery = () => {
       loading.value = true;
-      axios.get("/doc/all").then((response) => {
+      axios.get("/doc/all/"+ebookId.value).then((response) => {
         loading.value = false;
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
@@ -182,7 +183,7 @@ export default defineComponent({
     };
 
     /**
-     * 编辑
+     * 返回上一级页面
      */
     const back = () => {
       router.push({path: "/admin/ebook"});
@@ -262,7 +263,7 @@ export default defineComponent({
      */
     const add = () => {
       doc.value = {
-        ebookId: route.query.ebookId
+        ebookId: ebookId.value
       };
       //清空内容
       editor.txt.clear()
@@ -329,8 +330,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      handleQuery();
       bookName.value=route.query.name;
+      ebookId.value=route.query.ebookId;
+      handleQuery();
       //初始化富文本框
       editor = new Editor('#content');
       editor.config.zIndex=0;
@@ -355,7 +357,6 @@ export default defineComponent({
       handleDelete
     }
   },
-  components: {}
 });
 </script>
 

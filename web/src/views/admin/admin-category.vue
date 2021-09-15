@@ -221,7 +221,6 @@ export default defineComponent({
       handleDelete
     }
   },
-  components: {}
 });
 </script>
 

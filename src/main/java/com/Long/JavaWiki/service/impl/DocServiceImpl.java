@@ -35,8 +35,10 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     ContentMapper contentMapper;
 
     @Override
-    public List<DocQueryResp> all() {
+    public List<DocQueryResp> all(String ebookId) {
         QueryWrapper<Doc> wrapper = new QueryWrapper<>();
+        //根据电子书id查询
+        wrapper.eq("ebook_id",ebookId);
         //根据sort排序
         wrapper.orderByAsc("sort");
         List<Doc> docList = docMapper.selectList(wrapper);

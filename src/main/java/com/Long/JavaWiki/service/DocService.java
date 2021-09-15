@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2021-09-13
  */
 public interface DocService extends IService<Doc> {
-    List<DocQueryResp> all();
+    List<DocQueryResp> all(String ebookId);
 
     PageResp<DocQueryResp> list(DocQueryReq req);
 

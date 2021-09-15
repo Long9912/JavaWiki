@@ -18,7 +18,7 @@
           </a-tree>
         </a-col>
         <a-col :span="18">
-          文档内容
+          <div class="wangEditor" :innerHTML="html"></div>
         </a-col>
       </a-row>
     </a-layout-content>
@@ -41,6 +41,7 @@ export default defineComponent({
     const bookName = ref();
     const ebookId = ref();
     const docs = ref();
+    const html = ref();
 
     /**
      * 一级文档树，children属性就是二级文档
@@ -60,7 +61,7 @@ export default defineComponent({
      * 数据查询
      **/
     const handleQuery = () => {
-      axios.get("/doc/all/"+ebookId.value).then((response) => {
+      axios.get("/doc/all/" + ebookId.value).then((response) => {
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
           docs.value = data.content;
@@ -77,23 +78,29 @@ export default defineComponent({
     /**
      * 内容查询
      **/
-    const handleQueryContent = () => {
-      axios.get("/doc/findContent/" + ebookId.value).then((response) => {
+    const handleQueryContent = (id: string) => {
+      axios.get("/doc/findContent/" + id).then((response) => {
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
-          docs.value = data.content;
-
+          html.value = data.content;
         } else {
           message.error(data.content.respMsg);
         }
       });
     };
 
+    const onSelect = (selectedKeys: any, info: any) => {
+      if (Tool.isNotEmpty(selectedKeys)) {
+        //加装内容
+        handleQueryContent(selectedKeys[0]);
+      }
+    }
+
     /**
      * 返回上一级页面
      */
     const back = () => {
-      router.push({path: "/admin/ebook"});
+      router.push({path: "/"});
     };
 
     //----------表单-----------
@@ -110,12 +117,68 @@ export default defineComponent({
     return {
       level1,
       bookName,
+      html,
       back,
+      onSelect,
     }
   },
 });
 </script>
 
-<style scoped>
+<style>
+/* table 样式 */
+.wangEditor table {
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
 
+.wangEditor table td,
+.wangEditor table th {
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 3px 5px;
+}
+
+.wangEditor table th {
+  border-bottom: 2px solid #ccc;
+  text-align: center;
+}
+
+/* blockquote 样式 */
+.wangEditor blockquote {
+  display: block;
+  border-left: 8px solid #d0e5f2;
+  padding: 5px 10px;
+  margin: 10px 0;
+  line-height: 1.4;
+  font-size: 100%;
+  background-color: #f1f1f1;
+}
+
+/* 与ant vue的 p 冲突 覆盖掉 */
+.wangEditor blockquote p{
+  margin: 20px 10px;
+  font-family: "Microsoft Yahei";
+  font-weight: 600;
+}
+
+/* code 样式 */
+.wangEditor code {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  padding: 3px 5px;
+  margin: 0 3px;
+}
+
+.wangEditor pre code {
+  display: block;
+}
+
+/* ul ol 样式 */
+.wangEditor ul, ol {
+  margin: 10px 0 10px 20px;
+}
 </style>

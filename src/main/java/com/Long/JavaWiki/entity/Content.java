@@ -2,6 +2,7 @@ package com.Long.JavaWiki.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,5 +32,8 @@ public class Content implements Serializable {
     @ApiModelProperty(value = "内容")
     private String content;
 
+    @ApiModelProperty(value = "逻辑删除")
+    @TableLogic
+    private Integer deleted;
 
 }

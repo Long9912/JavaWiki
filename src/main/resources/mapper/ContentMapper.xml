@@ -6,11 +6,12 @@
     <resultMap id="BaseResultMap" type="com.Long.JavaWiki.entity.Content">
         <id column="id" property="id" />
         <result column="content" property="content" />
+        <result column="deleted" property="deleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, content
+        id, content, deleted
     </sql>
 
 </mapper>

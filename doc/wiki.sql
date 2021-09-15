@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 15/09/2021 20:46:14
+ Date: 15/09/2021 22:05:42
 */
 
 SET NAMES utf8mb4;
@@ -57,7 +57,7 @@ CREATE TABLE `content`  (
 -- Records of content
 -- ----------------------------
 INSERT INTO `content` VALUES (1, '<p>12312345</p>', 0);
-INSERT INTO `content` VALUES (2, '<p>12345678</p>', 0);
+INSERT INTO `content` VALUES (2, '<p>1234567</p>', 0);
 INSERT INTO `content` VALUES (1438000187241934850, '<blockquote><h1><font size=\"5\">这里是 Ant Design 的 Vue 实现，开发和服务于企业级后台产品。</font></h1></blockquote><p><br/></p><p><img src=\"https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg\" width=\"167.43\" height=\"167.43\"/>&nbsp; &nbsp;&nbsp;<font size=\"5\">+&nbsp; &nbsp;&nbsp;</font><img src=\"https://qn.antdv.com/vue.png\" width=\"158.43\" height=\"158.43\"/><br/></p><p>特性</p><ul><li>提炼自企业级中后台产品的交互语言和视觉风格。</li><li>开箱即用的高质量 Vue 组件。</li><li>共享<a href=\"http://ant-design.gitee.io/docs/spec/introduce-cn\" target=\"_blank\">Ant Design of React</a>设计工具体系。</li></ul>', 0);
 INSERT INTO `content` VALUES (1438000644823724034, '<p>众所周知，Ant Design 作为一门设计语言面世，经历过多年的迭代和积累，它对 UI 的设计思想已经成为一套事实标准，受到众多前端开发者及企业的追捧和喜爱，也是 React 开发者手中的神兵利器。希望 ant-design-vue 能够让 Vue 开发者也享受到 Ant Design 的优秀设计。</p><p>ant-design-vue 是 Ant Design 的 Vue 实现，组件的风格与 Ant Design 保持同步，组件的 html 结构和 css 样式也保持一致，真正做到了样式 0 修改，组件 API 也尽量保持了一致。</p><p>Ant Design Vue 致力于提供给程序员<strong>愉悦</strong>的开发体验。</p>', 0);
 
@@ -83,14 +83,14 @@ CREATE TABLE `doc`  (
 -- Records of doc
 -- ----------------------------
 INSERT INTO `doc` VALUES (1, 1, 0, '文档1', 1, 0, 0, 0, NULL, NULL);
-INSERT INTO `doc` VALUES (2, 1, 1, '文档1.1', 1, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (2, 1, 1, '文档1.1', 1, 0, 0, 0, NULL, '2021-09-15 21:01:21');
 INSERT INTO `doc` VALUES (3, 1, 0, '文档2', 2, 0, 0, 0, NULL, NULL);
 INSERT INTO `doc` VALUES (4, 1, 3, '文档2.1', 2, 0, 0, 0, NULL, NULL);
 INSERT INTO `doc` VALUES (5, 1, 1437317930831314945, '文档3.1', 2, 0, 0, 0, NULL, NULL);
 INSERT INTO `doc` VALUES (6, 1, 5, '文档3.1.1', 1, 0, 0, 0, NULL, NULL);
 INSERT INTO `doc` VALUES (1437317930831314945, 1, 0, '文档3', 3, 0, 0, 0, NULL, NULL);
 INSERT INTO `doc` VALUES (1438000187241934850, 2, 0, 'Ant Design of Vue', 1, 0, 0, 0, NULL, NULL);
-INSERT INTO `doc` VALUES (1438000644823724034, 2, 1438000187241934850, '关于ant-design-vue', 2, 0, 0, 0, NULL, NULL);
+INSERT INTO `doc` VALUES (1438000644823724034, 2, 1438000187241934850, '关于ant-design-vue', 3, 0, 0, 0, NULL, '2021-09-15 21:01:37');
 
 -- ----------------------------
 -- Table structure for ebook
@@ -139,12 +139,13 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'long1', 'Jone', '123', 0);
-INSERT INTO `user` VALUES (2, 'long2', 'Jack', '123', 0);
+INSERT INTO `user` VALUES (1, '测试', 'test', 'test', 0);
+INSERT INTO `user` VALUES (2, 'long123', 'Jack', 'abc12345', 0);
 INSERT INTO `user` VALUES (3, 'long3', 'Tom', '123', 0);
 INSERT INTO `user` VALUES (4, 'long4', 'Sandy', '123', 0);
 INSERT INTO `user` VALUES (5, 'long5', 'Long12', '123', 0);
 INSERT INTO `user` VALUES (1434857573659443201, 'long6', 'Long', '123', 0);
-INSERT INTO `user` VALUES (1434858980412280833, 'long7', 'Long', '123', 0);
+INSERT INTO `user` VALUES (1434858980412280833, 'long7', 'Long', '123', 1);
+INSERT INTO `user` VALUES (1438141057102610433, 'test2', '测试2', 'abc123', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

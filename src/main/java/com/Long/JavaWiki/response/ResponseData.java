@@ -20,7 +20,7 @@ public class ResponseData<T> {
      */
     public void parserEnum(EnumCode enumCode) {
         this.code = enumCode.getCode();// 获取枚举常量的状态码，赋值给属性
-        this.message = enumCode.getMessage();// 获取枚举常量的描述信息
+        this.message = enumCode.getDesc();// 获取枚举常量的描述信息
     }
 
     /**

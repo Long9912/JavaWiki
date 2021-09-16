@@ -18,5 +18,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
     PageResp<UserQueryResp> getList(UserQueryReq req);
 
-    boolean saveOrUpdate(UserSaveReq req);
+    void saveOrUpdate(UserSaveReq req);
+
+    User selectByLoginName(String loginName);
 }

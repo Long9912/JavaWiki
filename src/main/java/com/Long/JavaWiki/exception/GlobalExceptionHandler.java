@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     // 该注解用于指定异常处理方法执行后响应页面的HTTP状态码，HttpStatus是Spring内置的一个状态码枚举类，内定了详细的状态码及描述，当前获取的是500
     public ResponseData exceptionResponse(Exception ex, HttpServletRequest request) {
-        String message = null;
+        String message;
         if (ex instanceof NullPointerException) {      // 如果捕获的异常为空指针异常
             message = "服务器发生空指针异常，请稍后...";     // 用户看到的异常信息
         } else if (ex instanceof ArithmeticException) {
@@ -42,6 +42,7 @@ public class GlobalExceptionHandler {
         } else {
             message = "服务器发生异常，请稍后...";
         }
+        LOG.warn("发生异常:", ex);
         ExceptionResponse resultError = getResult(ex, request, message);
         return ResponseData.error(EnumCode.SYSTEM_ERROR, resultError);
     }
@@ -55,5 +56,17 @@ public class GlobalExceptionHandler {
         String message = (ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
         ExceptionResponse resultError = getResult(ex, request, message);
         return ResponseData.error(EnumCode.PARAMETER_ERROR, resultError);
+    }
+
+    /**
+     * 业务异常统一处理
+     */
+    @ExceptionHandler(value =BusinessException.class)
+    public ResponseData businessExceptionHandler(BusinessException ex, HttpServletRequest request) {
+        EnumCode code=ex.getCode();
+        LOG.warn("发生业务异常：{}", code.getDesc());
+        String message = (code.getDesc());
+        ExceptionResponse resultError = getResult(ex, request, message);
+        return ResponseData.error(code, resultError);
     }
 }

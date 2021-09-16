@@ -1,6 +1,8 @@
 package com.Long.JavaWiki.service.impl;
 
 import com.Long.JavaWiki.entity.User;
+import com.Long.JavaWiki.exception.BusinessException;
+import com.Long.JavaWiki.exception.EnumCode;
 import com.Long.JavaWiki.mapper.UserMapper;
 import com.Long.JavaWiki.request.UserQueryReq;
 import com.Long.JavaWiki.request.UserSaveReq;
@@ -11,6 +13,7 @@ import com.Long.JavaWiki.util.CopyUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +51,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public boolean saveOrUpdate(UserSaveReq req) {
-        User user=CopyUtil.copy(req,User.class);
-        return super.saveOrUpdate(user);
+    public void saveOrUpdate(UserSaveReq req) {
+        User user = CopyUtil.copy(req, User.class);
+        if (ObjectUtils.isEmpty(user.getId())) {
+            User userDB = selectByLoginName(user.getLoginName());
+            if (ObjectUtils.isEmpty(userDB)) {
+                userMapper.insert(user);
+            } else {
+                throw new BusinessException(EnumCode.USER_HAS_ERROR);
+            }
+        }
+        //用户名不可修改
+        user.setLoginName(null);
+        //更新
+        userMapper.updateById(user);
     }
+
+    @Override
+    public User selectByLoginName(String loginName) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("login_name", loginName);
+        return userMapper.selectOne(wrapper);
+    }
+
 }

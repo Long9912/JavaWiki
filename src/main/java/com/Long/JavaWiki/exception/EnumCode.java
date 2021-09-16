@@ -16,17 +16,17 @@ public enum EnumCode {
 
     // 定义的枚举常量属性。
     private int code;       // 状态码
-    private String message; // 描述
+    private String desc; // 描述
 
-    EnumCode(int code, String message) {
+    EnumCode(int code, String desc) {
         this.code = code;
-        this.message = message;
+        this.desc = desc;
     }
 
     public int getCode() {
         return code;
     }
-    public String getMessage() {
-        return message;
+    public String getDesc() {
+        return desc;
     }
 }

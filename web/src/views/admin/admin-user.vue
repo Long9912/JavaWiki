@@ -63,7 +63,7 @@
           <a-input v-model:value="user.id" disabled="true"/>
         </a-form-item>
         <a-form-item label="登录名">
-          <a-input v-model:value="user.loginName"/>
+          <a-input v-model:value="user.loginName" :disabled="!!user.id"/>
         </a-form-item>
         <a-form-item label="名称">
           <a-input v-model:value="user.name"/>

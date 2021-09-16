@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,8 @@ public class UserController {
     @ApiOperation("编辑或新增用户")
     @PostMapping("/save")
     public String save(@Validated @RequestBody UserSaveReq req) {
+        //将密码转为byte数组进行md5加密,然后转成16进制
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         userService.saveOrUpdate(req);
         return "保存成功";
     }

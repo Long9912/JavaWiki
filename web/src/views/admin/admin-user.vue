@@ -5,18 +5,18 @@
         <a-form layout="inline" :model="queryParam">
           <a-form-item>
             <a-input v-model:value="queryParam.loginName" placeholder="登录名">
-              <template #prefix><SearchOutlined /></template>
+              <template #prefix><SearchOutlined/></template>
             </a-input>
           </a-form-item>
           <a-form-item>
             <a-button @click="handleQuery({page: 1,size: pagination.pageSize})">
-              <template #icon><SearchOutlined /></template>
+              <template #icon><SearchOutlined/></template>
               查询
             </a-button>
           </a-form-item>
           <a-form-item>
             <a-button type="primary" @click="add">
-              <template #icon><PlusSquareOutlined /></template>
+              <template #icon><PlusSquareOutlined/></template>
               新增
             </a-button>
           </a-form-item>
@@ -33,7 +33,7 @@
           <template v-slot:action="{ text, record }">
             <a-space size="small">
               <a-button type="primary" @click="edit(record)">
-                <template #icon><EditOutlined /></template>
+                <template #icon><EditOutlined/></template>
                 编辑
               </a-button>
               <a-popconfirm
@@ -42,8 +42,8 @@
                   cancel-text="No"
                   @confirm="handleDelete(record.id)"
               >
-                <a-button type="danger" >
-                  <template #icon><DeleteOutlined /></template>
+                <a-button type="danger">
+                  <template #icon><DeleteOutlined/></template>
                   删除
                 </a-button>
               </a-popconfirm>
@@ -81,6 +81,9 @@ import {defineComponent, onMounted, ref} from 'vue';
 import axios from "axios";
 import {message} from 'ant-design-vue';
 import {Tool} from "@/util/tool";
+
+declare let hexMd5 :any;
+declare let KEY :any;
 
 export default defineComponent({
   name: 'AdminUser',
@@ -162,6 +165,8 @@ export default defineComponent({
 
     const handleModalOk = () => {
       modalLoading.value = true;
+      //传输到后端前先md5加密一次
+      user.value.password = hexMd5(user.value.password + KEY);
       axios.post("/user/save", user.value).then((response) => {
         modalLoading.value = false;
         const data = response.data;
@@ -195,8 +200,8 @@ export default defineComponent({
       user.value = Tool.copy(record);
     };
 
-    const handleDelete = (id:string) => {
-      axios.delete("/user/delete/"+id).then((response) => {
+    const handleDelete = (id: string) => {
+      axios.delete("/user/delete/" + id).then((response) => {
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
           //重新加载列表

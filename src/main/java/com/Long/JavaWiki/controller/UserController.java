@@ -2,6 +2,7 @@ package com.Long.JavaWiki.controller;
 
 
 import com.Long.JavaWiki.request.UserQueryReq;
+import com.Long.JavaWiki.request.UserResetReq;
 import com.Long.JavaWiki.request.UserSaveReq;
 import com.Long.JavaWiki.response.PageResp;
 import com.Long.JavaWiki.response.UserQueryResp;
@@ -45,6 +46,15 @@ public class UserController {
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         userService.saveOrUpdate(req);
         return "保存成功";
+    }
+
+    @ApiOperation("重置密码")
+    @PostMapping("/resetPassword")
+    public String resetPassword(@Validated @RequestBody UserResetReq req) {
+        //将密码转为byte数组进行md5加密,然后转成16进制
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+        userService.resetPassword(req);
+        return "重置成功";
     }
 
     @ApiOperation("通过id逻辑删除用户")

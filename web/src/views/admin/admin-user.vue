@@ -32,6 +32,10 @@
         >
           <template v-slot:action="{ text, record }">
             <a-space size="small">
+              <a-button type="primary" @click="reset(record)">
+                <template #icon><RedoOutlined /></template>
+                重置密码
+              </a-button>
               <a-button type="primary" @click="edit(record)">
                 <template #icon><EditOutlined/></template>
                 编辑
@@ -68,7 +72,19 @@
         <a-form-item label="名称">
           <a-input v-model:value="user.name"/>
         </a-form-item>
-        <a-form-item label="密码">
+        <a-form-item label="密码" v-show="!user.id">
+          <a-input v-model:value="user.password"/>
+        </a-form-item>
+      </a-form>
+    </a-modal>
+    <a-modal
+        title="重置密码"
+        v-model:visible="resetModalVisible"
+        :confirm-loading="resetModalLoading"
+        @ok="handleResetOk"
+    >
+      <a-form :model="user" :rules="rules" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+        <a-form-item label="新密码">
           <a-input v-model:value="user.password"/>
         </a-form-item>
       </a-form>
@@ -215,6 +231,52 @@ export default defineComponent({
       });
     };
 
+    //----------重置密码-----------
+    const resetModalVisible = ref<boolean>(false);
+    const resetModalLoading = ref<boolean>(false);
+
+    const handleResetOk = () => {
+      //参数校验
+      let value = user.value.password;
+      if (value === '') {
+        return message.error('请输入密码');
+      } else {
+        const regex = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}/;
+        if (!regex.test(value)) {
+          return message.error('密码 至少包含 数字和英文，长度6-20');
+        }
+      }
+
+      resetModalLoading.value = true;
+      //传输到后端前先md5加密一次
+      user.value.password = hexMd5(user.value.password + KEY);
+      axios.post("/user/resetPassword", user.value).then((response) => {
+        resetModalLoading.value = false;
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          resetModalVisible.value = false;
+          //重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize
+          });
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    };
+
+    /**
+     * 重置密码
+     */
+    const reset = (record:any) => {
+      //复制当前列的参数
+      user.value = Tool.copy(record);
+      //清空密码
+      user.value.password='';
+      resetModalVisible.value = true;
+    };
+
     onMounted(() => {
       handleQuery({
         page: 1,
@@ -237,6 +299,10 @@ export default defineComponent({
       modalVisible,
       modalLoading,
       handleModalOk,
+      reset,
+      resetModalVisible,
+      resetModalLoading,
+      handleResetOk,
       handleDelete
     }
   },

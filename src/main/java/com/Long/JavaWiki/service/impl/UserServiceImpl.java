@@ -5,6 +5,7 @@ import com.Long.JavaWiki.exception.BusinessException;
 import com.Long.JavaWiki.exception.EnumCode;
 import com.Long.JavaWiki.mapper.UserMapper;
 import com.Long.JavaWiki.request.UserQueryReq;
+import com.Long.JavaWiki.request.UserResetReq;
 import com.Long.JavaWiki.request.UserSaveReq;
 import com.Long.JavaWiki.response.PageResp;
 import com.Long.JavaWiki.response.UserQueryResp;
@@ -63,6 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         //用户名不可修改
         user.setLoginName(null);
+        user.setPassword(null);
         //更新
         userMapper.updateById(user);
     }
@@ -72,6 +74,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("login_name", loginName);
         return userMapper.selectOne(wrapper);
+    }
+
+    @Override
+    public void resetPassword(UserResetReq req) {
+        User user = CopyUtil.copy(req, User.class);
+        userMapper.updateById(user);
     }
 
 }

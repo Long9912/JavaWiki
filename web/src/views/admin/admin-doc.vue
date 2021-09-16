@@ -64,13 +64,13 @@
         <a-col :span="16">
           <a-form layout="inline" style="margin-top:10px;margin-left: 10px">
             <a-form-item>
-              <a-button v-if="addStatus" type="primary" @click="handleAdd()">
+              <a-button v-show="addStatus" type="primary" @click="handleAdd()">
                 <template #icon><FileAddOutlined /></template>
                 新增文档
               </a-button>
             </a-form-item>
             <a-form-item>
-              <a-button v-if="!addStatus" type="primary" @click="handleSave()">
+              <a-button v-show="!addStatus" type="primary" @click="handleSave()">
                 <template #icon><SaveOutlined/></template>
                 更新
               </a-button>
@@ -120,7 +120,7 @@
 import {createVNode, defineComponent, onMounted, ref} from 'vue';
 import axios from "axios";
 import {message, Modal} from 'ant-design-vue';
-import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import {ExclamationCircleOutlined} from '@ant-design/icons-vue';
 import {Tool} from "@/util/tool";
 import {useRoute} from "vue-router";
 import router from "@/router";

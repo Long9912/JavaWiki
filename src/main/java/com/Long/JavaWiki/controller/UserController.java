@@ -1,10 +1,12 @@
 package com.Long.JavaWiki.controller;
 
 
+import com.Long.JavaWiki.request.UserLoginReq;
 import com.Long.JavaWiki.request.UserQueryReq;
 import com.Long.JavaWiki.request.UserResetReq;
 import com.Long.JavaWiki.request.UserSaveReq;
 import com.Long.JavaWiki.response.PageResp;
+import com.Long.JavaWiki.response.UserLoginResp;
 import com.Long.JavaWiki.response.UserQueryResp;
 import com.Long.JavaWiki.service.UserService;
 import io.swagger.annotations.Api;
@@ -63,6 +65,14 @@ public class UserController {
     public String delete(@PathVariable Long id) {
         userService.removeById(id);
         return "删除成功";
+    }
+
+    @ApiOperation("登录")
+    @PostMapping("/login")
+    public UserLoginResp login(@Validated @RequestBody UserLoginReq req) {
+        //将密码转为byte数组进行md5加密,然后转成16进制
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+        return userService.login(req);
     }
 }
 

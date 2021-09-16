@@ -83,7 +83,7 @@
         :confirm-loading="resetModalLoading"
         @ok="handleResetOk"
     >
-      <a-form :model="user" :rules="rules" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+      <a-form :model="user" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
         <a-form-item label="新密码">
           <a-input v-model:value="user.password"/>
         </a-form-item>

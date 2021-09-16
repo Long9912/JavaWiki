@@ -32,10 +32,10 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request, ServerHttpResponse response) {
         //responseObject是否为null
         if (null == responseObject) {
-            return ResponseData.error(EnumCode.DATA_EMPTY_ERROR,null);
+            return ResponseData.error(EnumCode.DATA_EMPTY,null);
         }
         if (returnType.getMethod().getReturnType().isAssignableFrom(Void.TYPE)) {
-            return ResponseData.error(EnumCode.DATA_EMPTY_ERROR,null);
+            return ResponseData.error(EnumCode.DATA_EMPTY,null);
         }
         //responseObject是否是文件
         if (responseObject instanceof Resource) {

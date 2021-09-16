@@ -4,16 +4,19 @@ import com.Long.JavaWiki.entity.User;
 import com.Long.JavaWiki.exception.BusinessException;
 import com.Long.JavaWiki.exception.EnumCode;
 import com.Long.JavaWiki.mapper.UserMapper;
+import com.Long.JavaWiki.request.UserLoginReq;
 import com.Long.JavaWiki.request.UserQueryReq;
 import com.Long.JavaWiki.request.UserResetReq;
 import com.Long.JavaWiki.request.UserSaveReq;
 import com.Long.JavaWiki.response.PageResp;
+import com.Long.JavaWiki.response.UserLoginResp;
 import com.Long.JavaWiki.response.UserQueryResp;
 import com.Long.JavaWiki.service.UserService;
 import com.Long.JavaWiki.util.CopyUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,7 @@ import java.util.List;
  * @author Long9912
  * @since 2021-09-15
  */
+@Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
@@ -54,12 +58,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void saveOrUpdate(UserSaveReq req) {
         User user = CopyUtil.copy(req, User.class);
+        //新增
         if (ObjectUtils.isEmpty(user.getId())) {
+            //查找用户名是否重复
             User userDB = selectByLoginName(user.getLoginName());
             if (ObjectUtils.isEmpty(userDB)) {
                 userMapper.insert(user);
             } else {
-                throw new BusinessException(EnumCode.USER_HAS_ERROR);
+                throw new BusinessException(EnumCode.USER_EXIST);
             }
         }
         //用户名不可修改
@@ -80,6 +86,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void resetPassword(UserResetReq req) {
         User user = CopyUtil.copy(req, User.class);
         userMapper.updateById(user);
+    }
+
+    @Override
+    public UserLoginResp login(UserLoginReq req) {
+        User userDB = selectByLoginName(req.getLoginName());
+        if (ObjectUtils.isEmpty(userDB)){
+            log.info("用户名不存在:{}",req.getLoginName());
+            throw new BusinessException(EnumCode.LOGIN_ERROR);
+        }else {
+            if (userDB.getPassword().equals(req.getPassword())){
+                return CopyUtil.copy(userDB, UserLoginResp.class);
+            }else {
+                log.info("密码不对:{}",req.getPassword());
+                throw new BusinessException(EnumCode.LOGIN_ERROR);
+            }
+        }
     }
 
 }

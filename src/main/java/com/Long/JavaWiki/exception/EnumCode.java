@@ -8,9 +8,9 @@ public enum EnumCode {
 
     PARAMETER_ERROR(5002,"参数异常，认证失败"),
 
-    DATA_EMPTY_ERROR(5003,"响应数据为空"),
+    DATA_EMPTY(5003,"响应数据为空"),
 
-    USER_HAS_ERROR(5004,"用户名已存在"),
+    USER_EXIST(5004,"用户名已存在"),
 
     LOGIN_ERROR(5005,"用户名或密码错误");// 注意上面的是逗号分隔，这里结束是分号
 

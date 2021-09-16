@@ -1,10 +1,12 @@
 package com.Long.JavaWiki.service;
 
 import com.Long.JavaWiki.entity.User;
+import com.Long.JavaWiki.request.UserLoginReq;
 import com.Long.JavaWiki.request.UserQueryReq;
 import com.Long.JavaWiki.request.UserResetReq;
 import com.Long.JavaWiki.request.UserSaveReq;
 import com.Long.JavaWiki.response.PageResp;
+import com.Long.JavaWiki.response.UserLoginResp;
 import com.Long.JavaWiki.response.UserQueryResp;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -24,4 +26,6 @@ public interface UserService extends IService<User> {
     User selectByLoginName(String loginName);
 
     void resetPassword(UserResetReq req);
+
+    UserLoginResp login(UserLoginReq req);
 }

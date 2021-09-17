@@ -50,8 +50,8 @@
               </a-button>
               <a-popconfirm
                   title="确认删除电子书?"
-                  ok-text="Yes"
-                  cancel-text="No"
+                  ok-text="是"
+                  cancel-text="否"
                   @confirm="handleDelete(record.id)"
               >
                 <a-button type="danger" >

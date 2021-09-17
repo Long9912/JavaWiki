@@ -89,7 +89,7 @@ public class UserController {
         UserLoginResp userLoginResp = userService.login(req);
 
         Long token = snowFlake.nextId();
-        log.info("生成单点登录token:{}",token);
+        log.info("生成单点登录token:{},存入Redis",token);
         userLoginResp.setToken(token.toString());
 
         //登录信息保存到redis,token作为key,登录信息作为value
@@ -98,5 +98,15 @@ public class UserController {
 
         return userLoginResp;
     }
+
+    @ApiOperation("退出登录")
+    @ApiImplicitParam(name = "token", value = "传入一个token", required = true, dataType = "String", paramType = "path")
+    @DeleteMapping("/logout/{token}")
+    public String logout(@PathVariable String token) {
+        stringRedisTemplate.delete(token);
+        log.info("从Redis中删除token:{}",token);
+        return "退出成功";
+    }
+
 }
 

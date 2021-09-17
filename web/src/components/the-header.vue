@@ -1,6 +1,16 @@
 <template>
   <a-layout-header class="header">
     <div class="logo">Java知识库</div>
+    <a-popconfirm
+        title="确认退出?"
+        ok-text="是"
+        cancel-text="否"
+        @confirm="logout"
+    >
+      <a class="login-menu" v-show="user.id">
+        <span>退出登录</span>
+      </a>
+    </a-popconfirm>
     <a class="login-menu" v-show="user.id">
       <span>欢迎: {{ user.name }}</span>
     </a>
@@ -49,7 +59,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, ref} from "vue";
-import axios from "_axios@0.21.4@axios";
+import axios from "axios";
 import {message} from "ant-design-vue";
 import store from "@/store";
 
@@ -82,7 +92,7 @@ export default defineComponent({
           loginModalVisible.value = false;
           message.success("登录成功");
           //用户信息存入vuex
-          store.commit("setUser",user.value);
+          store.commit("setUser",data.content);
 
           loginUser.value.password = '';
         } else {
@@ -91,6 +101,20 @@ export default defineComponent({
         }
       });
     }
+
+    const logout = () => {
+      axios.delete("/user/logout/" + user.value.token).then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          message.success("退出登录成功");
+          //vuex清空用户信息
+          store.commit("setUser",{});
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    }
+
     return{
       loginModalVisible,
       loginModalLoading,
@@ -98,6 +122,7 @@ export default defineComponent({
       loginUser,
       user,
       login,
+      logout,
     }
   }
 })

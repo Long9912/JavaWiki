@@ -1,7 +1,10 @@
 <template>
   <a-layout-header class="header">
     <div class="logo">Java知识库</div>
-    <a class="login-menu" @click="showLoginModal">
+    <a class="login-menu" v-show="user.id">
+      <span>欢迎: {{ user.name }}</span>
+    </a>
+    <a class="login-menu" v-show="!user.id" @click="showLoginModal">
       <span>登录</span>
     </a>
     <a-menu
@@ -48,6 +51,7 @@
 import {defineComponent, ref} from "vue";
 import axios from "_axios@0.21.4@axios";
 import {message} from "ant-design-vue";
+import store from "@/store";
 
 declare let hexMd5 :any;
 declare let KEY :any;
@@ -55,6 +59,10 @@ declare let KEY :any;
 export default defineComponent({
   name: "the-header",
   setup() {
+    //登录后信息
+    const user = ref();
+    user.value = {};
+    //登录
     const loginUser = ref({
       loginName: 'test',
       password: 'test123'
@@ -74,6 +82,11 @@ export default defineComponent({
         if (data.code == process.env.VUE_APP_SUCCESS) {
           loginModalVisible.value = false;
           message.success("登录成功");
+
+          user.value = data.content;
+          //用户信息存入vuex
+          store.commit("setUser",user.value);
+
           loginUser.value.password = '';
         } else {
           loginUser.value.password = '';
@@ -86,6 +99,7 @@ export default defineComponent({
       loginModalLoading,
       showLoginModal,
       loginUser,
+      user,
       login,
     }
   }

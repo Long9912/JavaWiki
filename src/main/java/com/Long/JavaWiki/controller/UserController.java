@@ -9,13 +9,20 @@ import com.Long.JavaWiki.response.PageResp;
 import com.Long.JavaWiki.response.UserLoginResp;
 import com.Long.JavaWiki.response.UserQueryResp;
 import com.Long.JavaWiki.service.UserService;
+import com.Long.JavaWiki.util.SnowFlake;
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -26,12 +33,19 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-09-15
  */
 @Api("用户控制类")
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private SnowFlake snowFlake;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @ApiOperation("分页查询用户")
     @ApiImplicitParam(name = "req", value = "传入分页参数,如果有传入登录名则模糊查询用户", required = true, dataType = "UserQueryReq", paramType = "query")
@@ -72,7 +86,17 @@ public class UserController {
     public UserLoginResp login(@Validated @RequestBody UserLoginReq req) {
         //将密码转为byte数组进行md5加密,然后转成16进制
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
-        return userService.login(req);
+        UserLoginResp userLoginResp = userService.login(req);
+
+        Long token = snowFlake.nextId();
+        log.info("生成单点登录token:{}",token);
+        userLoginResp.setToken(token.toString());
+
+        //登录信息保存到redis,token作为key,登录信息作为value
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        operations.set(token.toString(), JSONObject.toJSONString(userLoginResp),1, TimeUnit.DAYS);
+
+        return userLoginResp;
     }
 }
 

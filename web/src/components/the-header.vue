@@ -46,13 +46,18 @@
 
 <script lang="ts">
 import {defineComponent, ref} from "vue";
+import axios from "_axios@0.21.4@axios";
+import {message} from "ant-design-vue";
+
+declare let hexMd5 :any;
+declare let KEY :any;
 
 export default defineComponent({
   name: "the-header",
   setup() {
     const loginUser = ref({
       loginName: 'test',
-      password: 'test'
+      password: 'test123'
     });
     const loginModalVisible = ref(false);
     const loginModalLoading = ref(false);
@@ -60,7 +65,21 @@ export default defineComponent({
       loginModalVisible.value = true
     }
     const login = () => {
-      console.log("开始登录")
+      loginModalLoading.value = true;
+      //传输到后端前先md5加密一次
+      loginUser.value.password = hexMd5(loginUser.value.password + KEY);
+      axios.post("/user/login", loginUser.value).then((response) => {
+        loginModalLoading.value = false;
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          loginModalVisible.value = false;
+          message.success("登录成功");
+          loginUser.value.password = '';
+        } else {
+          loginUser.value.password = '';
+          message.error(data.content.respMsg);
+        }
+      });
     }
     return{
       loginModalVisible,

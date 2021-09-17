@@ -7,6 +7,7 @@ import com.Long.JavaWiki.response.DocQueryResp;
 import com.Long.JavaWiki.response.PageResp;
 import com.Long.JavaWiki.service.ContentService;
 import com.Long.JavaWiki.service.DocService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import java.util.Optional;
  * @author Long9912
  * @since 2021-09-13
  */
+@Api("文档控制类")
 @RestController
 @RequestMapping("/doc")
 public class DocController {

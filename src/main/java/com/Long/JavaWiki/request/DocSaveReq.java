@@ -2,6 +2,7 @@ package com.Long.JavaWiki.request;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
@@ -16,13 +17,13 @@ public class DocSaveReq {
     @NotNull(message = "[父文档]不能为空")
     private Long parent;
 
-    @NotNull(message = "[名称]不能为空")
+    @NotEmpty(message = "[名称]不能为空")
     private String name;
 
-    @NotNull(message = "[排序]不能为空")
+    @NotEmpty(message = "[排序]不能为空")
     private Integer sort;
 
-    @NotNull(message = "[内容]不能为空")
+    @NotEmpty(message = "[内容]不能为空")
     private String content;
 
     private Integer viewCount;

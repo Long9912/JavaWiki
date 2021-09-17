@@ -6,6 +6,7 @@ import com.Long.JavaWiki.request.CategorySaveReq;
 import com.Long.JavaWiki.response.CategoryQueryResp;
 import com.Long.JavaWiki.response.PageResp;
 import com.Long.JavaWiki.service.CategoryService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import java.util.List;
  * @author Long9912
  * @since 2021-09-12
  */
+@Api("分类控制类")
 @RestController
 @RequestMapping("/category")
 public class CategoryController {

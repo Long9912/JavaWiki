@@ -25,18 +25,19 @@
       <a-menu-item key="home">
         <router-link to="/">首页</router-link>
       </a-menu-item>
-      <a-menu-item key="admin-user">
-        <router-link to="/admin/user">用户管理</router-link>
-      </a-menu-item>
-      <a-menu-item key="admin-ebook">
-        <router-link to="/admin/ebook">电子书管理</router-link>
-      </a-menu-item>
-      <a-menu-item key="admin-category">
-        <router-link to="/admin/category">分类管理</router-link>
-      </a-menu-item>
-      <a-menu-item key="about">
+      <a-menu-item key="about" :style="!user.id? {} : {display:'none'}">
         <router-link to="/about">关于我们</router-link>
       </a-menu-item>
+      <a-menu-item key="admin-user" :style="user.id? {} : {display:'none'}">
+        <router-link to="/admin/user">用户管理</router-link>
+      </a-menu-item>
+      <a-menu-item key="admin-ebook" :style="user.id? {} : {display:'none'}">
+        <router-link to="/admin/ebook">电子书管理</router-link>
+      </a-menu-item>
+      <a-menu-item key="admin-category" :style="user.id? {} : {display:'none'}">
+        <router-link to="/admin/category">分类管理</router-link>
+      </a-menu-item>
+
     </a-menu>
   </a-layout-header>
 

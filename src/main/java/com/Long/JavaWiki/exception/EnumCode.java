@@ -12,7 +12,9 @@ public enum EnumCode {
 
     USER_EXIST(5004,"用户名已存在"),
 
-    LOGIN_ERROR(5005,"用户名或密码错误");// 注意上面的是逗号分隔，这里结束是分号
+    LOGIN_ERROR(5005,"用户名或密码错误"),
+
+    VOTE_REPEAT(5006,"您已点赞过");// 注意上面的是逗号分隔，这里结束是分号
 
     // 定义的枚举常量属性。
     private int code;       // 状态码

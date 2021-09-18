@@ -2,6 +2,8 @@ package com.Long.JavaWiki.service.impl;
 
 import com.Long.JavaWiki.entity.Content;
 import com.Long.JavaWiki.entity.Doc;
+import com.Long.JavaWiki.exception.BusinessException;
+import com.Long.JavaWiki.exception.EnumCode;
 import com.Long.JavaWiki.mapper.ContentMapper;
 import com.Long.JavaWiki.mapper.DocMapper;
 import com.Long.JavaWiki.request.DocQueryReq;
@@ -10,6 +12,8 @@ import com.Long.JavaWiki.response.DocQueryResp;
 import com.Long.JavaWiki.response.PageResp;
 import com.Long.JavaWiki.service.DocService;
 import com.Long.JavaWiki.util.CopyUtil;
+import com.Long.JavaWiki.util.RedisUtil;
+import com.Long.JavaWiki.util.RequestContext;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -29,10 +33,13 @@ import java.util.List;
 @Service
 public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocService {
     @Autowired
-    DocMapper docMapper;
+    private DocMapper docMapper;
 
     @Autowired
-    ContentMapper contentMapper;
+    private ContentMapper contentMapper;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public List<DocQueryResp> all(String ebookId) {
@@ -90,8 +97,13 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
     @Override
-    public boolean vote(String id) {
-        docMapper.increaseVoteCount(Long.valueOf(id));
-        return true;
+    public void vote(String id) {
+        //远程ip+文档Id作为key,24小时不能重复
+        String key= RequestContext.getRemoteAddr();
+        if (redisUtil.validateRepeat("DOC_VOTE_"+id+"_"+key,24)){
+            docMapper.increaseVoteCount(Long.valueOf(id));
+        }else {
+            throw new BusinessException(EnumCode.VOTE_REPEAT);
+        }
     }
 }

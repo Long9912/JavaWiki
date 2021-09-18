@@ -27,5 +27,5 @@ public interface DocService extends IService<Doc> {
 
     Content findContent(String id);
 
-    boolean vote(String id);
+    void vote(String id);
 }

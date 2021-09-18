@@ -180,6 +180,17 @@ export default defineComponent({
     const modalLoading = ref<boolean>(false);
 
     const handleModalOk = () => {
+      //参数校验
+      let value = user.value.password;
+      if (value === '') {
+        return message.error('请输入密码');
+      } else {
+        const regex = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}/;
+        if (!regex.test(value)) {
+          return message.error('密码 至少包含 数字和英文，长度6-20');
+        }
+      }
+
       modalLoading.value = true;
       //传输到后端前先md5加密一次
       user.value.password = hexMd5(user.value.password + KEY);
@@ -194,6 +205,7 @@ export default defineComponent({
             size: pagination.value.pageSize
           });
         } else {
+          user.value.password = null;
           message.error(data.content.respMsg);
         }
       });

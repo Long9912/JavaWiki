@@ -27,12 +27,17 @@
               <span>更新时间：{{doc.updateTime}}</span> &nbsp; &nbsp;
             </div>
             <div>
-              <span>阅读数：{{doc.viewCount}}</span> &nbsp; &nbsp;
+              <span>阅读数：{{doc.viewCount}}</span> &nbsp; &nbsp;&nbsp;
               <span>点赞数：{{doc.voteCount}}</span> &nbsp; &nbsp;
             </div>
             <a-divider style="height: 2px; background-color: #9999cc"/>
           </div>
           <div class="wangEditor" :innerHTML="html"></div>
+          <div class="vote">
+            <a-button size="large" type="primary" shape="round" @click="vote">
+                <template #icon><LikeOutlined/>&nbsp;点赞:{{doc.voteCount}}</template>
+            </a-button>
+          </div>
         </a-col>
       </a-row>
     </a-layout-content>
@@ -136,6 +141,20 @@ export default defineComponent({
     const treeSelectData = ref();
     treeSelectData.value = [];
 
+    /**
+     * 点赞
+     **/
+    const vote = () => {
+      axios.get("/doc/vote/" + doc.value.id).then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          doc.value.voteCount++;
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    };
+
     onMounted(() => {
       bookName.value = route.query.name;
       ebookId.value = route.query.ebookId
@@ -150,6 +169,7 @@ export default defineComponent({
       doc,
       back,
       onSelect,
+      vote,
     }
   },
 });
@@ -210,5 +230,10 @@ export default defineComponent({
 /* ul ol 样式 */
 .wangEditor ul, ol {
   margin: 10px 0 10px 20px;
+}
+
+.vote {
+  padding: 15px;
+  text-align: center;
 }
 </style>

@@ -80,5 +80,12 @@ public class DocController {
                 .map(content -> content.getContent());
         return text.orElse("文档内容为空");
     }
+    @ApiOperation("通过id对文档点赞")
+    @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
+    @GetMapping("/vote/{id}")
+    public String vote(@PathVariable String id) {
+        docService.vote(id);
+        return "点赞成功";
+    }
 }
 

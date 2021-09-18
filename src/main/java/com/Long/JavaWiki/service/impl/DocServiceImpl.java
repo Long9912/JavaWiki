@@ -88,4 +88,10 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         docMapper.increaseViewCount(Long.valueOf(id));
         return contentMapper.selectById(id);
     }
+
+    @Override
+    public boolean vote(String id) {
+        docMapper.increaseVoteCount(Long.valueOf(id));
+        return true;
+    }
 }

@@ -26,4 +26,6 @@ public interface DocService extends IService<Doc> {
     boolean saveOrUpdate(DocSaveReq req);
 
     Content findContent(String id);
+
+    boolean vote(String id);
 }

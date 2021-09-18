@@ -21,4 +21,8 @@
         id, ebook_id, parent, name, sort, view_count, vote_count, deleted, create_time, update_time
     </sql>
 
+    <update id="increaseViewCount">
+        update doc set view_count = view_count+1 where id = #{id}
+    </update>
+
 </mapper>

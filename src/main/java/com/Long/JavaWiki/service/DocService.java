@@ -1,5 +1,6 @@
 package com.Long.JavaWiki.service;
 
+import com.Long.JavaWiki.entity.Content;
 import com.Long.JavaWiki.entity.Doc;
 import com.Long.JavaWiki.request.DocQueryReq;
 import com.Long.JavaWiki.request.DocSaveReq;
@@ -23,4 +24,6 @@ public interface DocService extends IService<Doc> {
     PageResp<DocQueryResp> list(DocQueryReq req);
 
     boolean saveOrUpdate(DocSaveReq req);
+
+    Content findContent(String id);
 }

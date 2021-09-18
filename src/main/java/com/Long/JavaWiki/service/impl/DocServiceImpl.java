@@ -81,4 +81,11 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         }
         return true;
     }
+
+    @Override
+    public Content findContent(String id) {
+        //文档阅读数加1
+        docMapper.increaseViewCount(Long.valueOf(id));
+        return contentMapper.selectById(id);
+    }
 }

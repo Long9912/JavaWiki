@@ -20,7 +20,7 @@ public class DocSaveReq {
     @NotEmpty(message = "[名称]不能为空")
     private String name;
 
-    @NotEmpty(message = "[排序]不能为空")
+    @NotNull(message = "[排序]不能为空")
     private Integer sort;
 
     @NotEmpty(message = "[内容]不能为空")

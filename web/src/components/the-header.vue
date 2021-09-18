@@ -25,7 +25,7 @@
       <a-menu-item key="home">
         <router-link to="/">首页</router-link>
       </a-menu-item>
-      <a-menu-item key="about" :style="!user.id? {} : {display:'none'}">
+      <a-menu-item key="about">
         <router-link to="/about">关于我们</router-link>
       </a-menu-item>
       <a-menu-item key="admin-user" :style="user.id? {} : {display:'none'}">
@@ -37,7 +37,6 @@
       <a-menu-item key="admin-category" :style="user.id? {} : {display:'none'}">
         <router-link to="/admin/category">分类管理</router-link>
       </a-menu-item>
-
     </a-menu>
   </a-layout-header>
 

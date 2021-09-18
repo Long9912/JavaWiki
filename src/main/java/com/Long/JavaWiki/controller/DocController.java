@@ -76,7 +76,7 @@ public class DocController {
     public String findContent(@PathVariable String id) {
         //获取文档文本,使用Optional包装处理 null,
         Optional<String> text=Optional
-                .ofNullable(contentService.getById(id))
+                .ofNullable(docService.findContent(id))
                 .map(content -> content.getContent());
         return text.orElse("文档内容为空");
     }

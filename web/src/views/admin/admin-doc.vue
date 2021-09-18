@@ -137,7 +137,7 @@ export default defineComponent({
     queryParam.value = {};
     const docs = ref();
     const loading = ref(false);
-    const addStatus =ref(false);
+    const addStatus =ref(true);
     // 因为树选择组件的属性状态，会随当前编辑的节点而变化，所以单独声明一个响应式变量
     const treeSelectData = ref();
     treeSelectData.value=[];
@@ -190,8 +190,6 @@ export default defineComponent({
           treeSelectData.value.unshift({id: 0, name: '无'});
         } else {
           message.error(data.message);
-          //设置为新增按钮
-          addStatus.value = true;
           // 为选择树添加一个"无"
           treeSelectData.value.unshift({id: 0, name: '无'});
         }

@@ -7,6 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+//开启定时任务
+@EnableScheduling
 @ComponentScan("com.Long")
 @SpringBootApplication
 public class JavaWikiApplication {

@@ -45,7 +45,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     public List<DocQueryResp> all(String ebookId) {
         QueryWrapper<Doc> wrapper = new QueryWrapper<>();
         //根据电子书id查询
-        wrapper.eq("ebook_id",ebookId);
+        wrapper.eq("ebook_id", ebookId);
         //根据sort排序
         wrapper.orderByAsc("sort");
         List<Doc> docList = docMapper.selectList(wrapper);
@@ -74,8 +74,8 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
 
     @Override
     public boolean saveOrUpdate(DocSaveReq req) {
-        Doc doc=CopyUtil.copy(req,Doc.class);
-        Content content=CopyUtil.copy(req,Content.class);
+        Doc doc = CopyUtil.copy(req, Doc.class);
+        Content content = CopyUtil.copy(req, Content.class);
         //保存文档和文档内容
         super.saveOrUpdate(doc);
         //获取到文档的雪花id,再保存到单独文档内容表
@@ -83,7 +83,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         //尝试更新
         int count = contentMapper.updateById(content);
         //文档内容表没有此数据时插入新数据
-        if (count == 0){
+        if (count == 0) {
             contentMapper.insert(content);
         }
         return true;
@@ -99,11 +99,19 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     @Override
     public void vote(String id) {
         //远程ip+文档Id作为key,24小时不能重复
-        String key= RequestContext.getRemoteAddr();
-        if (redisUtil.validateRepeat("DOC_VOTE_"+id+"_"+key,24)){
+        String key = RequestContext.getRemoteAddr();
+        if (redisUtil.validateRepeat("DOC_VOTE_" + id + "_" + key, 24)) {
             docMapper.increaseVoteCount(Long.valueOf(id));
-        }else {
+        } else {
             throw new BusinessException(EnumCode.VOTE_REPEAT);
         }
+    }
+
+    /**
+     * 按电子书分组统计文档数据,并更新到对应的电子书中
+     */
+    @Override
+    public void updateEbookInfo() {
+        docMapper.updateEbookInfo();
     }
 }

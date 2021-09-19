@@ -4,16 +4,16 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.Long.JavaWiki.entity.Doc">
-        <id column="id" property="id" />
-        <result column="ebook_id" property="ebookId" />
-        <result column="parent" property="parent" />
-        <result column="name" property="name" />
-        <result column="sort" property="sort" />
-        <result column="view_count" property="viewCount" />
-        <result column="vote_count" property="voteCount" />
-        <result column="deleted" property="deleted" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="id" property="id"/>
+        <result column="ebook_id" property="ebookId"/>
+        <result column="parent" property="parent"/>
+        <result column="name" property="name"/>
+        <result column="sort" property="sort"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="vote_count" property="voteCount"/>
+        <result column="deleted" property="deleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -22,11 +22,28 @@
     </sql>
 
     <update id="increaseViewCount">
-        update doc set view_count = view_count + 1 where id = #{id}
+        update doc
+        set view_count = view_count + 1
+        where id = #{id}
     </update>
 
     <update id="increaseVoteCount">
-        update doc set vote_count = doc.vote_count + 1 where id = #{id}
+        update doc
+        set vote_count = doc.vote_count + 1
+        where id = #{id}
+    </update>
+
+    <update id="updateEbookInfo">
+        update ebook t1,(select ebook_id,
+                                count(1)        doc_count,
+                                sum(view_count) view_count,
+                                sum(vote_count) vote_count
+                         from doc
+                         group by ebook_id) t2
+        set t1.doc_count=t2.doc_count,
+            t1.view_count=t2.view_count,
+            t1.vote_count=t2.vote_count
+        where t1.id = t2.ebook_id
     </update>
 
 </mapper>

@@ -28,4 +28,6 @@ public interface DocService extends IService<Doc> {
     Content findContent(String id);
 
     void vote(String id);
+
+    void updateEbookInfo();
 }

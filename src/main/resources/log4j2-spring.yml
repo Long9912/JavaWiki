@@ -19,30 +19,16 @@ Configuration:
       PatternLayout:
         #让highlight生效
         disableAnsi: false
-        Pattern: "%d %highlight{%-5level}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White} %style{[%t]}{bright,magenta} %style{%c{1.}.%M(%L)}{cyan}: %msg%n"
-    #处理DEBUG级别的日志，并把该日志放到logs/debug.log文件中
+        Pattern: "%d{HH:mm:ss} %highlight{%-5level}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}
+        %style{[%t]}{bright,magenta} %style{%c{1.}.%M(%L)}{cyan}: %style{%X{LOG_ID}}{green} %msg%n"
     RollingFile:
-      #打印出DEBUG级别日志，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档
-      - name: RollingFileDebug
-        fileName: ./logs/debug.log
-        filePattern: "logs/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log.gz"
-        PatternLayout:
-          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
-        Filters:
-          ThresholdFilter:
-            - level: DEBUG
-            - level: INFO
-              onMatch: DENY
-              onMismatch: NEUTRAL
-        Policies:
-          SizeBasedTriggeringPolicy:
-            size: 512MB
+      #打印日志，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档
       #处理INFO级别的日志，并把该日志放到logs/info.log文件中
       - name: RollingFileInfo
         fileName: ./logs/info.log
         filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
         PatternLayout:
-          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M [%X{LOG_ID}] %msg%xEx%n"
         Filters:
           #只接受INFO级别的日志，其余的全部拒绝处理
           ThresholdFilter:
@@ -58,7 +44,7 @@ Configuration:
         fileName: ./logs/warn.log
         filePattern: "logs/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz"
         PatternLayout:
-          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M [%X{LOG_ID}] %msg%xEx%n"
         Filters:
           ThresholdFilter:
             - level: WARN
@@ -73,7 +59,7 @@ Configuration:
         fileName: ./logs/error.log
         filePattern: "logs/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz"
         PatternLayout:
-          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M [%X{LOG_ID}] %msg%xEx%n"
         ThresholdFilter:
           level: ERROR
         Policies:
@@ -84,7 +70,7 @@ Configuration:
         fileName: ./logs/druid-sql.log
         filePattern: "logs/$${date:yyyy-MM}/api-%d{yyyy-MM-dd}-%i.log.gz"
         PatternLayout:
-          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %L %M - %msg%xEx%n"
+          Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %L %M [%X{LOG_ID}] %msg%xEx%n"
         Policies:
           SizeBasedTriggeringPolicy:
             size: 512MB

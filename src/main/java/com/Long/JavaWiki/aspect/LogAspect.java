@@ -1,6 +1,7 @@
 package com.Long.JavaWiki.aspect;
 
 import com.Long.JavaWiki.util.RequestContext;
+import com.Long.JavaWiki.util.SnowFlake;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import org.aspectj.lang.JoinPoint;
@@ -12,6 +13,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,6 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Component
 public class LogAspect {
+
+    @Autowired
+    private SnowFlake snowFlake;
 
     private final static Logger LOG = LoggerFactory.getLogger(LogAspect.class);
 
@@ -39,6 +45,8 @@ public class LogAspect {
      */
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
+        //加入日志流水号
+        MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
 
         // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

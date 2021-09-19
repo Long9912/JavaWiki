@@ -14,7 +14,11 @@ public enum EnumCode {
 
     LOGIN_ERROR(5005,"用户名或密码错误"),
 
-    VOTE_REPEAT(5006,"您已点赞过");// 注意上面的是逗号分隔，这里结束是分号
+    VOTE_REPEAT(5006,"您已点赞过"),
+
+    CATEGORY_EMPTY(5007,"该分类下还没有数据"),
+
+    DOC_EMPTY(5008,"文档内容为空");// 注意上面的是逗号分隔，这里结束是分号
 
     // 定义的枚举常量属性。
     private int code;       // 状态码

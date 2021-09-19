@@ -207,6 +207,7 @@ export default defineComponent({
 
           editor.txt.html(data.content);
         } else {
+          editor.txt.clear();
           message.error(data.content.respMsg);
         }
       });

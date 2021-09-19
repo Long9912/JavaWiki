@@ -19,7 +19,7 @@
           >
           </a-tree>
         </a-col>
-        <a-col :span="18">
+        <a-col :span="18" v-if="level1.length !== 0">
           <div>
             <h2>{{doc.name}}</h2>
             <div>

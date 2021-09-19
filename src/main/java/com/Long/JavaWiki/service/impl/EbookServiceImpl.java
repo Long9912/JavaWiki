@@ -1,6 +1,8 @@
 package com.Long.JavaWiki.service.impl;
 
 import com.Long.JavaWiki.entity.Ebook;
+import com.Long.JavaWiki.exception.BusinessException;
+import com.Long.JavaWiki.exception.EnumCode;
 import com.Long.JavaWiki.mapper.EbookMapper;
 import com.Long.JavaWiki.request.EbookQueryReq;
 import com.Long.JavaWiki.request.EbookSaveReq;
@@ -38,6 +40,9 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
             wrapper.eq("category2_id", req.getCategoryId2());
         }
         List<Ebook> ebookList = ebookMapper.selectList(wrapper);
+        if (ebookList.isEmpty()){
+            throw new BusinessException(EnumCode.CATEGORY_EMPTY);
+        }
         return CopyUtil.copyList(ebookList, EbookQueryResp.class);
     }
 

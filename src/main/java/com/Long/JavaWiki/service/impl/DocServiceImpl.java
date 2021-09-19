@@ -14,6 +14,7 @@ import com.Long.JavaWiki.service.DocService;
 import com.Long.JavaWiki.util.CopyUtil;
 import com.Long.JavaWiki.util.RedisUtil;
 import com.Long.JavaWiki.util.RequestContext;
+import com.Long.JavaWiki.webSocket.WebSocketServer;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <p>
@@ -40,6 +42,9 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private WebSocketServer webSocketServer;
 
     @Override
     public List<DocQueryResp> all(String ebookId) {
@@ -93,7 +98,9 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     public Content findContent(String id) {
         //文档阅读数加1
         docMapper.increaseViewCount(Long.valueOf(id));
-        return contentMapper.selectById(id);
+        Content content = contentMapper.selectById(id);
+        return Optional.ofNullable(content)
+                .orElseThrow(() -> new BusinessException(EnumCode.DOC_EMPTY));
     }
 
     @Override
@@ -105,6 +112,8 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         } else {
             throw new BusinessException(EnumCode.VOTE_REPEAT);
         }
+        Doc docDB = docMapper.selectById(id);
+        webSocketServer.sendInfo("[" + docDB.getName() + "]被点赞");
     }
 
     /**

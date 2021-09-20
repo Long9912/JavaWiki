@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -78,14 +79,15 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
     @Override
+    @Transactional
     public boolean saveOrUpdate(DocSaveReq req) {
         Doc doc = CopyUtil.copy(req, Doc.class);
         Content content = CopyUtil.copy(req, Content.class);
-        //保存文档和文档内容
+        //保存文档消息
         super.saveOrUpdate(doc);
         //获取到文档的雪花id,再保存到单独文档内容表
         content.setId(doc.getId());
-        //尝试更新
+        //尝试更新文档内容
         int count = contentMapper.updateById(content);
         //文档内容表没有此数据时插入新数据
         if (count == 0) {

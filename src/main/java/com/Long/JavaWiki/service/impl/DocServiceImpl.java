@@ -95,11 +95,20 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
     @Override
-    public Content findContent(String id) {
+    public String findContent(String id) {
         //文档阅读数加1
         docMapper.increaseViewCount(Long.valueOf(id));
-        Content content = contentMapper.selectById(id);
-        return Optional.ofNullable(content)
+        //使用Optional包装处理 null
+        return Optional.ofNullable(contentMapper.selectById(id))
+                .map(content -> content.getContent())
+                .orElseThrow(() -> new BusinessException(EnumCode.DOC_EMPTY));
+    }
+
+    @Override
+    public String editContent(String id) {
+        //使用Optional包装处理 null
+        return Optional.ofNullable(contentMapper.selectById(id))
+                .map(content -> content.getContent())
                 .orElseThrow(() -> new BusinessException(EnumCode.DOC_EMPTY));
     }
 

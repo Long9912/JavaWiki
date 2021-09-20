@@ -23,7 +23,6 @@ public class DocSaveReq {
     @NotNull(message = "[排序]不能为空")
     private Integer sort;
 
-    @NotEmpty(message = "[内容]不能为空")
     private String content;
 
     private Integer viewCount;

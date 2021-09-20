@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * <p>
@@ -70,16 +69,20 @@ public class DocController {
         return "删除成功";
     }
 
-    @ApiOperation("通过id查找文档内容")
+    @ApiOperation("通过id查找文档内容,点赞数加1")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/findContent/{id}")
     public String findContent(@PathVariable String id) {
-        //获取文档文本,使用Optional包装处理 null,
-        Optional<String> text=Optional
-                .ofNullable(docService.findContent(id))
-                .map(content -> content.getContent());
-        return text.orElse("文档内容为空");
+        return docService.findContent(id);
     }
+
+    @ApiOperation("编辑时通过id查找文档内容")
+    @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
+    @GetMapping("/editContent/{id}")
+    public String editContent(@PathVariable String id) {
+        return docService.editContent(id);
+    }
+
     @ApiOperation("通过id对文档点赞")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/vote/{id}")

@@ -197,10 +197,10 @@ export default defineComponent({
     };
 
     /**
-     * 内容查询
+     * 文档查询
      **/
     const handleQueryContent = () => {
-      axios.get("/doc/findContent/"+doc.value.id).then((response) => {
+      axios.get("/doc/editContent/"+doc.value.id).then((response) => {
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
           docs.value = data.content;
@@ -317,24 +317,29 @@ export default defineComponent({
       treeSelectData.value.unshift({id: 0, name: '无'});
     };
 
-    const handleSave = () => {
-      doc.value.content =editor.txt.html();
+    const handleSave = (): boolean => {
+      doc.value.content = editor.txt.html();
       axios.post("/doc/save", doc.value).then((response) => {
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
           message.success(data.content);
           //重新加载列表
           handleQuery();
+          return true;
         } else {
           message.error(data.content.respMsg);
+          return false;
         }
       });
+      return false;
     };
 
     const handleAdd = () => {
-      handleSave();
-      //保存后调用add方法清空数据防止重复添加
-      add();
+      let result = handleSave();
+      //保存成功后调用add方法清空数据防止重复添加
+      if (result == true) {
+        add();
+      }
     };
 
     const handleDelete = (id:string) => {

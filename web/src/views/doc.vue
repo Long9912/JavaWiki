@@ -90,6 +90,7 @@ export default defineComponent({
         if (data.code == process.env.VUE_APP_SUCCESS) {
           html.value = data.content;
         } else {
+          html.value = null;
           message.error(data.content.respMsg);
         }
       });

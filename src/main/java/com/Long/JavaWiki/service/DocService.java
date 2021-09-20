@@ -1,6 +1,5 @@
 package com.Long.JavaWiki.service;
 
-import com.Long.JavaWiki.entity.Content;
 import com.Long.JavaWiki.entity.Doc;
 import com.Long.JavaWiki.request.DocQueryReq;
 import com.Long.JavaWiki.request.DocSaveReq;
@@ -25,7 +24,9 @@ public interface DocService extends IService<Doc> {
 
     boolean saveOrUpdate(DocSaveReq req);
 
-    Content findContent(String id);
+    String findContent(String id);
+
+    String editContent(String id);
 
     void vote(String id);
 

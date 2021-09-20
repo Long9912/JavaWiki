@@ -14,10 +14,10 @@ import com.Long.JavaWiki.service.DocService;
 import com.Long.JavaWiki.util.CopyUtil;
 import com.Long.JavaWiki.util.RedisUtil;
 import com.Long.JavaWiki.util.RequestContext;
-import com.Long.JavaWiki.webSocket.WebSocketServer;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +44,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     private RedisUtil redisUtil;
 
     @Autowired
-    private WebSocketServer webSocketServer;
+    private WsService wsService;
 
     @Override
     public List<DocQueryResp> all(String ebookId) {
@@ -100,7 +100,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         docMapper.increaseViewCount(Long.valueOf(id));
         //使用Optional包装处理 null
         return Optional.ofNullable(contentMapper.selectById(id))
-                .map(content -> content.getContent())
+                .map(Content::getContent)
                 .orElseThrow(() -> new BusinessException(EnumCode.DOC_EMPTY));
     }
 
@@ -108,7 +108,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     public String editContent(String id) {
         //使用Optional包装处理 null
         return Optional.ofNullable(contentMapper.selectById(id))
-                .map(content -> content.getContent())
+                .map(Content::getContent)
                 .orElseThrow(() -> new BusinessException(EnumCode.DOC_EMPTY));
     }
 
@@ -121,8 +121,11 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         } else {
             throw new BusinessException(EnumCode.VOTE_REPEAT);
         }
+        //推送消息
         Doc docDB = docMapper.selectById(id);
-        webSocketServer.sendInfo("[" + docDB.getName() + "]被点赞");
+        String logId= MDC.get("LOG_ID");
+        //异步处理
+        wsService.sendInfo("[" + docDB.getName() + "]被点赞",logId);
     }
 
     /**

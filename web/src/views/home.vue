@@ -54,7 +54,7 @@
                       </router-link>
                     </template>
                     <template #avatar>
-                      <a-avatar :src="item.cover"/>
+                      <a-avatar :src="getImageUrl(item.cover)"/>
                     </template>
                   </a-list-item-meta>
                 </a-list-item>
@@ -125,6 +125,10 @@ export default defineComponent({
       }))
     };
 
+    const getImageUrl = (url) => {
+      return process.env.VUE_APP_SERVER + url;
+    }
+
     onMounted(() => {
       handleQueryCategory();
     });
@@ -135,6 +139,7 @@ export default defineComponent({
       isShowWelcome,
       level1,
       handleClick,
+      getImageUrl
     }
   },
 });

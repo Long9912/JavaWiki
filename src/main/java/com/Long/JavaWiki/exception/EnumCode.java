@@ -20,7 +20,7 @@ public enum EnumCode {
 
     DOC_EMPTY(5008,"文档内容为空"),
 
-    PICTURE_FORMAT_ERROR(5009,"图片格式不正确! 使用.jpg/.png/.bpm/.jpeg后缀的图片");// 注意上面的是逗号分隔，这里结束是分号
+    PICTURE_FORMAT_ERROR(5009,"图片格式不正确! 使用.jpg/.png/.jpeg后缀的图片");// 注意上面的是逗号分隔，这里结束是分号
 
     // 定义的枚举常量属性。
     private int code;       // 状态码

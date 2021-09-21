@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 //全局异常处理器类
 // 控制器类增强：可以对Controller中所有使用@RequestMapping注解的方法增强
@@ -23,15 +22,13 @@ public class GlobalExceptionHandler {
     private ExceptionResponse getResult(Exception ex, HttpServletRequest request, String message) {
         ExceptionResponse resultError = new ExceptionResponse();
         resultError.setRespMsg(message);                        // 用户看到的异常信息
-        resultError.setTimestamp(new Date());                   // 设置异常发生时间
         resultError.setMessage(ex.getMessage());                // 实际发生的异常信息
-        resultError.setPath(request.getRequestURI());           // 异常RUI
         resultError.setExceptionName(ex.getClass().getName());  // 实际异常的名字
         return resultError;
     }
 
     // 该注解是异常处理器注解，可以对指定异常类型处理，执行注解标注的方法（只要发生指定异常都会被拦截）
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(Exception.class)
     // 该注解用于指定异常处理方法执行后响应页面的HTTP状态码，HttpStatus是Spring内置的一个状态码枚举类，内定了详细的状态码及描述，当前获取的是500
     public ResponseData exceptionResponse(Exception ex, HttpServletRequest request) {
         String message;

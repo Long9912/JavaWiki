@@ -31,7 +31,7 @@
             @change="handleTableChange"
         >
           <template #cover="{ text: cover }">
-            <img v-if="cover" :src="cover" alt="avatar"/>
+            <img v-if="cover" :src="getImageUrl(cover)" alt="封面"/>
           </template>
           <template v-slot:category="{ text, record }">
             <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
@@ -71,11 +71,23 @@
         @ok="handleModalOk"
     >
       <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-        <a-form-item label="id">
-          <a-input v-model:value="ebook.id" disabled="true"/>
-        </a-form-item>
         <a-form-item label="封面">
-          <a-input v-model:value="ebook.cover"/>
+          <a-upload
+              name="avatar"
+              list-type="picture-card"
+              class="avatar-uploader"
+              :show-upload-list="false"
+              :before-upload="beforeUpload"
+              @change="handleChange"
+              :customRequest=uploadLink
+          >
+            <img v-if="ebook.cover" :src="getImageUrl(ebook.cover)" alt="封面" />
+            <div v-else>
+              <loading-outlined v-if="fileLoading"></loading-outlined>
+              <plus-outlined v-else></plus-outlined>
+              <div class="ant-upload-text">Upload</div>
+            </div>
+          </a-upload>
         </a-form-item>
         <a-form-item label="名称">
           <a-input v-model:value="ebook.name"/>
@@ -147,6 +159,70 @@ export default defineComponent({
         slots: {customRender: 'action'}
       }
     ];
+
+    //文件上传
+    const uploadUrl = process.env.VUE_APP_SERVER + '/upload/fileUpload';
+    const fileLoading = ref<boolean>(false);
+
+    //上传前检查
+    const beforeUpload = (file) => {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      if (!isJpgOrPng) {
+        message.error('只能上传png,jpg,jpeg格式图片!');
+      }
+      const isLt1M = file.size / 1024 / 1024 < 1;
+      if (!isLt1M) {
+        message.error('文件必须小于1m!');
+      }
+      return isJpgOrPng && isLt1M;
+    };
+
+    //图片上传状态
+    const handleChange = (info) => {
+      if (info.file.status === 'uploading') {
+        loading.value = true;
+        return;
+      }
+      if (info.file.status === 'done') {
+        loading.value = false;
+        message.success('上传成功');
+      }
+      if (info.file.status === 'error') {
+        loading.value = false;
+        message.error('上传失败');
+      }
+    };
+
+    //自定义的上传方法
+    const uploadLink = (info) => {
+      let formData = new FormData();           //创建一个FormData表单对象
+      formData.append('file', info.file);//将文件加到formData里面
+      //将表单对象作为接口变量传过去
+      upload(formData)
+          .then((response) => {
+            const data = response.data;
+            if (data.code == process.env.VUE_APP_SUCCESS) {
+              message.success("上传成功");
+              ebook.value.cover = data.content;
+            } else {
+              message.error(data.content.respMsg);
+            }
+          })
+
+    };
+
+    const upload = (parameter) => {
+      return axios({
+        headers: {'Content-Type': 'multipart/form-data'},
+        url: uploadUrl,
+        method: 'post',
+        data: parameter
+      })
+    }
+
+    const getImageUrl = (url) => {
+      return process.env.VUE_APP_SERVER + url;
+    }
 
     /**
      * 数据查询
@@ -296,6 +372,12 @@ export default defineComponent({
       handleTableChange,
       handleQuery,
 
+      fileLoading,
+      upload,
+      uploadLink,
+      handleChange,
+      beforeUpload,
+      getImageUrl,
 
       add,
       edit,
@@ -312,7 +394,11 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
+.avatar-uploader > .ant-upload {
+  width: 50px;
+  height: 50px;
+}
 img {
   width: 50px;
   height: 50px;

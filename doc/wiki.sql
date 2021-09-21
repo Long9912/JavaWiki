@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 21/09/2021 13:31:37
+ Date: 21/09/2021 16:51:32
 */
 
 SET NAMES utf8mb4;
@@ -39,7 +39,7 @@ INSERT INTO `category` VALUES (201, 200, '基础应用', 201);
 INSERT INTO `category` VALUES (202, 200, '框架应用', 202);
 INSERT INTO `category` VALUES (300, 0, '数据库', 300);
 INSERT INTO `category` VALUES (301, 300, 'Mysql', 301);
-INSERT INTO `category` VALUES (302, 300, 'MysqlPlus', 302);
+INSERT INTO `category` VALUES (302, 300, 'Mybatis', 302);
 INSERT INTO `category` VALUES (1436952696622972930, 1436952541278535682, 'test2', 2);
 
 -- ----------------------------
@@ -118,13 +118,14 @@ CREATE TABLE `ebook`  (
 -- ----------------------------
 -- Records of ebook
 -- ----------------------------
-INSERT INTO `ebook` VALUES (1, 'Spring Boot 入门教程', 200, 202, '企业级应用开发最佳首选框架', '/image/95389644681777152-1.png', 9, 135, 21, 0, '2021-09-07 21:29:15');
-INSERT INTO `ebook` VALUES (2, 'Vue 入门教程', 100, 102, '企业级应用开发最佳首选框架', '/image/95390169611505664-2.png', 2, 68, 2, 0, '2021-09-07 21:30:25');
+INSERT INTO `ebook` VALUES (1, 'Spring Boot 入门教程', 200, 202, '企业级应用开发最佳首选框架', '/image/95440793401167872-1.png', 9, 135, 21, 0, '2021-09-07 21:29:15');
+INSERT INTO `ebook` VALUES (2, 'Vue 入门教程', 100, 102, '企业级应用开发最佳首选框架', '/image/95434419678089216-2.png', 2, 68, 2, 0, '2021-09-07 21:30:25');
 INSERT INTO `ebook` VALUES (3, 'MySQL 入门教程', 300, 301, '企业级应用开发最佳首选框架', '/image/95390190427836416-5.png', 0, 0, 0, 0, '2021-09-07 21:30:55');
 INSERT INTO `ebook` VALUES (4, 'Swagger 入门教程', 200, 202, '企业级应用开发最佳首选框架', '/image/95390228814106625-4.png', 0, 0, 0, 0, '2021-09-07 21:34:40');
-INSERT INTO `ebook` VALUES (5, 'MyBatisPlus 入门教程', 1, 2, '企业级应用开发最佳首选框架', '/image/95390352319582208-5.png', 0, 0, 0, 0, '2021-09-07 21:32:06');
-INSERT INTO `ebook` VALUES (1436589909073756161, 'Spring 入门教程', 1, 2, '入门', '/image/95390376583630849-3.png', 0, 0, 0, 0, '2021-09-11 15:18:20');
-INSERT INTO `ebook` VALUES (1436599062148247554, 'MyBatis 入门教程', 1, 2, NULL, '/image/95390840981164033-4.png', 0, 0, 0, 0, '2021-09-11 15:54:42');
+INSERT INTO `ebook` VALUES (5, 'MyBatisPlus 入门教程', 300, 302, '企业级应用开发最佳首选', '/image/95440189387837440-5.png', 0, 0, 0, 0, '2021-09-07 21:32:06');
+INSERT INTO `ebook` VALUES (1436589909073756161, 'Spring 入门教程', 200, 202, 'spring入门', '/image/95440262159011840-1.png', 0, 0, 0, 0, '2021-09-11 15:18:20');
+INSERT INTO `ebook` VALUES (1436599062148247554, 'MyBatis 入门教程', 300, 302, '12345', '/image/95440347555041280-5.png', 0, 0, 0, 0, '2021-09-11 15:54:42');
+INSERT INTO `ebook` VALUES (1440230385408651266, 'java入门', 200, 201, 'java 入门', '/image/95440400155807744-4.png', 0, 0, 0, 0, '2021-09-21 16:24:17');
 
 -- ----------------------------
 -- Table structure for user
@@ -143,7 +144,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'test', '测试', '7354a1d413535a6c0dc5c209e198d799', 0);
+INSERT INTO `user` VALUES (1, 'test', '测试用户', '7354a1d413535a6c0dc5c209e198d799', 0);
 INSERT INTO `user` VALUES (2, 'long123', 'Long', '7354a1d413535a6c0dc5c209e198d799', 0);
 INSERT INTO `user` VALUES (1434857573659443201, 'long6', 'Long', '7354a1d413535a6c0dc5c209e198d799', 0);
 INSERT INTO `user` VALUES (1438141057102610433, 'test2', '测试2', 'a48895a6380f269780666b2d492d08b2', 0);

@@ -161,7 +161,7 @@ export default defineComponent({
     ];
 
     //文件上传
-    const uploadUrl = process.env.VUE_APP_SERVER + '/upload/fileUpload';
+    const uploadUrl = process.env.VUE_APP_SERVER + '/file/fileUpload';
     const fileLoading = ref<boolean>(false);
 
     //上传前检查

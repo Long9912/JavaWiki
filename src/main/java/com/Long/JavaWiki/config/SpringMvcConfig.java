@@ -30,8 +30,8 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/doc/all/**",
                         "/doc/vote/**",
                         "/doc/findContent/**",
-                        "/upload/fileUpload",
-                        "/image/**"
+                        "/image/**",
+                        "/error"
                         );
     }
 

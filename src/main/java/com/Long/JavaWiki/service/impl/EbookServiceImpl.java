@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -30,7 +31,10 @@ import java.util.List;
 public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements EbookService {
 
     @Autowired
-    EbookMapper ebookMapper;
+    private EbookMapper ebookMapper;
+
+    @Autowired
+    private FileService fileService;
 
     @Override
     public List<EbookQueryResp> all(EbookQueryReq req) {
@@ -66,7 +70,22 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
 
     @Override
     public boolean saveOrUpdate(EbookSaveReq req) {
-        Ebook ebook=CopyUtil.copy(req,Ebook.class);
+        Ebook ebook = CopyUtil.copy(req, Ebook.class);
+        //更新图片时,删除旧图片
+        if (ebook.getId() != null && ebook.getCover() != null) {
+            //查出数据库数据
+            Ebook ebookDB = ebookMapper.selectById(ebook.getId());
+            //对比封面看是否更新
+            if (!Objects.equals(ebookDB.getCover(), ebook.getCover())) {
+                //得到旧图片地址
+                String filePath = ebookDB.getCover();
+                //获得文件名
+                int lastIndexOf = filePath.lastIndexOf("/");
+                String fileName = filePath.substring(lastIndexOf + 1);
+                //根据文件名删除旧图片
+                fileService.delFile(fileName);
+            }
+        }
         return super.saveOrUpdate(ebook);
     }
 }

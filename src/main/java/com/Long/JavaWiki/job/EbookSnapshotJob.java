@@ -25,7 +25,7 @@ public class EbookSnapshotJob {
     public void cron() {
         //加入日志流水号
         MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
-        //按电子书分组统计文档数据,并更新到对应的电子书中
+        //使用复杂sql收集电子书数据和每日新增阅读量和点赞数
         LOG.info("生成今日电子书快照开始");
         long start = System.currentTimeMillis();
         ebookSnapshotService.genSnapshot();

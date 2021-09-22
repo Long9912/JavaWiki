@@ -1,7 +1,10 @@
 package com.Long.JavaWiki.mapper;
 
 import com.Long.JavaWiki.entity.EbookSnapshot;
+import com.Long.JavaWiki.response.StatisticResp;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +17,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface EbookSnapshotMapper extends BaseMapper<EbookSnapshot> {
 
     void genSnapshot();
+
+    List<StatisticResp> getStatistic();
 }

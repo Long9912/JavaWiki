@@ -49,4 +49,20 @@
         where t1.date = curdate();
     </update>
 
+    <!-- 获得首页数据: 总阅读数,总点赞数,今日阅读数,今日点赞数,今日预计阅读数,今日预计阅读增长-->
+    <select id="getStatistic" resultType="com.Long.JavaWiki.response.StatisticResp">
+        select `date`,
+               sum(view_count)    as viewCount,
+               sum(vote_count)    as voteCount,
+               sum(view_increase) as viewIncrease,
+               sum(vote_increase) as voteIncrease
+        from ebook_snapshot
+        #查出昨天和今天的数据
+        where `date` >= date_sub(curdate(), interval 1 day)
+        #根据日期分为昨天和今天2组
+        group by `date`
+        #根据日期排序,昨天为第一条数据,在第一天时,只返回1条数据
+        order by `date` asc;
+    </select>
+
 </mapper>

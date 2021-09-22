@@ -1,7 +1,10 @@
 package com.Long.JavaWiki.service;
 
 import com.Long.JavaWiki.entity.EbookSnapshot;
+import com.Long.JavaWiki.response.StatisticResp;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +17,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface EbookSnapshotService extends IService<EbookSnapshot> {
 
     void genSnapshot();
+
+    List<StatisticResp> getStatistic();
 }

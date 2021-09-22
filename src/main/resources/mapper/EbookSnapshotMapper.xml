@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Long.JavaWiki.mapper.EbookSnapshotMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.Long.JavaWiki.entity.EbookSnapshot">
+        <id column="id" property="id" />
+        <result column="ebook_id" property="ebookId" />
+        <result column="date" property="date" />
+        <result column="view_count" property="viewCount" />
+        <result column="vote_count" property="voteCount" />
+        <result column="view_increase" property="viewIncrease" />
+        <result column="vote_increase" property="voteIncrease" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, ebook_id, date, view_count, vote_count, view_increase, vote_increase
+    </sql>
+
+</mapper>

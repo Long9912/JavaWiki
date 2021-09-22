@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 21/09/2021 16:51:32
+ Date: 22/09/2021 10:42:41
 */
 
 SET NAMES utf8mb4;
@@ -126,6 +126,21 @@ INSERT INTO `ebook` VALUES (5, 'MyBatisPlus 入门教程', 300, 302, '企业级�
 INSERT INTO `ebook` VALUES (1436589909073756161, 'Spring 入门教程', 200, 202, 'spring入门', '/image/95440262159011840-1.png', 0, 0, 0, 0, '2021-09-11 15:18:20');
 INSERT INTO `ebook` VALUES (1436599062148247554, 'MyBatis 入门教程', 300, 302, '12345', '/image/95440347555041280-5.png', 0, 0, 0, 0, '2021-09-11 15:54:42');
 INSERT INTO `ebook` VALUES (1440230385408651266, 'java入门', 200, 201, 'java 入门', '/image/95440400155807744-4.png', 0, 0, 0, 0, '2021-09-21 16:24:17');
+
+-- ----------------------------
+-- Table structure for ebook_snapshot
+-- ----------------------------
+DROP TABLE IF EXISTS `ebook_snapshot`;
+CREATE TABLE `ebook_snapshot`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `ebook_id` bigint(11) NOT NULL DEFAULT 0 COMMENT '电子书id',
+  `date` date NOT NULL COMMENT '快照日期',
+  `view_count` int(255) NOT NULL DEFAULT 0 COMMENT '阅读数',
+  `vote_count` int(255) NOT NULL DEFAULT 0 COMMENT '点赞数',
+  `view_increase` int(255) NOT NULL DEFAULT 0 COMMENT '阅读增长',
+  `vote_increase` int(255) NOT NULL DEFAULT 0 COMMENT '点赞增长',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电子书快照' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user

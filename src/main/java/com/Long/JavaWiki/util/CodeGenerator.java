@@ -1,4 +1,4 @@
-package com.Long.JavaWiki.config;
+package com.Long.JavaWiki.util;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -27,9 +27,7 @@ public class CodeGenerator {
     //读取控制台内容
     public static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append("请输入" + tip + "：");
-        System.out.println(help.toString());
+        System.out.println("请输入" + tip + "：");
         if (scanner.hasNext()) {
             String ipt = scanner.next();
             if (StringUtils.isNotBlank(ipt)) {
@@ -49,7 +47,7 @@ public class CodeGenerator {
         gc.setAuthor("Long9912");
         gc.setOpen(false);
         //是否覆盖
-        gc.setFileOverride(false);
+        gc.setFileOverride(true);
         //去Service的I前缀
         gc.setServiceName("%sService");
         gc.setIdType(IdType.ASSIGN_ID);

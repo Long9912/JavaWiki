@@ -4,18 +4,49 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.Long.JavaWiki.entity.EbookSnapshot">
-        <id column="id" property="id" />
-        <result column="ebook_id" property="ebookId" />
-        <result column="date" property="date" />
-        <result column="view_count" property="viewCount" />
-        <result column="vote_count" property="voteCount" />
-        <result column="view_increase" property="viewIncrease" />
-        <result column="vote_increase" property="voteIncrease" />
+        <id column="id" property="id"/>
+        <result column="ebook_id" property="ebookId"/>
+        <result column="date" property="date"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="vote_count" property="voteCount"/>
+        <result column="view_increase" property="viewIncrease"/>
+        <result column="vote_increase" property="voteIncrease"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, ebook_id, date, view_count, vote_count, view_increase, vote_increase
     </sql>
+
+    <update id="genSnapshot">
+        #尝试插入每个电子书今日的新快照表
+        insert into ebook_snapshot(ebook_id, `date`, view_count, vote_count, view_increase, vote_increase)
+        #获取要插入新数据的电子书id和今日日期
+        select t1.id, curdate(), 0, 0, 0, 0
+        from ebook t1
+        #当不存在其中一个电子书今日的快照表时,就能查询出今天要新插入的电子书id
+        where not exists(select 1
+                         from ebook_snapshot t2
+                         where t1.id = t2.ebook_id
+                           and t2.`date` = curdate());
+
+        #更新今日表的总阅读量和总点赞量
+        update ebook t1,ebook_snapshot t2
+        set t2.view_count=t1.view_count,
+            t2.vote_count=t1.vote_count
+        where t2.`date` = curdate()
+          and t1.id = t2.ebook_id;
+
+        #获取昨天的数据,更新增长数到今天的表
+        #使用左连接,当查出昨天数据时,计算相比昨天的增长数
+        #查不到昨天数据时,增长量就直接是今天的数据
+        update ebook_snapshot t1 left join (select ebook_id, view_count, vote_count
+                                            from ebook_snapshot
+                                            where `date` = date_sub(curdate(), interval 1 day)) t2
+            on t1.ebook_id = t2.ebook_id
+        set t1.view_increase=(t1.view_count - ifnull(t2.view_count, 0)),
+            t1.vote_increase=(t1.vote_count - ifnull(t2.vote_count, 0))
+        where t1.date = curdate();
+    </update>
 
 </mapper>

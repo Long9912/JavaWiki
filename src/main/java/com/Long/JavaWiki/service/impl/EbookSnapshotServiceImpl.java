@@ -4,6 +4,7 @@ import com.Long.JavaWiki.entity.EbookSnapshot;
 import com.Long.JavaWiki.mapper.EbookSnapshotMapper;
 import com.Long.JavaWiki.service.EbookSnapshotService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class EbookSnapshotServiceImpl extends ServiceImpl<EbookSnapshotMapper, EbookSnapshot> implements EbookSnapshotService {
 
+    @Autowired
+    private EbookSnapshotMapper ebookSnapshotMapper;
+
+    @Override
+    public void genSnapshot() {
+        ebookSnapshotMapper.genSnapshot();
+    }
 }

@@ -24,6 +24,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * AOP切面,打印请求信息日志
+ */
 @Aspect
 @Component
 public class LogAspect {
@@ -66,7 +69,6 @@ public class LogAspect {
             RequestContext.setRemoteAddr(getRemoteIp(request));
             LOG.info("请求点赞,将远程ip,保存到线程本地变量ThreadLocal: {}", getRemoteIp(request));
         }
-
 
         // 请求参数
         Object[] args = joinPoint.getArgs();

@@ -5,6 +5,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * 解决前后端跨越问题
+ */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
     @Override

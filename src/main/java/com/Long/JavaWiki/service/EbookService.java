@@ -18,10 +18,22 @@ import java.util.List;
  * @since 2021-09-07
  */
 public interface EbookService extends IService<Ebook> {
+    /**
+     * 根据分类id查询电子书
+     * @param req 分类id
+     * @return  返回分类下电子书列表
+     */
     List<EbookQueryResp> all(EbookQueryReq req);
 
+    /**
+     * 分页查询电子书
+     * @return  分页数据
+     */
     PageResp<EbookQueryResp> getList(EbookQueryReq req);
 
+    /**
+     * 保存或更新电子书
+     */
     boolean saveOrUpdate(EbookSaveReq req);
 
 }

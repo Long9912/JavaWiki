@@ -35,7 +35,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Override
     public PageResp<UserQueryResp> getList(UserQueryReq req) {

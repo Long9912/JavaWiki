@@ -81,7 +81,7 @@ public class UserController {
         return "删除成功";
     }
 
-    @ApiOperation("登录")
+    @ApiOperation("登录,登录成功后生成单点登录token")
     @PostMapping("/login")
     public UserLoginResp login(@Validated @RequestBody UserLoginReq req) {
         //将密码转为byte数组进行md5加密,然后转成16进制

@@ -1,4 +1,8 @@
 package com.Long.JavaWiki.exception;
+
+/**
+ * 自定义枚举类,用于异常处理
+ */
 public enum EnumCode {
     // 这里的代码相当于：public static  final DataEnumCode SUCCESS = new DataEnumCode(0,“ok”)调用类有参构造传值
     // 定义成功的枚举常量，状态码，和描述
@@ -19,12 +23,15 @@ public enum EnumCode {
     CATEGORY_EMPTY(5007,"该分类下还没有数据"),
 
     DOC_EMPTY(5008,"文档内容为空"),
+    // 注意上面的是逗号分隔，这里结束是分号
+    PICTURE_FORMAT_ERROR(5009,"图片格式不正确! 使用.jpg/.png/.jpeg后缀的图片");
 
-    PICTURE_FORMAT_ERROR(5009,"图片格式不正确! 使用.jpg/.png/.jpeg后缀的图片");// 注意上面的是逗号分隔，这里结束是分号
 
     // 定义的枚举常量属性。
-    private int code;       // 状态码
-    private String desc; // 描述
+    // 状态码
+    private int code;
+    // 描述
+    private String desc;
 
     EnumCode(int code, String desc) {
         this.code = code;

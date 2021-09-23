@@ -9,6 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
 
+/**
+ * 配置未登录拦截请求和将静态文件请求映射到自定义路径
+ */
 @Configuration
 public class SpringMvcConfig implements WebMvcConfigurer {
 
@@ -18,11 +21,11 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     @Resource
     LoginInterceptor loginInterceptor;
 
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/test/**",
                         "/user/login",
                         "/category/all",
                         "/ebook/list",
@@ -36,7 +39,10 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         );
     }
 
-    //配置图片映射路径
+    /**
+     *配置图片映射路径
+     */
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry register){
         register.addResourceHandler("/image/**").addResourceLocations("file:"+fileUrl);
     }

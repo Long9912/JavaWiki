@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class WsService {
 
     @Autowired
-    WebSocketServer webSocketServer;
+    private WebSocketServer webSocketServer;
 
     /**
      * 推送消息,异步处理,这里的方法被自动注入使用ThreadPoolTaskExecutor作为TaskExecutor（线程池）

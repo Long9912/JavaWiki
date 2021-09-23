@@ -15,8 +15,14 @@ import java.util.List;
  * @since 2021-09-22
  */
 public interface EbookSnapshotMapper extends BaseMapper<EbookSnapshot> {
-
+    /**
+     * 通过定时任务,生成电子书快照,得到总量,今日增长量
+     */
     void genSnapshot();
 
+    /**
+     * 获得首页数据
+     * @return 总阅读数,总点赞数,昨日今日阅读数,昨日今日点赞数
+     */
     List<StatisticResp> getStatistic();
 }

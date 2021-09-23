@@ -20,7 +20,7 @@ public class RequestContext implements Serializable {
     }
 
     public static void removeRemoteAddr() {
-        RequestContext.remoteAddr.remove();
+        remoteAddr.remove();
     }
 
 }

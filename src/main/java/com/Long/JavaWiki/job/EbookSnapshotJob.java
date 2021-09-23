@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+/**
+ * 定时任务:更新电子书快照
+ */
 @Component
 public class EbookSnapshotJob {
 
@@ -20,7 +23,9 @@ public class EbookSnapshotJob {
     @Autowired
     private SnowFlake snowFlake;
 
-    //每6分钟更新一次电子书快照
+    /**
+     * 每6分钟更新一次电子书快照
+     */
     @Scheduled(cron = "0 */6 * * * ?")
     public void cron() {
         //加入日志流水号

@@ -5,22 +5,30 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 标准响应类
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseData<T> {
 
-    private int code;       // 状态码
-    private String message; // 提示消息
-    private T content;         // 响应结果集数据
+    // 状态码
+    private int code;
+    // 提示消息
+    private String message;
+    // 响应结果集数据
+    private T content;
 
     /**
      * 枚举类常量解析器
      * 快速解析枚举类常量信息，解析数据并放入到标准响应类ResponseData的属性中
      */
     public void parserEnum(EnumCode enumCode) {
-        this.code = enumCode.getCode();// 获取枚举常量的状态码，赋值给属性
-        this.message = enumCode.getDesc();// 获取枚举常量的描述信息
+        // 获取枚举常量的状态码，赋值给属性
+        this.code = enumCode.getCode();
+        // 获取枚举常量的描述信息
+        this.message = enumCode.getDesc();
     }
 
     /**

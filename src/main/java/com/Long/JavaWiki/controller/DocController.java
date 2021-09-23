@@ -30,10 +30,10 @@ import java.util.List;
 @RequestMapping("/doc")
 public class DocController {
     @Autowired
-    DocService docService;
+    private DocService docService;
 
     @Autowired
-    ContentService contentService;
+    private ContentService contentService;
 
     @ApiOperation("传入电子书id查询电子书的文档")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")

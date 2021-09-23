@@ -15,7 +15,7 @@ import java.io.IOException;
 public class FileController {
 
     @Autowired
-    FileService fileService;
+    private FileService fileService;
 
     @PostMapping("/fileUpload")
     @ApiOperation(value = "上传下载图片")

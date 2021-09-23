@@ -18,9 +18,20 @@ import java.util.List;
  * @since 2021-09-12
  */
 public interface CategoryService extends IService<Category> {
+    /**
+     * 查询所有分类
+     * @return  返回分类列表
+     */
     List<CategoryQueryResp> all();
 
+    /**
+     * 分页查询分类
+     * @return  分页数据
+     */
     PageResp<CategoryQueryResp> list(CategoryQueryReq req);
 
+    /**
+     * 保存或更新分类
+     */
     boolean saveOrUpdate(CategorySaveReq req);
 }

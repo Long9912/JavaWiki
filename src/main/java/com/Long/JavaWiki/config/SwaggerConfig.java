@@ -15,7 +15,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @EnableOpenApi   // 开启Swagger自定义接口文档
 @Configuration
-@ConditionalOnProperty(name = "swagger.enable", havingValue = "true")//开发环境下配置
+@ConditionalOnProperty(name = "swagger.enable", havingValue = "true") //开发环境下配置
 public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
@@ -26,7 +26,9 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
-    //API基础信息定义
+    /**
+     * API基础信息定义
+     */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("JavaWiki")

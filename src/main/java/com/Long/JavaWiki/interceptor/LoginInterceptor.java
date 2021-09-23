@@ -32,7 +32,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         // OPTIONS请求不做校验,
         // 前后端分离的架构, 前端会发一个OPTIONS请求先做预检, 对预检请求不做校验
-        if(request.getMethod().equalsIgnoreCase("OPTIONS")){
+        if("OPTIONS".equalsIgnoreCase(request.getMethod())){
             return true;
         }
 

@@ -29,7 +29,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @ApiOperation("查询全部分类")
     @GetMapping("/all")

@@ -54,8 +54,8 @@ public class FileService {
     public String delFile(String fileName) {
 
         String resultInfo = null;
-        String img_path = uploadPath + fileName;
-        File file = new File(img_path);
+        String imgPath = uploadPath + fileName;
+        File file = new File(imgPath);
         //文件是否存在
         if (file.exists()) {
             if (file.delete()) {

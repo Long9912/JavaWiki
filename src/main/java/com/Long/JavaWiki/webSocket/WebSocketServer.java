@@ -10,6 +10,9 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * 点赞时,向连接的WebSocket发送通知
+ */
 @Component
 @ServerEndpoint("/webSocket/{token}")
 public class WebSocketServer {

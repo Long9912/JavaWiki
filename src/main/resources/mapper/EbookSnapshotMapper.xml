@@ -49,7 +49,7 @@
         where t1.date = curdate();
     </update>
 
-    <!-- 获得首页数据: 总阅读数,总点赞数,今日阅读数,今日点赞数,今日预计阅读数,今日预计阅读增长-->
+    <!-- 获得首页数据: 总阅读数,总点赞数,今日阅读数,今日点赞数-->
     <select id="getStatistic" resultType="com.Long.JavaWiki.response.StatisticResp">
         select `date`,
                sum(view_count)    as viewCount,

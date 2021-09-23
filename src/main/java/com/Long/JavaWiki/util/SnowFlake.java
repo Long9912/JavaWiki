@@ -11,9 +11,9 @@ import java.text.ParseException;
 public class SnowFlake {
 
     /**
-     * 起始的时间戳
+     * 起始的时间戳 2021-01-01 00:00:00
      */
-    private final static long START_STMP = 1609459200000L; // 2021-01-01 00:00:00
+    private final static long START_STMP = 1609459200000L;
 
     /**
      * 每一部分占用的位数
@@ -38,8 +38,8 @@ public class SnowFlake {
 
     private long datacenterId = 1;  //数据中心
     private long machineId = 1;     //机器标识
-    private long sequence = 0L; //序列号
-    private long lastStmp = -1L;//上一次时间戳
+    private long sequence = 0L;     //序列号
+    private long lastStmp = -1L;    //上一次时间戳
 
     public SnowFlake() {
     }
@@ -57,11 +57,9 @@ public class SnowFlake {
 
     /**
      * 产生下一个ID
-     *
-     * @return
      */
     public synchronized long nextId() {
-        long currStmp = getNewstmp();
+        long currStmp = getNewTimeMillis();
         if (currStmp < lastStmp) {
             throw new RuntimeException("Clock moved backwards.  Refusing to generate id");
         }
@@ -87,25 +85,18 @@ public class SnowFlake {
     }
 
     private long getNextMill() {
-        long mill = getNewstmp();
+        long mill = getNewTimeMillis();
         while (mill <= lastStmp) {
-            mill = getNewstmp();
+            mill = getNewTimeMillis();
         }
         return mill;
     }
 
-    private long getNewstmp() {
+    private long getNewTimeMillis() {
         return System.currentTimeMillis();
     }
 
     public static void main(String[] args) throws ParseException {
-        // 时间戳
-        // System.out.println(System.currentTimeMillis());
-        // System.out.println(new Date().getTime());
-        //
-        // String dateTime = "2021-01-01 08:00:00";
-        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        // System.out.println(sdf.parse(dateTime).getTime());
 
         SnowFlake snowFlake = new SnowFlake(1, 1);
 

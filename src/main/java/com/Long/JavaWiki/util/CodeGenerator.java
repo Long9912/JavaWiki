@@ -21,10 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//代码生成器
+/**
+ * 代码生成器
+ */
 public class CodeGenerator {
 
-    //读取控制台内容
+    /**
+     * 读取控制台内容
+     */
     public static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("请输入" + tip + "：");

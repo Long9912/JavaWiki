@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 用于分页查询
+ */
 @Data
 public class PageReq {
 

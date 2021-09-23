@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+/**
+ * 解决js中数字精度问题
+ */
 @Configuration
 public class JacksonConfig {
 

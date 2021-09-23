@@ -27,7 +27,7 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
     @Autowired
-    CategoryMapper categoryMapper;
+    private CategoryMapper categoryMapper;
 
     @Override
     public List<CategoryQueryResp> all() {

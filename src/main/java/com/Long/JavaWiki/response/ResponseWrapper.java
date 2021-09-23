@@ -12,11 +12,16 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-//对所有控制器中，被@RequestMapping注解标注的方法，进行增强
+/**
+ * 对所有控制器中，被@RequestMapping注解标注的方法，进行增强
+ * 用标准响应类ResponseData包装返回值
+ */
 @RestControllerAdvice(basePackages = "com.Long.JavaWiki.controller")
 public class ResponseWrapper implements ResponseBodyAdvice<Object> {
 
-    //这个方法的返回值，决定是否启动结果响应拦截，当返回为true是，表示拦截
+    /**
+     * 这个方法的返回值，决定是否启动结果响应拦截，当返回为true是，表示拦截
+     */
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
@@ -28,7 +33,7 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
      */
     @Override
     public Object beforeBodyWrite(Object responseObject, MethodParameter returnType, MediaType mediaType,
-                                  Class<? extends HttpMessageConverter<?>> Converter,
+                                  Class<? extends HttpMessageConverter<?>> converter,
                                   ServerHttpRequest request, ServerHttpResponse response) {
         //responseObject是否为null
         if (null == responseObject) {

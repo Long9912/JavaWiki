@@ -29,7 +29,7 @@ import java.util.List;
 public class EbookController {
 
     @Autowired
-    EbookService ebookService;
+    private EbookService ebookService;
 
     @ApiOperation("默认查询全部电子书,传入分类id时查询分类下电子书")
     @GetMapping("/all")

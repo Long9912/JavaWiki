@@ -15,7 +15,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @EnableOpenApi   // 开启Swagger自定义接口文档
 @Configuration
-@ConditionalOnProperty(name = "swagger.enable", havingValue = "true") //开发环境下配置
+@ConditionalOnProperty(name = "swagger.enable", havingValue = "true") //开发环境下配置为true
 public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
@@ -33,7 +33,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("JavaWiki")
                 .description("Spring Boot + Vue3 前后端分离的wiki知识库系统")
-                .contact(new Contact("Long12", "https://cn.bing.com/", "792516830@qq.com"))
+                .contact(new Contact("Long12", "https://github.com/Long9912/JavaWiki", "792516830@qq.com"))
                 .version("1.0")
                 .build();
     }

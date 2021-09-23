@@ -35,16 +35,23 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/doc/findContent/**",
                         "/image/**",
                         "/ebookSnapshot/**",
-                        "/error"
+                        "/error",
+
+                        //不拦截swagger3.0相关文件
+                        "/swagger**/**",
+                        "/webjars/**",
+                        "/v3/**",
+                        "/doc.html"
                         );
     }
 
     /**
-     *配置图片映射路径
+     * 配置静态资源映射路径
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry register){
         register.addResourceHandler("/image/**").addResourceLocations("file:"+fileUrl);
+        register.addResourceHandler("/swagger-ui/**").addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
     }
 
 }

@@ -55,7 +55,7 @@ spring:
         url-pattern: /*
         #忽略过滤格式
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
-      #配置监拉统计挡成的filter. stat: 监控统计、Log4j:日志记录、wall: 防御sqL注入
+      #过滤器 log4j:日志记录、stat: 监控统计、wall: 防御sqL注入
       filter:
         log4j2:
           enabled: true
@@ -64,6 +64,7 @@ spring:
           result-set-open-after-log-enabled: false
           result-set-close-after-log-enabled: false
         stat:
+          enabled: true
           merge-sql: true
           slow-sql-millis: 3000
           log-slow-sql: true

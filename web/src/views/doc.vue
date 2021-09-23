@@ -149,6 +149,7 @@ export default defineComponent({
       axios.get("/doc/vote/" + doc.value.id).then((response) => {
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
+          message.success("点赞成功");
           doc.value.voteCount++;
         } else {
           message.error(data.content.respMsg);

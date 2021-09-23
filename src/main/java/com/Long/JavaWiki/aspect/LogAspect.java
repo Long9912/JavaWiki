@@ -61,8 +61,12 @@ public class LogAspect {
         LOG.info("类名方法: {}.{}", signature.getDeclaringTypeName(), name);
         LOG.info("远程地址: {}", request.getRemoteAddr());
 
-        //获取远程ip,保存到线程本地变量ThreadLocal
-        RequestContext.setRemoteAddr(getRemoteIp(request));
+        //点赞时获取远程ip,防止重复点赞,一天只能点赞相同文章一次
+        if ("vote".equals(name)){
+            RequestContext.setRemoteAddr(getRemoteIp(request));
+            LOG.info("请求点赞,将远程ip,保存到线程本地变量ThreadLocal: {}", getRemoteIp(request));
+        }
+
 
         // 请求参数
         Object[] args = joinPoint.getArgs();

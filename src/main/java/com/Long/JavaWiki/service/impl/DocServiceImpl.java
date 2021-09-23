@@ -17,6 +17,7 @@ import com.Long.JavaWiki.util.RequestContext;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ import java.util.Optional;
  * @author Long9912
  * @since 2021-09-13
  */
+@Slf4j
 @Service
 public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocService {
     @Autowired
@@ -79,7 +81,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public boolean saveOrUpdate(DocSaveReq req) {
         Doc doc = CopyUtil.copy(req, Doc.class);
         Content content = CopyUtil.copy(req, Content.class);
@@ -119,8 +121,13 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         //远程ip+文档Id作为key,24小时不能重复
         String key = RequestContext.getRemoteAddr();
         if (redisUtil.validateRepeat("DOC_VOTE_" + id + "_" + key, 24)) {
+            //使用完ThreadLocal后移除数据,防止内存泄漏
+            RequestContext.removeRemoteAddr();
+            log.info("点赞成功,清空线程本地变量ThreadLocal: {}",key);
             docMapper.increaseVoteCount(Long.valueOf(id));
         } else {
+            RequestContext.removeRemoteAddr();
+            log.info("重复点赞,清空线程本地变量ThreadLocal: {}",key);
             throw new BusinessException(EnumCode.VOTE_REPEAT);
         }
         //推送消息

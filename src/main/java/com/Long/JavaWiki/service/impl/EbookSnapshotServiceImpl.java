@@ -36,4 +36,12 @@ public class EbookSnapshotServiceImpl extends ServiceImpl<EbookSnapshotMapper, E
     public List<StatisticResp> getStatistic() {
         return ebookSnapshotMapper.getStatistic();
     }
+
+    /**
+     * 获得30天新增数据统计
+     */
+    @Override
+    public List<StatisticResp> get30DayStatistic() {
+        return ebookSnapshotMapper.get30DayStatistic();
+    }
 }

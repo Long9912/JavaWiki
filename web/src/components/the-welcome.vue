@@ -87,12 +87,20 @@
       </a-card>
     </a-col>
   </a-row>
+  <br>
+  <a-row>
+    <a-col :span="24">
+      <div id="main" style="width:100%; height: 300px"></div>
+    </a-col>
+  </a-row>
 </template>
 
 <script lang="ts">
 import {defineComponent, onMounted, ref} from "vue";
 import axios from "axios";
 import {message} from "ant-design-vue";
+
+declare let echarts:any;
 
 export default defineComponent({
   name: "the-welcome",
@@ -128,8 +136,80 @@ export default defineComponent({
       })
     }
 
+    const get30DayStatistic = () => {
+      axios.get("/ebookSnapshot/get30Statistic").then((response)=>{
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          const statisticList = data.content;
+          init30DayStatistic(statisticList);
+        }
+      })
+    }
+
+    const init30DayStatistic = (list:any) => {
+      // 基于准备好的dom，初始化echarts实例
+      const myChart = echarts.init(document.getElementById('main'));
+
+      const xAxis = [] as string[];
+      const seriesView = [] as number[];
+      const seriesVote = [] as number[];
+      for (let i = 0; i < list.length; i++) {
+        const record = list[i];
+        xAxis.push(record.date);
+        seriesView.push(record.viewIncrease);
+        seriesVote.push(record.voteIncrease);
+      }
+
+      myChart.setOption({
+            title: {
+              text: '30天趋势图'
+            },
+            tooltip: {
+              trigger: 'axis'
+            },
+            legend: {
+              data: ['每日阅读数','每日点赞数']
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {}
+              }
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: xAxis
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                name: '每日阅读数',
+                type: 'line',
+                data: seriesView,
+                smooth: true
+              },
+              {
+                name: '每日点赞数',
+                type: 'line',
+                data: seriesVote,
+                smooth: true
+              }
+            ]
+          }
+      );
+    }
+
     onMounted(() => {
       getStatistic();
+      get30DayStatistic();
     });
 
     return {

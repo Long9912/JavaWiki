@@ -65,4 +65,17 @@
         order by `date` asc;
     </select>
 
+    <select id="get30DayStatistic" resultType="com.Long.JavaWiki.response.StatisticResp">
+        select `date`,
+               sum(view_increase) as viewIncrease,
+               sum(vote_increase) as voteIncrease
+        from ebook_snapshot
+        #查出30天前到昨天数据
+        where `date` between date_sub(curdate(), interval 30 day) and date_sub(curdate(), interval 1 day)
+        #根据日期组
+        group by `date`
+        #根据日期排序
+        order by `date` asc;
+    </select>
+
 </mapper>

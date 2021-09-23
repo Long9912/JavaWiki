@@ -26,4 +26,9 @@ public interface EbookSnapshotService extends IService<EbookSnapshot> {
      * @return 总阅读数,总点赞数,昨日今日阅读数,昨日今日点赞数
      */
     List<StatisticResp> getStatistic();
+
+    /**
+     * 获得30天新增数据统计
+     */
+    List<StatisticResp> get30DayStatistic();
 }

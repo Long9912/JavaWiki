@@ -34,5 +34,11 @@ public class EbookSnapshotController {
         return ebookSnapshotService.getStatistic();
     }
 
+    @ApiOperation("获得首页使用的统计数值")
+    @GetMapping("/get30Statistic")
+    private List<StatisticResp> get30DayStatistic() {
+        return ebookSnapshotService.get30DayStatistic();
+    }
+
 }
 

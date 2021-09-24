@@ -24,5 +24,5 @@ public class EbookQueryResp {
 
     private Integer voteCount;
 
-    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
 }

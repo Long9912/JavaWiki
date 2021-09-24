@@ -2,7 +2,6 @@ package com.Long.JavaWiki.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -37,10 +36,5 @@ public class User implements Serializable {
 
     @ApiModelProperty(value = "密码")
     private String password;
-
-    @ApiModelProperty(value = "逻辑删除")
-    @TableLogic
-    private Integer deleted;
-
 
 }

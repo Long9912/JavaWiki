@@ -8,12 +8,11 @@
         <result column="login_name" property="loginName" />
         <result column="name" property="name" />
         <result column="password" property="password" />
-        <result column="deleted" property="deleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, login_name, name, password, deleted
+        id, login_name, name, password
     </sql>
 
 </mapper>

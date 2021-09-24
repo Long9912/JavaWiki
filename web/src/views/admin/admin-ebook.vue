@@ -161,7 +161,6 @@ export default defineComponent({
     ];
 
     //文件上传
-    const uploadUrl = process.env.VUE_APP_SERVER + '/file/fileUpload';
     const fileLoading = ref<boolean>(false);
 
     //上传前检查
@@ -198,8 +197,12 @@ export default defineComponent({
       let formData = new FormData();           //创建一个FormData表单对象
       formData.append('file', info.file);//将文件加到formData里面
       //将表单对象作为接口变量传过去
-      upload(formData)
-          .then((response) => {
+      axios({
+        headers: {'Content-Type': 'multipart/form-data'},
+        url: '/file/fileUpload',
+        method: 'post',
+        data: formData
+      }).then((response) => {
             const data = response.data;
             if (data.code == process.env.VUE_APP_SUCCESS) {
               message.success("上传成功");
@@ -210,15 +213,6 @@ export default defineComponent({
           })
 
     };
-
-    const upload = (parameter) => {
-      return axios({
-        headers: {'Content-Type': 'multipart/form-data'},
-        url: uploadUrl,
-        method: 'post',
-        data: parameter
-      })
-    }
 
     const getImageUrl = (url) => {
       return process.env.VUE_APP_SERVER + url;
@@ -373,7 +367,6 @@ export default defineComponent({
       handleQuery,
 
       fileLoading,
-      upload,
       uploadLink,
       handleChange,
       beforeUpload,

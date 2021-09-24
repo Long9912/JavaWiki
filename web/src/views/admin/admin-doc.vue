@@ -383,6 +383,35 @@ export default defineComponent({
       //初始化富文本框
       editor = new Editor('#content');
       editor.config.zIndex=0;
+
+      //自定义上传方法
+      editor.config.customUploadImg = function (resultFiles, insertImgFn) {
+        // insertImgFn 是获取图片 url 后，插入到编辑器的方法
+        //创建一个FormData表单对象
+        let imgUrl =null;
+        let formData = new FormData();
+        //将文件加到formData里面
+        formData.append('file', resultFiles[0]);
+        //将表单对象作为接口变量传过去
+        axios({
+          headers: {'Content-Type': 'multipart/form-data'},
+          url: '/file/fileUpload',
+          method: 'post',
+          data: formData
+        }).then((response) => {
+              const data = response.data;
+              if (data.code == process.env.VUE_APP_SUCCESS) {
+                message.success("上传成功");
+                imgUrl = data.content;
+                //增加服务器前缀
+                imgUrl = process.env.VUE_APP_SERVER + imgUrl;
+                // 上传图片，返回结果，将图片插入到编辑器中
+                insertImgFn(imgUrl);
+              } else {
+                message.error(data.content.respMsg);
+              }
+            })
+      }
       editor.create();
     });
 

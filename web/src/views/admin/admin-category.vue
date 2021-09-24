@@ -4,12 +4,6 @@
       <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
         <a-form layout="inline" :model="queryParam">
           <a-form-item>
-            <a-button @click="handleQuery()">
-              <template #icon><SearchOutlined /></template>
-              查询
-            </a-button>
-          </a-form-item>
-          <a-form-item>
             <a-button type="primary" @click="add">
               <template #icon><PlusSquareOutlined /></template>
               新增
@@ -57,9 +51,6 @@
         @ok="handleModalOk"
     >
       <a-form :model="category" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
-        <a-form-item label="id">
-          <a-input v-model:value="category.id" disabled="true"/>
-        </a-form-item>
         <a-form-item label="名称">
           <a-input v-model:value="category.name"/>
         </a-form-item>
@@ -96,16 +87,8 @@ export default defineComponent({
 
     const columns = [
       {
-        title: 'Id',
-        dataIndex: 'id'
-      },
-      {
         title: '名称',
         dataIndex: 'name'
-      },
-      {
-        title: '父类',
-        dataIndex: 'parent'
       },
       {
         title: '顺序',

@@ -12,12 +12,6 @@
           <a-layout-content :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
             <a-form layout="inline" :model="queryParam">
               <a-form-item>
-                <a-button @click="handleQuery()">
-                  <template #icon><SearchOutlined /></template>
-                  查询
-                </a-button>
-              </a-form-item>
-              <a-form-item>
                 <a-button type="primary" @click="add">
                   <template #icon><PlusSquareOutlined /></template>
                   新增

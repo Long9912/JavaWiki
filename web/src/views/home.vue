@@ -54,7 +54,7 @@
                       </router-link>
                     </template>
                     <template #avatar>
-                      <a-avatar :src="getImageUrl(item.cover)"/>
+                      <img class="cover" :src="getImageUrl(item.cover)" alt="封面"/>
                     </template>
                   </a-list-item-meta>
                 </a-list-item>
@@ -149,8 +149,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-  .ant-avatar {
+<style>
+  .cover {
     width: 50px;
     height: 50px;
     line-height: 50px;

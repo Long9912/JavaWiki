@@ -31,7 +31,7 @@
             @change="handleTableChange"
         >
           <template #cover="{ text: cover }">
-            <img v-if="cover" :src="getImageUrl(cover)" alt="封面"/>
+            <img class="cover" v-if="cover" :src="getImageUrl(cover)" alt="封面"/>
           </template>
           <template v-slot:category="{ text, record }">
             <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
@@ -81,7 +81,7 @@
               @change="handleChange"
               :customRequest=uploadLink
           >
-            <img v-if="ebook.cover" :src="getImageUrl(ebook.cover)" alt="封面" />
+            <img  v-if="ebook.cover" :src="getImageUrl(ebook.cover)" alt="封面" style="max-width: 300%"/>
             <div v-else>
               <loading-outlined v-if="fileLoading"></loading-outlined>
               <plus-outlined v-else></plus-outlined>
@@ -180,15 +180,15 @@ export default defineComponent({
     //图片上传状态
     const handleChange = (info) => {
       if (info.file.status === 'uploading') {
-        loading.value = true;
+        fileLoading.value = true;
         return;
       }
       if (info.file.status === 'done') {
-        loading.value = false;
+        fileLoading.value = false;
         message.success('上传成功');
       }
       if (info.file.status === 'error') {
-        loading.value = false;
+        fileLoading.value = false;
         message.error('上传失败');
       }
     };
@@ -396,10 +396,6 @@ export default defineComponent({
 
 <style>
 .avatar-uploader > .ant-upload {
-  width: 50px;
-  height: 50px;
-}
-img {
   width: 50px;
   height: 50px;
 }

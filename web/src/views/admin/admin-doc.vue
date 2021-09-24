@@ -295,7 +295,7 @@ export default defineComponent({
       editor.txt.clear();
       doc.value={};
       doc.value.ebookId=ebookId.value;
-      treeSelectData.value = Tool.copy(level1.value);
+      treeSelectData.value = Tool.copy(level1.value) || [];
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
     };

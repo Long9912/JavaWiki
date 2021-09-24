@@ -1,6 +1,8 @@
 <template>
-  <a-layout-header class="header">
-    <div class="logo">Java知识库</div>
+  <a-layout-header class="header" style="padding-left: 20px">
+    <div class="logo">
+      <img class="logoImg" src="../../public/image/logo.jpg">
+    </div>
     <a-popconfirm
         title="确认退出?"
         ok-text="是"
@@ -147,10 +149,13 @@ export default defineComponent({
 }
 
 .logo {
-  width: 120px;
-  height: 31px;
+  width: 160px;
+  height: 40px;
   float: left;
-  color: white;
-  font-size: 18px;
+}
+
+.logoImg {
+  width: 160px;
+  height: 40px;
 }
 </style>

@@ -31,7 +31,7 @@ public class WebSocketServer {
     public void onOpen(Session session, @PathParam("token") String token) {
         map.put(token, session);
         this.token = token;
-        LOG.info("有新连接:token:{},session id:{}，当前连接数:{}", token, session.getId(), map.size());
+        LOG.info("有新连接:token:{},session id:{} 当前连接数:{}", token, session.getId(), map.size());
     }
 
     /**
@@ -40,7 +40,7 @@ public class WebSocketServer {
     @OnClose
     public void onClose(Session session) {
         map.remove(this.token);
-        LOG.info("连接关闭,token:{},session id:{}!当前连接数:{}", this.token, session.getId(), map.size());
+        LOG.info("连接关闭,token:{},session id:{} 当前连接数:{}", this.token, session.getId(), map.size());
     }
 
     /**

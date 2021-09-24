@@ -234,6 +234,12 @@ export default defineComponent({
   margin: 10px 0 10px 20px;
 }
 
+/* 图片自适应 */
+.wangEditor img {
+  max-width: 100%;
+  height: auto;
+}
+
 .vote {
   padding: 15px;
   text-align: center;

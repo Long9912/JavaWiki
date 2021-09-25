@@ -2,6 +2,7 @@ package com.Long.JavaWiki.service.impl;
 
 import com.Long.JavaWiki.exception.BusinessException;
 import com.Long.JavaWiki.exception.EnumCode;
+import com.Long.JavaWiki.util.RegExpUtil;
 import com.Long.JavaWiki.util.SnowFlake;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -20,7 +23,11 @@ public class FileService {
     private String uploadPath;
 
     @Autowired
-    SnowFlake snowFlake;
+    private SnowFlake snowFlake;
+
+    @Autowired
+    private RegExpUtil regExpUtil;
+
 
     /**
      * 上传图片
@@ -70,4 +77,34 @@ public class FileService {
         return resultInfo;
     }
 
+    /**
+     * 更新时对比文本获取被删除的图片
+     */
+    public void compareDeleteImg(String oldText, String newText) {
+        List<String> oldImgList = regExpUtil.getImgList(oldText);
+        List<String> newImgList = regExpUtil.getImgList(newText);
+
+        List<String> notExist =new ArrayList<>();
+        for (String imgFile : oldImgList) {
+            //当新图片列表里不存在旧图片时,说明图片被删除了
+            if (!newImgList.contains(imgFile)){
+                notExist.add(imgFile);
+            }
+        }
+        notExist.forEach(imgFile->{
+            log.info("更新文章时发现被删除的图片: {}",imgFile);
+            delFile(imgFile);
+        });
+    }
+
+    /**
+     * 删除文章时获取被删除的图片
+     */
+    public void deleteImg(String htmlText) {
+        List<String> imgList = regExpUtil.getImgList(htmlText);
+        imgList.forEach(imgFile->{
+            log.info("删除文章时发现被删除的图片: {}",imgFile);
+            delFile(imgFile);
+        });
+    }
 }

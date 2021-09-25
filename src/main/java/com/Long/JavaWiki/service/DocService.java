@@ -32,9 +32,9 @@ public interface DocService extends IService<Doc> {
     PageResp<DocQueryResp> list(DocQueryReq req);
 
     /**
-     * 保存或更新文档信息,文档内容
+     * 保存或更新文档信息,文档内容,更新时对比文本获取被删除的图片,然后在服务器中删除文件
      */
-    boolean saveOrUpdate(DocSaveReq req);
+    void saveOrUpdate(DocSaveReq req);
 
     /**
      * 查看文档内容,阅读数加1

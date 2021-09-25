@@ -10,6 +10,7 @@ import com.Long.JavaWiki.request.DocQueryReq;
 import com.Long.JavaWiki.request.DocSaveReq;
 import com.Long.JavaWiki.response.DocQueryResp;
 import com.Long.JavaWiki.response.PageResp;
+import com.Long.JavaWiki.service.ContentService;
 import com.Long.JavaWiki.service.DocService;
 import com.Long.JavaWiki.util.CopyUtil;
 import com.Long.JavaWiki.util.RedisUtil;
@@ -42,6 +43,9 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
 
     @Autowired
     private ContentMapper contentMapper;
+
+    @Autowired
+    private ContentService contentService;
 
     @Autowired
     private RedisUtil redisUtil;
@@ -82,20 +86,15 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
 
     @Override
     @Transactional(rollbackFor=Exception.class)
-    public boolean saveOrUpdate(DocSaveReq req) {
+    public void saveOrUpdate(DocSaveReq req) {
         Doc doc = CopyUtil.copy(req, Doc.class);
         Content content = CopyUtil.copy(req, Content.class);
         //保存文档消息
         super.saveOrUpdate(doc);
         //获取到文档的雪花id,再保存到单独文档内容表
         content.setId(doc.getId());
-        //尝试更新文档内容
-        int count = contentMapper.updateById(content);
-        //文档内容表没有此数据时插入新数据
-        if (count == 0) {
-            contentMapper.insert(content);
-        }
-        return true;
+        //保存文档内容,对比文本在服务器删除对应图片
+        contentService.saveContent(content);
     }
 
     @Override

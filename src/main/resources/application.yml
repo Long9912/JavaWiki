@@ -8,10 +8,8 @@ swagger:
   enable: true
 
 file:
-  #服务器文件上传地址
-  uploadUrl: "/long/upload/images/"
   #本地文件上传地址
-  localUrl: "E:/IdeaProjects/JavaWiki/upload/images/"
+  localUrl: "E:/upload/images/"
 
 spring:
   datasource:

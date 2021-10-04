@@ -6,6 +6,7 @@
             mode="inline"
             :style="{ height: '100%', borderRight: 0 }"
             @click="handleClick"
+            :openKeys="openKeys"
         >
           <a-menu-item key="welcome">
             <HomeOutlined />
@@ -80,6 +81,7 @@ export default defineComponent({
     const ebooks = ref();
     const isShowWelcome = ref(true);
     let categoryId2 = '0';
+    const openKeys =  ref();
 
     const level1 = ref(); // 一级分类树，children属性就是二级分类
     let categorys:any;
@@ -91,6 +93,12 @@ export default defineComponent({
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
           categorys = data.content;
+
+          // 加载完分类后，将侧边栏全部展开
+          openKeys.value = [];
+          for (let i = 0; i < categorys.length; i++) {
+            openKeys.value.push(categorys[i].id)
+          }
 
           level1.value = [];
           //使用递归将数组转为树形结构
@@ -140,7 +148,8 @@ export default defineComponent({
       isShowWelcome,
       level1,
       handleClick,
-      getImageUrl
+      getImageUrl,
+      openKeys
     }
   },
   components:{

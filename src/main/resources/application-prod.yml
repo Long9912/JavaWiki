@@ -13,5 +13,6 @@ spring:
     username: wiki
     password: '@wiki'
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  redis:
+    password: wiki
 

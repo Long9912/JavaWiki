@@ -1,4 +1,5 @@
 module.exports = {
+    productionSourceMap: false,
     pwa: {
         iconPaths: {
             favicon32: 'favicon.ico',

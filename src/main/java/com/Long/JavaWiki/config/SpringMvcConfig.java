@@ -1,5 +1,6 @@
 package com.Long.JavaWiki.config;
 
+import com.Long.JavaWiki.interceptor.ActionInterceptor;
 import com.Long.JavaWiki.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +22,12 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     @Resource
     LoginInterceptor loginInterceptor;
 
+    @Resource
+    ActionInterceptor actionInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //登录拦截
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
@@ -43,6 +48,13 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/v3/**",
                         "/doc.html"
                         );
+        //权限拦截
+        registry.addInterceptor(actionInterceptor)
+                .addPathPatterns(
+                        "/*/save",
+                        "/*/delete/**",
+                        "/*/resetPassword",
+                        "/file/*");
     }
 
     /**

@@ -1,5 +1,8 @@
 package com.Long.JavaWiki.interceptor;
 
+import com.Long.JavaWiki.response.UserLoginResp;
+import com.Long.JavaWiki.util.LoginUserContext;
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -54,6 +57,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         } else {
             LOG.info("已登录:{}", object);
+            //登录后保存用户消息,用来检查管理员权限
+            LoginUserContext.setUser(JSON.parseObject((String) object, UserLoginResp.class));
             return true;
         }
     }

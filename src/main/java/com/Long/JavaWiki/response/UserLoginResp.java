@@ -11,6 +11,8 @@ public class UserLoginResp {
 
     private String name;
 
+    private String isAdmin;
+
     private String token;
 
 }

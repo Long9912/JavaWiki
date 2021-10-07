@@ -53,7 +53,8 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns(
                         "/*/save",
                         "/*/delete/**",
-                        "/*/resetPassword",
+                        "/user/resetPassword",
+                        "/user/setAdmin/**",
                         "/file/*");
     }
 

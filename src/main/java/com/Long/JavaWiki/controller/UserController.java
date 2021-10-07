@@ -108,5 +108,14 @@ public class UserController {
         return "退出成功";
     }
 
+    @ApiOperation("设置管理员")
+    @ApiImplicitParam(name = "id", value = "传入一个id", required = true, dataType = "String", paramType = "path")
+    @PostMapping("/setAdmin/{id}")
+    public String setAdmin(@PathVariable Long id) {
+        userService.setAdmin(id);
+        log.info("设置管理员:{}",id);
+        return "设置成功";
+    }
+
 }
 

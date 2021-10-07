@@ -36,6 +36,14 @@
                 <template #icon><RedoOutlined /></template>
                 重置密码
               </a-button>
+              <a-button v-show="record.isAdmin==='false'" type="primary" @click="setAdmin(record.id)">
+                <template #icon><UserAddOutlined /></template>
+                设为管理员
+              </a-button>
+              <a-button v-show="record.isAdmin==='true'" type="danger" @click="setAdmin(record.id)">
+                <template #icon><UserDeleteOutlined /></template>
+                取消管理员
+              </a-button>
               <a-button type="primary" @click="edit(record)">
                 <template #icon><EditOutlined/></template>
                 编辑
@@ -282,6 +290,21 @@ export default defineComponent({
       resetModalVisible.value = true;
     };
 
+    const setAdmin = (id:any) => {
+      axios.post("/user/setAdmin/"+ id).then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          //重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize
+          });
+          message.success(data.content)
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    }
     onMounted(() => {
       handleQuery({
         page: 1,
@@ -305,6 +328,7 @@ export default defineComponent({
       modalLoading,
       handleModalOk,
       reset,
+      setAdmin,
       resetModalVisible,
       resetModalLoading,
       handleResetOk,

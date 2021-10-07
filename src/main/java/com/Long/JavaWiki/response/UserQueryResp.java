@@ -21,4 +21,6 @@ public class UserQueryResp  {
 
     private String password;
 
+    private String isAdmin;
+
 }

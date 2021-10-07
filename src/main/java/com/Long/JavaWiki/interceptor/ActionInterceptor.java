@@ -28,12 +28,12 @@ public class ActionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         // OPTIONS请求不做校验,
         // 前后端分离的架构, 前端会发一个OPTIONS请求先做预检, 对预检请求不做校验
-        if("OPTIONS".equals(request.getMethod().toUpperCase())){
+        if("OPTIONS".equalsIgnoreCase(request.getMethod())){
             return true;
         }
 
         UserLoginResp userLoginResp = LoginUserContext.getUser();
-        if ("Long12".equals(userLoginResp.getLoginName())) {
+        if ("true".equals(userLoginResp.getIsAdmin())) {
             //管理员用户不拦截
             return true;
         }
@@ -46,7 +46,7 @@ public class ActionInterceptor implements HandlerInterceptor {
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().print(JSONObject.toJSON(responseData));
-        //移除保持的用户数据
+        //移除保存的用户数据
         LoginUserContext.removeUser();
         return false;
     }

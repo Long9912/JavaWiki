@@ -8,4 +8,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UserMapper extends BaseMapper<User> {
 
+    /**
+     * 设置管理员
+     * @param id 用户id
+     */
+    void setAdmin(Long id);
 }

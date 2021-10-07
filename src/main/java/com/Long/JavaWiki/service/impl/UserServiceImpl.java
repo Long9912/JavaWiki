@@ -104,4 +104,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
     }
 
+    @Override
+    public void setAdmin(Long id) {
+        userMapper.setAdmin(id);
+    }
+
 }

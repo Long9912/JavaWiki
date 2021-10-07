@@ -15,4 +15,15 @@
         id, login_name, name, password
     </sql>
 
+    <update id="setAdmin">
+        update user
+        set is_admin = CASE
+                           when is_admin = 'true' then
+                               'false'
+                           else
+                               'true'
+            END
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
 </mapper>

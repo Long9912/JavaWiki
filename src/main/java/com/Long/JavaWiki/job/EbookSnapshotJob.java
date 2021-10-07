@@ -24,9 +24,9 @@ public class EbookSnapshotJob {
     private SnowFlake snowFlake;
 
     /**
-     * 每6分钟更新一次电子书快照
+     * 每分钟更新一次电子书快照
      */
-    @Scheduled(cron = "0 */6 * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     public void cron() {
         //加入日志流水号
         MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));

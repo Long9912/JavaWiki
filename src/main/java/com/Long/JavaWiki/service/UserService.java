@@ -49,4 +49,10 @@ public interface UserService extends IService<User> {
      * @return id 用户名 昵称
      */
     UserLoginResp login(UserLoginReq req);
+
+    /**
+     * 设置管理员
+     * @param id 用户id
+     */
+    void setAdmin(Long id);
 }

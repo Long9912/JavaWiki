@@ -166,7 +166,7 @@
   </a-layout>
 </template>
 
-<style>
+<style scoped>
 .about {
   line-height: 30px;
   padding: 40px;
@@ -183,36 +183,36 @@
   margin-top: 10px;
 }
 
-table{
+.about table{
   width: 80%;
   text-align: center;
   border-collapse: collapse;
 }
 
-th,td{
+.about th,td{
   border: 1px solid #999;
   text-align: center;
   padding: 5px 0;
 }
 
-table thead tr{
+.about table thead tr{
   background-color: #47728d;
   color: #fff;
 }
 
-table tbody tr:nth-child(odd){
+.about table tbody tr:nth-child(odd){
   background-color: #eee;
 }
 
-table tbody tr:hover{
+.about table tbody tr:hover{
   background-color: #ccc;
 }
 
-table tbody tr td:first-child{
+.about table tbody tr td:first-child{
   color: #f40;
 }
 
-table tfoot tr td{
+.about table tfoot tr td{
   text-align: right;
   padding-right: 20px;
 }

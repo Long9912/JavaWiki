@@ -14,6 +14,7 @@
           <li><strong>ECharts</strong> 首页30天数据统计展示</li>
           <li><strong>定时任务设计</strong> 定时执行复杂SQL统计电子书数据</li>
           <li><strong>登录校验</strong>  用户登录后,在Redis 存储用户 Token 用于接口校验</li>
+          <li><strong>权限校验</strong>  登录后,保存用户消息,对增删改接口进行拦截,验证当前用户是否管理员</li>
           <li><strong>接口防重</strong> 点赞时通过AOP获取到用户远程IP,保存在ThreadLocal中,在Redis中将文章id与远程ip作为key,一天只能对一篇文章点赞一次</li>
           <li><strong>WebSocket</strong> 实现向浏览器发送消息通知,点赞后会通知所有连接会话的用户</li>
           <li><strong>异步处理</strong> 点赞后,通知功能异步处理,解耦点赞与通知功能</li>
@@ -28,36 +29,134 @@
         </ul>
 
         <h2>依赖</h2>
-        <pre>
-          | 后端依赖项            | 版本    | 说明
-          | -------------------- | ------- | ---------------------------------
-          | Spring Boot          | 2.5.4   | MVC 框架，容器，切面
-          | MySQL                | 8.0     | 数据库
-          | MyBatisPlus          | 3.4.3.3 | 持久层框架,简化单表操作,分页
-          | MyBatisPlusGenerator | 3.4.1   | 代码生成器
-          | Velocity             | 2.3     | 用于代码生成
-          | Alibaba Druid        | 1.2.6   | 数据库连接池
-          | Swagger              | 3.0     | 接口文档生成工具
-          | Fastjson             | 1.2.76  | 处理json格式,解决js中Long精度问题
-          | Redis                | ---     | 用于登录校验,接口防重设计
-          | Devtools             | ---     | 热部署工具
-          | Log4j2               | ---     | Log日志
-          | Lombok               | ---     | 减少模板代码工具类
-          | Validation           | ---     | 数据验证
-          | WebSocket            | ---     | 向浏览器发送通知
-          | Aop                  | ---     | 开启Aop功能,日志记录
-        </pre>
-
-        <pre>
-          | 前端依赖项      | 版本   | 说明
-          | -------------- | ------ | ----------------------
-          | Vue            | 3.0    | 渐进式 JavaScript 框架
-          | Ant Design Vue | 2.2.6  | UI组件库
-          | Axios          | 0.21.4 | 前后端通信
-          | Vue-router     | 4.0    | 前端路由
-          | Vuex           | 4.0    | 保存用户状态
-          | wangeditor     | 4.7.8  | 富文本编辑器
-        </pre>
+        <table style="margin-left: 80px">
+          <thead>
+          <tr>
+            <th>后端依赖项</th>
+            <th>版本</th>
+            <th>说明</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Spring Boot</td>
+            <td>2.5.4</td>
+            <td>MVC 框架，容器，切面</td>
+          </tr>
+          <tr>
+            <td>MySQL</td>
+            <td>8.0</td>
+            <td>数据库</td>
+          </tr>
+          <tr>
+            <td>MyBatisPlus</td>
+            <td>3.4.3.3</td>
+            <td>持久层框架,简化单表操作,分页</td>
+          </tr>
+          <tr>
+            <td>MyBatisPlusGenerator</td>
+            <td>3.4.1</td>
+            <td>代码生成器</td>
+          </tr>
+          <tr>
+            <td>Velocity</td>
+            <td>2.3</td>
+            <td>用于代码生成</td>
+          </tr>
+          <tr>
+            <td>Alibaba Druid</td>
+            <td>1.2.6</td>
+            <td>数据库连接池</td>
+          </tr>
+          <tr>
+            <td>Swagger</td>
+            <td>3.0</td>
+            <td>接口文档生成工具</td>
+          </tr>
+          <tr>
+            <td>Fastjson</td>
+            <td>1.2.76</td>
+            <td>处理json格式,解决js中Long精度问题</td>
+          </tr>
+          <tr>
+            <td>Redis</td>
+            <td>---</td>
+            <td>用于登录校验,接口防重设计</td>
+          </tr>
+          <tr>
+            <td>Devtools</td>
+            <td>---</td>
+            <td>热部署工具</td>
+          </tr>
+          <tr>
+            <td>Log4j2</td>
+            <td>---</td>
+            <td>Log日志</td>
+          </tr>
+          <tr>
+            <td>Lombok</td>
+            <td>---</td>
+            <td>减少模板代码工具类</td>
+          </tr>
+          <tr>
+            <td>Validation</td>
+            <td>---</td>
+            <td>数据验证</td>
+          </tr>
+          <tr>
+            <td>WebSocket</td>
+            <td>---</td>
+            <td>向浏览器发送通知</td>
+          </tr>
+          <tr>
+            <td>Aop</td>
+            <td>---</td>
+            <td>开启Aop功能,日志记录</td>
+          </tr>
+          </tbody>
+        </table>
+        <br/>
+        <table style="margin-left: 80px">
+          <thead>
+          <tr>
+            <th>前端依赖项</th>
+            <th>版本</th>
+            <th>说明</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Vue</td>
+            <td>3.0</td>
+            <td>渐进式 JavaScript 框架</td>
+          </tr>
+          <tr>
+            <td>Ant Design Vue</td>
+            <td>2.2.6</td>
+            <td>UI组件库</td>
+          </tr>
+          <tr>
+            <td>Axios</td>
+            <td>0.21.4</td>
+            <td>前后端通信</td>
+          </tr>
+          <tr>
+            <td>Vue-router</td>
+            <td>4.0</td>
+            <td>前端路由</td>
+          </tr>
+          <tr>
+            <td>Vuex</td>
+            <td>4.0</td>
+            <td>保存用户状态</td>
+          </tr>
+          <tr>
+            <td>WangEditor</td>
+            <td>4.6.3</td>
+            <td>富文本编辑器</td>
+          </tr>
+          </tbody>
+        </table>
 
         <h2>Long9912 </h2>
         <div><b>QQ:792516830</b></div>
@@ -83,4 +182,39 @@
 .about img {
   margin-top: 10px;
 }
+
+table{
+  width: 80%;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+th,td{
+  border: 1px solid #999;
+  text-align: center;
+  padding: 5px 0;
+}
+
+table thead tr{
+  background-color: #47728d;
+  color: #fff;
+}
+
+table tbody tr:nth-child(odd){
+  background-color: #eee;
+}
+
+table tbody tr:hover{
+  background-color: #ccc;
+}
+
+table tbody tr td:first-child{
+  color: #f40;
+}
+
+table tfoot tr td{
+  text-align: right;
+  padding-right: 20px;
+}
+
 </style>

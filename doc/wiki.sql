@@ -68,15 +68,15 @@ CREATE TABLE `doc`  (
 -- ----------------------------
 -- Records of doc
 -- ----------------------------
-INSERT INTO `doc` VALUES (1, 1, 0, '文档1', 1, 34, 9, 0, '2021-09-15 21:01:21', '2021-09-18 16:26:03');
+INSERT INTO `doc` VALUES (1, 1, 0, '文档1', 1, 34, 9, 0, '2021-09-15 21:01:21', '2021-10-07 18:14:57');
 INSERT INTO `doc` VALUES (2, 1, 1, '文档1.1', 1, 18, 2, 0, '2021-09-15 21:01:21', '2021-09-23 15:05:43');
 INSERT INTO `doc` VALUES (3, 1, 0, '文档2', 2, 10, 1, 0, '2021-09-15 21:01:21', '2021-09-15 21:01:21');
 INSERT INTO `doc` VALUES (4, 1, 3, '文档2.1', 2, 15, 2, 0, '2021-09-15 21:01:21', '2021-09-15 21:01:21');
 INSERT INTO `doc` VALUES (5, 1, 1437317930831314945, '文档3.1', 2, 21, 1, 0, '2021-09-15 21:01:21', '2021-09-15 21:01:21');
 INSERT INTO `doc` VALUES (6, 1, 5, '文档3.1.1', 1, 19, 1, 0, '2021-09-15 21:01:21', '2021-09-15 21:01:21');
 INSERT INTO `doc` VALUES (1437317930831314945, 1, 0, '文档3', 3, 8, 1, 0, '2021-09-15 21:01:21', '2021-09-15 21:01:21');
-INSERT INTO `doc` VALUES (1438000187241934850, 2, 0, 'Ant Design of Vue', 1, 57, 3, 0, '2021-09-15 21:01:21', '2021-09-15 21:01:21');
-INSERT INTO `doc` VALUES (1438000644823724034, 2, 1438000187241934850, '关于ant-design-vue', 3, 35, 3, 0, '2021-09-15 21:01:21', '2021-10-06 00:25:00');
+INSERT INTO `doc` VALUES (1438000187241934850, 2, 0, 'Ant Design of Vue', 1, 72, 5, 0, '2021-09-15 21:01:21', '2021-09-15 21:01:21');
+INSERT INTO `doc` VALUES (1438000644823724034, 2, 1438000187241934850, '关于ant-design-vue', 3, 44, 3, 0, '2021-09-15 21:01:21', '2021-10-06 00:25:00');
 INSERT INTO `doc` VALUES (1439143762902151169, 1, 0, 'abc', 123, 15, 3, 0, '2021-09-18 16:26:26', '2021-09-18 16:26:30');
 INSERT INTO `doc` VALUES (1439823758947819521, 1, 1439143762902151169, 'cde', 456, 3, 3, 0, '2021-09-20 13:28:29', '2021-09-20 14:58:14');
 
@@ -103,7 +103,7 @@ CREATE TABLE `ebook`  (
 -- Records of ebook
 -- ----------------------------
 INSERT INTO `ebook` VALUES (1, 'Spring Boot 入门教程', 200, 202, '企业级应用开发最佳首选框架', '/image/100580371187503104-1.png', 9, 143, 23, 0, '2021-10-05 21:10:30');
-INSERT INTO `ebook` VALUES (2, 'Vue 入门教程', 100, 102, '企业级应用开发最佳首选框架', '/image/100580394134540289-2.png', 2, 92, 6, 0, '2021-10-05 21:10:36');
+INSERT INTO `ebook` VALUES (2, 'Vue 入门教程', 100, 102, '企业级应用开发最佳首选框架', '/image/100580394134540289-2.png', 2, 116, 8, 0, '2021-10-05 21:10:36');
 INSERT INTO `ebook` VALUES (3, 'MySQL 入门教程 ', 300, 301, '企业级应用开发最佳首选', '/image/100580414678241280-5.png', 0, 0, 0, 0, '2021-10-05 21:10:41');
 INSERT INTO `ebook` VALUES (4, 'Swagger 入门教程', 200, 202, '企业级应用开发最佳首选框架', '/image/100580432558559233-4.png', 0, 0, 0, 0, '2021-10-05 21:10:45');
 INSERT INTO `ebook` VALUES (5, 'MyBatisPlus 入门教程', 300, 302, '企业级应用开发最佳首选', '/image/100580454293442560-5.png', 0, 0, 0, 0, '2021-10-05 21:10:50');
@@ -124,66 +124,7 @@ CREATE TABLE `ebook_snapshot`  (
   `view_increase` int NOT NULL DEFAULT 0 COMMENT '阅读增长',
   `vote_increase` int NOT NULL DEFAULT 0 COMMENT '点赞增长',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 77 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电子书快照' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of ebook_snapshot
--- ----------------------------
-INSERT INTO `ebook_snapshot` VALUES (1, 1, '2021-09-21', 120, 17, 120, 17);
-INSERT INTO `ebook_snapshot` VALUES (2, 3, '2021-09-21', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (3, 4, '2021-09-21', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (4, 5, '2021-09-21', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (5, 1436589909073756161, '2021-09-21', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (6, 1436599062148247554, '2021-09-21', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (7, 1440230385408651266, '2021-09-21', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (16, 1, '2021-09-22', 139, 23, 19, 6);
-INSERT INTO `ebook_snapshot` VALUES (17, 2, '2021-09-22', 74, 3, 74, 3);
-INSERT INTO `ebook_snapshot` VALUES (18, 3, '2021-09-22', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (19, 4, '2021-09-22', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (20, 5, '2021-09-22', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (21, 1436589909073756161, '2021-09-22', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (22, 1436599062148247554, '2021-09-22', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (23, 1440230385408651266, '2021-09-22', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (31, 1, '2021-09-23', 142, 23, 3, 0);
-INSERT INTO `ebook_snapshot` VALUES (32, 2, '2021-09-23', 83, 4, 9, 1);
-INSERT INTO `ebook_snapshot` VALUES (33, 3, '2021-09-23', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (34, 4, '2021-09-23', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (35, 5, '2021-09-23', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (36, 1436589909073756161, '2021-09-23', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (37, 1436599062148247554, '2021-09-23', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (38, 1440230385408651266, '2021-09-23', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (46, 1, '2021-09-24', 142, 23, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (47, 2, '2021-09-24', 84, 4, 1, 0);
-INSERT INTO `ebook_snapshot` VALUES (48, 3, '2021-09-24', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (49, 4, '2021-09-24', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (50, 5, '2021-09-24', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (51, 1436589909073756161, '2021-09-24', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (52, 1436599062148247554, '2021-09-24', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (53, 1440230385408651266, '2021-09-24', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (54, 1, '2021-10-04', 142, 23, 142, 23);
-INSERT INTO `ebook_snapshot` VALUES (55, 2, '2021-10-04', 85, 5, 85, 5);
-INSERT INTO `ebook_snapshot` VALUES (56, 3, '2021-10-04', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (57, 4, '2021-10-04', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (58, 5, '2021-10-04', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (59, 1436589909073756161, '2021-10-04', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (60, 1436599062148247554, '2021-10-04', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (61, 1440230385408651266, '2021-10-04', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (62, 1, '2021-10-05', 143, 23, 1, 0);
-INSERT INTO `ebook_snapshot` VALUES (63, 2, '2021-10-05', 92, 6, 7, 1);
-INSERT INTO `ebook_snapshot` VALUES (64, 3, '2021-10-05', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (65, 4, '2021-10-05', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (66, 5, '2021-10-05', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (67, 1436589909073756161, '2021-10-05', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (68, 1436599062148247554, '2021-10-05', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (69, 1440230385408651266, '2021-10-05', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (77, 1, '2021-10-06', 143, 23, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (78, 2, '2021-10-06', 92, 6, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (79, 3, '2021-10-06', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (80, 4, '2021-10-06', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (81, 5, '2021-10-06', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (82, 1436589909073756161, '2021-10-06', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (83, 1436599062148247554, '2021-10-06', 0, 0, 0, 0);
-INSERT INTO `ebook_snapshot` VALUES (84, 1440230385408651266, '2021-10-06', 0, 0, 0, 0);
+) ENGINE = InnoDB AUTO_INCREMENT = 107 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电子书快照' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for user
@@ -194,6 +135,7 @@ CREATE TABLE `user`  (
   `login_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登陆名',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
   `password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
+  `is_admin` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'false' COMMENT '管理员标识',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `login_name_uindex`(`login_name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户' ROW_FORMAT = DYNAMIC;
@@ -201,10 +143,10 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1434857573659443201, 'test', '测试用户', '7354a1d413535a6c0dc5c209e198d799');
-INSERT INTO `user` VALUES (1438141057102610433, 'test2', 'Long', 'a48895a6380f269780666b2d492d08b2');
-INSERT INTO `user` VALUES (1439132061330874375, 'test3', 'test', '05868668465e6e515f6472740a508ac6');
-INSERT INTO `user` VALUES (1445377119931375618, 'test4', '测试', '296b0f9fc224484c79584a68687943c7');
-INSERT INTO `user` VALUES (1445377868295872514, 'Long12', '龙', '068f798972eea38846b627e655dc513c');
+INSERT INTO `user` VALUES (1433377868295872514, 'Long12', '龙', '068f798972eea38846b627e655dc513c', 'true');
+INSERT INTO `user` VALUES (1434857573659443203, 'test', '测试用户', '7354a1d413535a6c0dc5c209e198d799', 'true');
+INSERT INTO `user` VALUES (1438141057102610433, 'test2', 'Long12', 'a48895a6380f269780666b2d492d08b2', 'false');
+INSERT INTO `user` VALUES (1439132061330874375, 'test3', 'test', '05868668465e6e515f6472740a508ac6', 'false');
+INSERT INTO `user` VALUES (1445377119931375618, 'test4', '测试', '296b0f9fc224484c79584a68687943c7', 'false');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -2,7 +2,8 @@
   <a-layout>
     <a-layout-content :style="{ background: '#fff',marginLeft:'20px',marginRight:'20px', minHeight: '280px' }">
       <a-row>
-        <a-col :span="6">
+        <a-col :span="5">
+          <a-back-top />
           <a-page-header
               style="height: 70px"
               :title="bookName"
@@ -19,18 +20,18 @@
           >
           </a-tree>
         </a-col>
-        <a-col :span="18" v-if="level1.length !== 0">
-          <div>
-            <h2>{{doc.name}}</h2>
+        <a-col :span="19" v-if="level1.length !== 0">
+          <h2>{{doc.name}}</h2>
+          <div style="color: #999aaa">
             <div>
-              <span>创建时间：{{doc.createTime}}</span> &nbsp; &nbsp;
-              <span>更新时间：{{doc.updateTime}}</span> &nbsp; &nbsp;
+              <span><CalendarOutlined /> {{doc.createTime}}</span> &nbsp; &nbsp;
+              <span><FieldTimeOutlined /> {{doc.updateTime}}</span> &nbsp; &nbsp;
             </div>
             <div>
-              <span>阅读数：{{doc.viewCount}}</span> &nbsp; &nbsp;&nbsp;
-              <span>点赞数：{{doc.voteCount}}</span> &nbsp; &nbsp;
+              <span><EyeOutlined /> {{doc.viewCount}}</span> &nbsp; &nbsp;&nbsp;
+              <span><LikeOutlined/>&nbsp;{{doc.voteCount}}</span> &nbsp; &nbsp;
             </div>
-            <a-divider style="height: 2px; background-color: #9999cc"/>
+            <a-divider style="height: 2px; background-color: #1890ff"/>
           </div>
           <div class="wangEditor" :innerHTML="html"></div>
           <div class="vote">
@@ -182,6 +183,7 @@ export default defineComponent({
 .wangEditor table {
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
+  max-width: 80%;
 }
 
 .wangEditor table td,
@@ -189,11 +191,20 @@ export default defineComponent({
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
   padding: 3px 5px;
+  text-align: center;
 }
 
 .wangEditor table th {
-  border-bottom: 2px solid #ccc;
   text-align: center;
+  background-color: #eee;
+}
+
+.wangEditor table tbody tr:nth-child(even){
+  background-color: #eee;
+}
+
+.wangEditor table tbody tr:hover{
+  background-color: #ccc;
 }
 
 /* blockquote 样式 */
@@ -211,7 +222,6 @@ export default defineComponent({
 .wangEditor blockquote p{
   margin: 20px 10px;
   font-family: "Microsoft Yahei";
-  font-weight: 600;
 }
 
 /* code 样式 */

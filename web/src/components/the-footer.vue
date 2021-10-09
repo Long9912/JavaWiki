@@ -1,6 +1,8 @@
 <template>
   <a-layout-footer style="text-align: center">
-    Long的知识库  <span v-show="user.id">欢迎 : {{user.name}}</span>
+    <span v-show="user.id">欢迎 : {{user.name}}</span>
+    <br/>
+    Long的知识库
   </a-layout-footer>
 </template>
 

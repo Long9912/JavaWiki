@@ -196,11 +196,10 @@
 }
 
 .about table thead tr{
-  background-color: #47728d;
-  color: #fff;
+  background-color: #eee;
 }
 
-.about table tbody tr:nth-child(odd){
+.about table tbody tr:nth-child(even){
   background-color: #eee;
 }
 

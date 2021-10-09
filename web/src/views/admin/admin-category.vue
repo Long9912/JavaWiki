@@ -19,9 +19,6 @@
             :pagination="false"
             @change="handleTableChange"
         >
-          <template #cover="{ text: cover }">
-            <img v-if="cover" :src="cover" alt="avatar"/>
-          </template>
           <template v-slot:action="{ text, record }">
             <a-space size="small">
               <a-button type="primary" @click="edit(record)">
@@ -63,7 +60,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="顺序">
-          <a-input v-model:value="category.sort"/>
+          <a-input-number id="inputNumber" v-model:value="category.sort" :min="1" :max="1000" placeholder="顺序"/>
         </a-form-item>
       </a-form>
     </a-modal>

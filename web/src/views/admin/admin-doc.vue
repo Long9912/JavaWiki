@@ -2,7 +2,7 @@
   <div>
     <a-layout>
       <a-row>
-        <a-col :span="8">
+        <a-col :span="7">
           <a-page-header
               style="height: 60px"
               title="文档管理"
@@ -55,7 +55,7 @@
             </a-table>
           </a-layout-content>
         </a-col>
-        <a-col :span="16">
+        <a-col :span="17">
           <a-form layout="inline" style="margin-top:10px;margin-left: 10px">
             <a-form-item>
               <a-button v-show="addStatus" type="primary" @click="handleAdd()">
@@ -88,7 +88,7 @@
               </a-tree-select>
             </a-form-item>
             <a-form-item >
-              <a-input v-model:value="doc.sort" placeholder="顺序"/>
+              <a-input-number id="inputNumber" v-model:value="doc.sort" :min="1" :max="1000" placeholder="顺序"/>
             </a-form-item>
             <a-form-item>
               <a-button type="primary" @click="handlePreviewContent()">
@@ -352,7 +352,8 @@ export default defineComponent({
       treeSelectData.value.unshift({id: 0, name: '无'});
     };
 
-    const handleSave = (): boolean => {
+    let result = false;
+    const handleSave = () => {
       doc.value.content = editor.txt.html();
       axios.post("/doc/save", doc.value).then((response) => {
         const data = response.data;
@@ -360,21 +361,23 @@ export default defineComponent({
           message.success(data.content);
           //重新加载列表
           handleQuery();
-          return true;
+          result = true;
         } else {
           message.error(data.content.respMsg);
-          return false;
+          result = false;
         }
       });
-      return false;
     };
 
     const handleAdd = () => {
-      let result = handleSave();
+      handleSave();
       //保存成功后调用add方法清空数据防止重复添加
-      if (result == true) {
+      //因为axios是异步方法,需要等待一会后获取结果
+      setTimeout(()=> {
+        if (result) {
           add();
-      }
+        }
+      }, 500);
     };
 
     const handleDelete = (id:string) => {

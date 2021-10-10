@@ -120,6 +120,8 @@ import {useRoute} from "vue-router";
 import router from "@/router";
 import Editor from "wangeditor"
 
+declare let hljs :any;
+
 export default defineComponent({
   name: 'AdminDoc',
 
@@ -308,6 +310,22 @@ export default defineComponent({
         }
       })
     }
+    // 挂载代码高亮插件
+    editor.highlight = hljs;
+    //插入代码语言配置
+    editor.config.languageType = [
+      'Java',
+      'JavaScript',
+      'C',
+      'JSON',
+      'Html',
+      'XML',
+      'SQL',
+      'Go',
+      'Markdown',
+      'Python',
+      'Shell Session'
+    ]
 
     // ----------------富文本预览--------------
     const drawerVisible = ref(false);

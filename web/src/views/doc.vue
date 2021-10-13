@@ -17,6 +17,7 @@
               :replaceFields="{title:'name', key:'id',value:'id'}"
               :defaultExpandAll="true"
               :defaultSelectedKeys="defaultSelectedKeys"
+              show-line=true
           >
           </a-tree>
         </a-col>

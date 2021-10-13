@@ -59,6 +59,8 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         }
         //获取当前页面和大小进行分页查询
         Page<Ebook> page = new Page<>(req.getPage(), req.getSize());
+        //按照id降序排序
+        wrapper.orderByDesc("id");
         ebookMapper.selectPage(page, wrapper);
         //获取总数和结果列表
         long pageTotal = page.getTotal();

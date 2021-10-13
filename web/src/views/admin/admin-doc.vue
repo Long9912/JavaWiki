@@ -25,7 +25,7 @@
                 :row-key="record => record.id"
                 :data-source="level1"
                 :loading="loading"
-                :pagination="false"
+                :pagination="pagination"
                 @change="handleTableChange"
                 size="small"
                 :default-expand-all-rows="true"
@@ -129,6 +129,9 @@ export default defineComponent({
     const route =useRoute();
     const bookName =ref();
     const ebookId =ref();
+    const pagination = ref({
+      pageSize: 7
+    });
     const queryParam = ref();
     queryParam.value = {};
     const docs = ref();
@@ -281,6 +284,10 @@ export default defineComponent({
 
     //设置富文本框
     const editor = new Editor('#content');
+    // 取消自动 focus
+    editor.config.focus = false
+    // 设置编辑区域高度为 500px
+    editor.config.height = 500
     editor.config.zIndex=0;
     //自定义上传方法
     editor.config.customUploadImg = function (resultFiles, insertImgFn) {
@@ -434,6 +441,7 @@ export default defineComponent({
     });
 
     return {
+      pagination,
       queryParam,
       docs,
       level1,

@@ -38,7 +38,7 @@ public class EbookController {
         return list.isEmpty() ? null : list;
     }
 
-    @ApiOperation("分页查询电子书")
+    @ApiOperation("分页查询电子书,按照id降序排序")
     @ApiImplicitParam(name = "req", value = "传入分页参数,如果有传入书名则模糊查询电子书", required = true, dataType = "EbookQueryReq", paramType = "query")
     @GetMapping("/list")
     public PageResp<EbookQueryResp> list(@Validated EbookQueryReq req) {

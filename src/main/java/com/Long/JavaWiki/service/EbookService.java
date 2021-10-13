@@ -26,7 +26,7 @@ public interface EbookService extends IService<Ebook> {
     List<EbookQueryResp> all(EbookQueryReq req);
 
     /**
-     * 分页查询电子书
+     * 分页查询电子书,按照id降序排序
      * @return  分页数据
      */
     PageResp<EbookQueryResp> getList(EbookQueryReq req);

@@ -3,16 +3,17 @@
     <a-layout>
       <a-row>
         <a-col :span="7">
+          <a-back-top />
           <a-page-header
               style="height: 60px"
               title="文档管理"
               :sub-title="bookName"
               @back="back"
           />
-          <a-layout-content :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
+          <a-layout-content :style="{ background: '#fff', padding: '0px 24px', minHeight: '280px' }">
             <a-form layout="inline" :model="queryParam">
               <a-form-item>
-                <a-button type="primary" @click="add">
+                <a-button type="primary" @click="add" size="small">
                   <template #icon><PlusSquareOutlined /></template>
                   新增
                 </a-button>
@@ -99,6 +100,22 @@
               <div id="content"></div>
             </a-form-item>
           </a-form>
+
+          <a-form layout="inline" style="margin-left: 80%">
+            <a-form-item>
+              <a-button v-show="addStatus" type="primary" @click="handleAdd()">
+                <template #icon><FileAddOutlined /></template>
+                新增文档
+              </a-button>
+            </a-form-item>
+            <a-form-item>
+              <a-button v-show="!addStatus" type="primary" @click="handleSave()">
+                <template #icon><SaveOutlined/></template>
+                更新
+              </a-button>
+            </a-form-item>
+          </a-form>
+
         </a-col>
       </a-row>
 
@@ -130,7 +147,7 @@ export default defineComponent({
     const bookName =ref();
     const ebookId =ref();
     const pagination = ref({
-      pageSize: 7
+      pageSize: 10
     });
     const queryParam = ref();
     queryParam.value = {};
@@ -358,6 +375,10 @@ export default defineComponent({
       treeSelectData.value = Tool.copy(level1.value) || [];
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
+      // 父文档自动选择 "无"
+      doc.value.parent = 0;
+      // 根据文档数自动填入顺序
+      doc.value.sort = (level1.value.length+1);
     };
 
     /**

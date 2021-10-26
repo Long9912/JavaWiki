@@ -50,10 +50,17 @@
   >
     <a-form :model="loginUser" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
       <a-form-item label="用户名">
-        <a-input v-model:value="loginUser.loginName"/>
+        <a-input v-model:value="loginUser.loginName" placeholder="测试用户:test"/>
       </a-form-item>
       <a-form-item label="密码">
-        <a-input v-model:value="loginUser.password" type="password"/>
+        <a-input v-model:value="loginUser.password" type="password" placeholder="测试密码:test123"/>
+      </a-form-item>
+      <a-form-item label="验证码">
+        <a-input v-model:value="loginUser.code" style="width: 30%" />
+        <img width="100" height="50" v-show="image!=null" :src="image" alt="验证码"/>
+        <a style="margin-left: 30px" @click="getCaptchaCode">
+          <span>获取验证码</span>
+        </a>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -76,8 +83,11 @@ export default defineComponent({
     //登录
     const loginUser = ref({
       loginName: 'test',
-      password: 'test123'
+      password: 'test123',
+      code: '',
+      captchaKey: ''
     });
+    const image = ref();
     const loginModalVisible = ref(false);
     const loginModalLoading = ref(false);
     const showLoginModal = () => {
@@ -108,8 +118,11 @@ export default defineComponent({
           store.commit("setUser",data.content);
 
           loginUser.value.password = '';
+          loginUser.value.code = '';
         } else {
           loginUser.value.password = '';
+          //刷新验证码
+          getCaptchaCode();
           message.error(data.content.respMsg);
         }
       });
@@ -127,8 +140,23 @@ export default defineComponent({
         }
       });
     }
+    //获取验证码
+    const getCaptchaCode = () => {
+      axios.get("/user/captcha").then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          loginUser.value.code = '';
+          loginUser.value.captchaKey = data.content.captchaKey;
+          image.value = data.content.image;
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    }
 
     return{
+      image,
+      getCaptchaCode,
       loginModalVisible,
       loginModalLoading,
       showLoginModal,

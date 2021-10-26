@@ -10,6 +10,8 @@ import com.Long.JavaWiki.response.UserLoginResp;
 import com.Long.JavaWiki.response.UserQueryResp;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Map;
+
 /**
  * <p>
  * 用户 服务类
@@ -43,9 +45,10 @@ public interface UserService extends IService<User> {
     void resetPassword(UserResetReq req);
 
     /**
-     * 用户登录,密码先在前端md5加密传输,再到后端md5加密后
+     * 用户登录,密码先在前端md5加密传输,再到后端md5加密
+     * 根据redis中的验证id 查询验证码是否正确
      * 在数据库根据登录名查询用户,对比密码是否一致
-     * @param req 用户名 md5加密的密码
+     * @param req 用户名 md5加密的密码 redis中的验证id 验证码
      * @return id 用户名 昵称
      */
     UserLoginResp login(UserLoginReq req);
@@ -55,4 +58,10 @@ public interface UserService extends IService<User> {
      * @param id 用户id
      */
     void setAdmin(Long id);
+
+    /**
+     * 生成验证码图片
+     * @return redis中的验证id 和 图片
+     */
+    Map<String,Object> captcha();
 }

@@ -22,6 +22,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -115,6 +116,13 @@ public class UserController {
         userService.setAdmin(id);
         log.info("设置管理员:{}",id);
         return "设置成功";
+    }
+
+    @ApiOperation("生成验证码图片")
+    @GetMapping("/captcha")
+    public Map<String,Object> captcha() {
+        Map<String, Object> captcha = userService.captcha();
+        return captcha;
     }
 
 }

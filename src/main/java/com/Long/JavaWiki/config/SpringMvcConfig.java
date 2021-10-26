@@ -40,6 +40,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/doc/findContent/**",
                         "/image/**",
                         "/ebookSnapshot/**",
+                        "/user/captcha",
                         "/error",
 
                         //不拦截swagger3.0相关文件

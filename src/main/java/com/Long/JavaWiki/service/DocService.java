@@ -37,6 +37,11 @@ public interface DocService extends IService<Doc> {
     void saveOrUpdate(DocSaveReq req);
 
     /**
+     * 删除电子书下的全部文档
+     */
+    void deleteEbookDoc(Long ebookId);
+
+    /**
      * 查看文档内容,阅读数加1
      * @param id 文档id
      * @return  文档内容

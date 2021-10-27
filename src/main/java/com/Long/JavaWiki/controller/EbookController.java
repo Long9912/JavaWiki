@@ -5,6 +5,7 @@ import com.Long.JavaWiki.request.EbookQueryReq;
 import com.Long.JavaWiki.request.EbookSaveReq;
 import com.Long.JavaWiki.response.EbookQueryResp;
 import com.Long.JavaWiki.response.PageResp;
+import com.Long.JavaWiki.service.DocService;
 import com.Long.JavaWiki.service.EbookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -30,6 +31,9 @@ public class EbookController {
 
     @Autowired
     private EbookService ebookService;
+
+    @Autowired
+    private DocService docService;
 
     @ApiOperation("默认查询全部电子书,传入分类id时查询分类下电子书")
     @GetMapping("/all")
@@ -58,6 +62,7 @@ public class EbookController {
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         ebookService.removeById(id);
+        docService.deleteEbookDoc(id);
         return "删除成功";
     }
 }

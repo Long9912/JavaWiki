@@ -98,6 +98,20 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
     @Override
+    public void deleteEbookDoc(Long ebookId) {
+        QueryWrapper<Doc> wrapper = new QueryWrapper<>();
+        //根据电子书id查询
+        wrapper.eq("ebook_id", ebookId);
+        log.info("删除电子书:{}",ebookId);
+        List<Doc> docList = docMapper.selectList(wrapper);
+        for (Doc doc : docList) {
+            log.info("删除文档:{}",doc.getName());
+            docMapper.deleteById(doc.getId());
+            contentService.deleteContent(String.valueOf(doc.getId()));
+        }
+    }
+
+    @Override
     public String findContent(String id) {
         //文档阅读数加1
         docMapper.increaseViewCount(Long.valueOf(id));

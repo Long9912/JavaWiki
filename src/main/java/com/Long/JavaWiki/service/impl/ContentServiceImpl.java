@@ -28,13 +28,26 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
     private FileService fileService;
 
     @Override
+    public void deleteContent(String id) {
+        //查出文章内容
+        Content contentDB = contentMapper.selectById(id);
+        //存在文章内容才删除
+        if (!ObjectUtils.isEmpty(contentDB)) {
+            //查出文章中的图片并删除
+            fileService.deleteImg(contentDB.getContent());
+            contentMapper.deleteById(id);
+        }
+    }
+
+    @Override
     public void deleteContents(List<String> idList) {
         Content contentDB = null;
         for (String id : idList) {
-            //查出文章中的图片
-            contentDB = contentMapper.selectById(id);
+            //查出文章内容
+             contentDB = contentMapper.selectById(id);
             //存在文章内容才删除
             if (!ObjectUtils.isEmpty(contentDB)) {
+                //查出文章中的图片并删除
                 fileService.deleteImg(contentDB.getContent());
                 contentMapper.deleteById(id);
             }
@@ -53,8 +66,8 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
             //有文档时更新文档内容
             contentMapper.updateById(content);
             //对比文本获取被删除的图片,然后在服务器中删除文件
-            fileService.compareDeleteImg(contentDB.getContent(),content.getContent());
-        }else {
+            fileService.compareDeleteImg(contentDB.getContent(), content.getContent());
+        } else {
             //文档内容表没有此数据时插入新数据
             contentMapper.insert(content);
         }

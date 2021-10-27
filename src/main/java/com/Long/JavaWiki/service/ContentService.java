@@ -15,8 +15,14 @@ import java.util.List;
  */
 public interface ContentService extends IService<Content> {
     /**
+     * 根据id删除文档,并在服务器中删除文档图片
+     * @param id 文档id
+     */
+    void deleteContent(String id);
+
+    /**
      * 根据id列表删除文档,并在服务器中删除文档图片
-     * @param idList 文档id
+     * @param idList 文档id列表
      */
     void deleteContents(List<String> idList);
 

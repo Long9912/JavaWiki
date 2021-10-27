@@ -42,7 +42,7 @@
 - **代码生成器** 使用MyBatisPlus的代码生成器,快速生成基础代码
 - **Json格式转换** 序列化成json时,将所有的Long变成String 因为js中得数字类型为16位,解决精度丢失问题
 - **密码加密传输和储存** 前端登录时先md5加密一次传输,后端再md5加密一次进行数据校验
-- **Swagger** 后端 API 接口文档  地址: /swagger-ui/index.html
+- **接口文档** Knife4j:Swagger 的增强工具 作为后端 API 接口文档  地址: /doc.html
 - **监控统计**  Druid 的监控统计页  地址: /druid/index.html
 - **多环境** 配置文件分别用于开发和生产
 
@@ -56,7 +56,7 @@
 | MyBatisPlusGenerator | 3.4.1   | 代码生成器                        |
 | Velocity             | 2.3     | 用于代码生成                      |
 | Alibaba Druid        | 1.2.6   | 数据库连接池                      |
-| Swagger              | 3.0     | 接口文档生成工具                  |
+| knife4j              | 3.0.3     | 接口文档生成工具,Swagger的增强版   |
 | Fastjson             | 1.2.76  | 处理json格式,解决js中Long精度问题 |
 | Redis                | ---     | 用于登录校验,接口防重设计         |
 | Devtools             | ---     | 热部署工具                        |

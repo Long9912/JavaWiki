@@ -5,6 +5,10 @@ import com.Long.JavaWiki.response.UserLoginResp;
 
 import java.io.Serializable;
 
+/**
+ * 用于保存用户消息
+ */
+@Deprecated
 public class LoginUserContext implements Serializable {
 
     private static ThreadLocal<UserLoginResp> user = new ThreadLocal<>();

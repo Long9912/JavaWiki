@@ -3,6 +3,9 @@ package com.Long.JavaWiki.util;
 
 import java.io.Serializable;
 
+/**
+ * 用于保存远程地址
+ */
 public class RequestContext implements Serializable {
     /**
      * 线程本地变量，每个线程拥有本地变量的副本，各个线程之间的变量相互独立。

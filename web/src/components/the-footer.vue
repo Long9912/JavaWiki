@@ -3,6 +3,7 @@
     <span v-show="user.id">欢迎 : {{user.name}}</span>
     <br/>
     Long的知识库
+    <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021145207号</a>
   </a-layout-footer>
 </template>
 

@@ -15,9 +15,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +56,7 @@ public class UserController {
         return list.getList().isEmpty() ? null : list;
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("编辑或新增用户")
     @PostMapping("/save")
     public String save(@Validated @RequestBody UserSaveReq req) {
@@ -65,6 +66,7 @@ public class UserController {
         return "保存成功";
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("重置密码")
     @PostMapping("/resetPassword")
     public String resetPassword(@Validated @RequestBody UserResetReq req) {
@@ -74,6 +76,7 @@ public class UserController {
         return "重置成功";
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("通过id逻辑删除用户")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "Long", paramType = "path")
     @DeleteMapping("/delete/{id}")
@@ -88,14 +91,14 @@ public class UserController {
         //将密码转为byte数组进行md5加密,然后转成16进制
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         UserLoginResp userLoginResp = userService.login(req);
-
+        //通过雪花算法生成唯一ID作为Token
         Long token = snowFlake.nextId();
         log.info("生成单点登录token:{},存入Redis",token);
         userLoginResp.setToken(token.toString());
 
         //登录信息保存到redis,token作为key,登录信息作为value
-        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
-        operations.set(token.toString(), JSONObject.toJSONString(userLoginResp),1, TimeUnit.DAYS);
+        stringRedisTemplate.opsForValue()
+                .set(token.toString(), JSONObject.toJSONString(userLoginResp),5, TimeUnit.HOURS);
 
         return userLoginResp;
     }
@@ -109,6 +112,7 @@ public class UserController {
         return "退出成功";
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("设置管理员")
     @ApiImplicitParam(name = "id", value = "传入一个id", required = true, dataType = "String", paramType = "path")
     @PostMapping("/setAdmin/{id}")
@@ -121,8 +125,7 @@ public class UserController {
     @ApiOperation("生成验证码图片")
     @GetMapping("/captcha")
     public Map<String,Object> captcha() {
-        Map<String, Object> captcha = userService.captcha();
-        return captcha;
+        return userService.captcha();
     }
 
 }

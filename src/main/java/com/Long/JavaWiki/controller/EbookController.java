@@ -10,6 +10,7 @@ import com.Long.JavaWiki.service.EbookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +51,7 @@ public class EbookController {
         return list.getList().isEmpty() ? null : list;
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("编辑或新增电子书")
     @PostMapping("/save")
     public String save(@Validated @RequestBody EbookSaveReq req) {
@@ -57,6 +59,7 @@ public class EbookController {
         return "保存成功";
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("通过id逻辑删除电子书")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "Long", paramType = "path")
     @DeleteMapping("/delete/{id}")

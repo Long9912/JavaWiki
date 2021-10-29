@@ -275,6 +275,7 @@ export default defineComponent({
           });
         } else {
           message.error(data.content.respMsg);
+          user.value.password = '';
         }
       });
     };

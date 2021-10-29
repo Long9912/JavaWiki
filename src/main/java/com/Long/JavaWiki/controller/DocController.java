@@ -10,6 +10,7 @@ import com.Long.JavaWiki.service.DocService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,7 @@ public class DocController {
         return list.getList().isEmpty() ? null : list;
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("编辑或新增文档")
     @PostMapping("/save")
     public String save(@Validated @RequestBody DocSaveReq req) {
@@ -58,6 +60,7 @@ public class DocController {
         return "保存成功";
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("通过一个或多个id逻辑删除文档")
     @ApiImplicitParam(name = "id", value = "传入一个或多个ID", required = true, dataType = "String", paramType = "path")
     @DeleteMapping("/delete/{idsStr}")

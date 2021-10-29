@@ -9,6 +9,7 @@ import com.Long.JavaWiki.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,7 @@ public class CategoryController {
         return list.getList().isEmpty() ? null : list;
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("编辑或新增分类")
     @PostMapping("/save")
     public String save(@Validated @RequestBody CategorySaveReq req) {
@@ -52,6 +54,7 @@ public class CategoryController {
         return "保存成功";
     }
 
+    @RequiresRoles("admin")
     @ApiOperation("通过id删除分类")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "Long", paramType = "path")
     @DeleteMapping("/delete/{id}")

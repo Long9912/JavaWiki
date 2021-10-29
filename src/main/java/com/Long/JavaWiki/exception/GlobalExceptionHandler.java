@@ -1,6 +1,7 @@
 package com.Long.JavaWiki.exception;
 
 import com.Long.JavaWiki.response.ResponseData;
+import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -71,5 +72,20 @@ public class GlobalExceptionHandler {
         String message = (code.getDesc());
         ExceptionResponse resultError = getResult(ex, request, message);
         return ResponseData.error(code, resultError);
+    }
+
+    /**
+     * 权限异常统一处理
+     */
+    @ExceptionHandler(value = AuthorizationException.class)
+    public ResponseData authorizationExceptionHandler(AuthorizationException ex, HttpServletRequest request) {
+        String message = ex.getMessage();
+        LOG.warn("发生权限异常：{}", message);
+        String msg=message.substring(message.indexOf("[")+1,message.indexOf("]"));
+        if (message.contains("role")) {
+            message = "该操作需要" + msg + "权限";
+        }
+        ExceptionResponse resultError = getResult(ex, request, message);
+        return ResponseData.error(EnumCode.NOT_PERMISSIONS, resultError);
     }
 }

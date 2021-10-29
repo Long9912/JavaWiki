@@ -26,7 +26,7 @@ public enum EnumCode {
 
     PICTURE_FORMAT_ERROR(5009,"图片格式不正确! 使用.jpg/.png/.jpeg后缀的图片"),
 
-    NOT_PERMISSIONS(5010,"操作被拦截了,测试用户不开放增删改操作"),
+    NOT_PERMISSIONS(5010,"权限不足"),
 
     VERIFY_FAIL(5011,"验证码错误或失效");
     // 注意上面的是逗号分隔，这里结束是分号

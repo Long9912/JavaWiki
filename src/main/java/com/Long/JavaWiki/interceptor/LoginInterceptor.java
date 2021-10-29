@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,8 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 拦截器：Spring框架特有的，常用于登录校验，权限校验，请求日志打印
+ * 作为简单的安全框架使用,项目中已被Shiro代替
  */
-@Component
+//@Component
+@Deprecated
 public class LoginInterceptor implements HandlerInterceptor {
 
     private static final Logger LOG = LoggerFactory.getLogger(LoginInterceptor.class);

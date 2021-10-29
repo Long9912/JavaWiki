@@ -13,8 +13,8 @@
           <li><strong>AOP</strong> 通过切面打印接口耗时,请求返回参数在日志中,在点赞时获取远程ip</li>
           <li><strong>ECharts</strong> 首页30天数据统计展示</li>
           <li><strong>定时任务设计</strong> 定时执行复杂SQL统计电子书数据</li>
-          <li><strong>登录校验</strong>  用户登录后,在Redis 存储用户 Token 用于接口校验</li>
-          <li><strong>权限校验</strong>  登录后,保存用户消息,对增删改接口进行拦截,验证当前用户是否管理员</li>
+          <li><strong>登录校验</strong>  用户登录后,在Redis 存储用户 Token 用于Shiro的接口校验</li>
+          <li><strong>权限校验</strong>  登录后,对增删改接口进行拦截,使用Shiro的授权来验证当前用户是否管理员</li>
           <li><strong>接口防重</strong> 点赞时通过AOP获取到用户远程IP,保存在ThreadLocal中,在Redis中将文章id与远程ip作为key,一天只能对一篇文章点赞一次</li>
           <li><strong>WebSocket</strong> 实现向浏览器发送消息通知,点赞后会通知所有连接会话的用户</li>
           <li><strong>异步处理</strong> 点赞后,通知功能异步处理,解耦点赞与通知功能</li>
@@ -23,6 +23,7 @@
           <li><strong>代码生成器</strong> 使用MyBatisPlus的代码生成器,快速生成基础代码</li>
           <li><strong>Json格式转换</strong> 序列化成json时,将所有的Long变成String 因为js中得数字类型为16位,解决精度丢失问题</li>
           <li><strong>密码加密传输和储存</strong> 前端登录时先md5加密一次传输,后端再md5加密一次进行数据校验</li>
+          <li><strong>验证码校验</strong> 使用Hutool生成验证码,并生成唯一ID保存在Redis中</li>
           <li><strong>接口文档</strong> Knife4j:Swagger 的增强工具 作为后端 API 接口文档  地址: /doc.html</li>
           <li><strong>监控统计</strong>  Druid 的监控统计页  地址: /druid/index.html</li>
           <li><strong>多环境</strong> 配置文件分别用于开发和生产</li>
@@ -77,6 +78,16 @@
             <td>Fastjson</td>
             <td>1.2.76</td>
             <td>处理json格式,解决js中Long精度问题</td>
+          </tr>
+          <tr>
+            <td>Shiro</td>
+            <td>1.8.0</td>
+            <td>安全框架,用于登录校验与权限校验</td>
+          </tr>
+          <tr>
+            <td>hutool-captcha</td>
+            <td>5.7.15</td>
+            <td>验证码生成工具</td>
           </tr>
           <tr>
             <td>Redis</td>

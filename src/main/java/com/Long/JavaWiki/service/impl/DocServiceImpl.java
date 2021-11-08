@@ -15,6 +15,7 @@ import com.Long.JavaWiki.service.DocService;
 import com.Long.JavaWiki.util.CopyUtil;
 import com.Long.JavaWiki.util.RedisUtil;
 import com.Long.JavaWiki.util.RequestContext;
+import com.Long.JavaWiki.webSocket.WsService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

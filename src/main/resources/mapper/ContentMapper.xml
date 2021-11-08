@@ -5,13 +5,14 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.Long.JavaWiki.entity.Content">
         <id column="id" property="id" />
+        <result column="name" property="name" />
         <result column="content" property="content" />
         <result column="deleted" property="deleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, content, deleted
+        id, name, content, deleted
     </sql>
 
 </mapper>

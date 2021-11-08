@@ -1,4 +1,4 @@
-package com.Long.JavaWiki.config;
+package com.Long.JavaWiki.job;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;

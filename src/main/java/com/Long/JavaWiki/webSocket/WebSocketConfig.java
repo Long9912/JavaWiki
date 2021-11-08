@@ -1,4 +1,4 @@
-package com.Long.JavaWiki.config;
+package com.Long.JavaWiki.webSocket;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

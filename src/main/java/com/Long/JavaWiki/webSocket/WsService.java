@@ -1,4 +1,4 @@
-package com.Long.JavaWiki.service.impl;
+package com.Long.JavaWiki.webSocket;
 
 import com.Long.JavaWiki.webSocket.WebSocketServer;
 import org.slf4j.MDC;

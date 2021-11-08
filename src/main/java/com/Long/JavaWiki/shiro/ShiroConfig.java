@@ -1,4 +1,4 @@
-package com.Long.JavaWiki.config;
+package com.Long.JavaWiki.shiro;
 
 import com.Long.JavaWiki.shiro.AuthFilter;
 import com.Long.JavaWiki.shiro.AuthRealm;

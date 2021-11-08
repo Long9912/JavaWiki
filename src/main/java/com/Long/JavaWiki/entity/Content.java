@@ -29,6 +29,9 @@ public class Content implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
+    @ApiModelProperty(value = "标题")
+    private String name;
+
     @ApiModelProperty(value = "内容")
     private String content;
 

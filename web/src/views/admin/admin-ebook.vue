@@ -102,6 +102,9 @@
         <a-form-item label="描述">
           <a-input v-model:value="ebook.description" type="textarea"/>
         </a-form-item>
+        <a-form-item label="更新时间">
+          <a-input v-model:value="ebook.updateTime" type="textarea" disabled/>
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -154,7 +157,7 @@ export default defineComponent({
         dataIndex: 'voteCount'
       },
       {
-        title: 'Action',
+        title: '操作',
         key: 'action',
         slots: {customRender: 'action'}
       }

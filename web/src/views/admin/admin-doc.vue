@@ -15,7 +15,7 @@
               <a-form-item>
                 <a-button type="primary" @click="add" size="small">
                   <template #icon><PlusSquareOutlined /></template>
-                  新增
+                  新增文档
                 </a-button>
               </a-form-item>
             </a-form>
@@ -57,29 +57,22 @@
           </a-layout-content>
         </a-col>
         <a-col :span="17">
-          <a-form layout="inline" style="margin-top:10px;margin-left: 10px">
-            <a-form-item>
-              <a-button v-show="addStatus" type="primary" @click="handleAdd()">
-                <template #icon><FileAddOutlined /></template>
-                新增文档
-              </a-button>
-            </a-form-item>
-            <a-form-item>
-              <a-button v-show="!addStatus" type="primary" @click="handleSave()">
-                <template #icon><SaveOutlined/></template>
-                更新
-              </a-button>
-            </a-form-item>
-          </a-form>
-          <a-form :model="doc" layout="vertical" style="margin-top:10px;margin-left: 10px" >
-
+          <div style="margin-left: 20px;margin-top: 20px" v-show="doc.createTime!=null">
+            <span><CalendarOutlined /> <a-tag color="cyan">{{doc.createTime}}</a-tag></span>
+            <span><FieldTimeOutlined /> <a-tag color="green">{{doc.updateTime}}</a-tag></span>&nbsp;
+            <span><EyeOutlined /> <a-tag color="blue">{{doc.viewCount}}</a-tag></span>
+            <span><LikeOutlined/><a-tag color="red">{{doc.voteCount}}</a-tag></span>
+          </div>
+          <a-form :model="doc" layout="vertical" style="margin-top:30px;margin-left: 10px" >
             <a-form-item >
-              <a-input v-model:value="doc.name" placeholder="名称"/>
+              <a-tag color="green">标题:</a-tag>
+              <a-input v-model:value="doc.name" placeholder="标题" style="width: 90%;margin-left: 10px"/>
             </a-form-item>
             <a-form-item>
+              <a-tag color="cyan">父文档:</a-tag>
               <a-tree-select
                   v-model:value="doc.parent"
-                  style="width: 100%"
+                  style="width: 90%"
                   :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
                   :tree-data="treeSelectData"
                   placeholder="请选择父文档"
@@ -89,10 +82,19 @@
               </a-tree-select>
             </a-form-item>
             <a-form-item >
-              <a-input-number id="inputNumber" v-model:value="doc.sort" :min="1" :max="1000" placeholder="顺序"/>
+              <a-tag color="blue">顺序:</a-tag>
+              <a-input-number id="inputNumber" v-model:value="doc.sort" :min="1" :max="1000" placeholder="顺序" style="margin-left: 10px"/>
             </a-form-item>
             <a-form-item>
-              <a-button type="primary" @click="handlePreviewContent()">
+                <a-button v-show="addStatus" type="primary" @click="handleAdd()">
+                  <template #icon><FileAddOutlined /></template>
+                  新增文档
+                </a-button>
+                <a-button v-show="!addStatus" type="primary" @click="handleSave()">
+                  <template #icon><SaveOutlined/></template>
+                  更新
+                </a-button>
+              <a-button type="primary" @click="handlePreviewContent()" style="margin-left: 20px">
                 <EyeOutlined /> 内容预览
               </a-button>
             </a-form-item>

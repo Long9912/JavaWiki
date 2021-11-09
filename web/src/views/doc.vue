@@ -23,14 +23,12 @@
         </a-col>
         <a-col :span="19" v-if="level1.length !== 0">
           <h2>{{doc.name}}</h2>
-          <div style="color: #999aaa">
+          <div>
             <div>
-              <span><CalendarOutlined /> {{doc.createTime}}</span> &nbsp; &nbsp;
-              <span><FieldTimeOutlined /> {{doc.updateTime}}</span> &nbsp; &nbsp;
-            </div>
-            <div>
-              <span><EyeOutlined /> {{doc.viewCount}}</span> &nbsp; &nbsp;&nbsp;
-              <span><LikeOutlined/>&nbsp;{{doc.voteCount}}</span> &nbsp; &nbsp;
+              <span><CalendarOutlined /> <a-tag color="cyan">{{doc.createTime}}</a-tag></span>
+              <span><FieldTimeOutlined /> <a-tag color="green">{{doc.updateTime}}</a-tag></span>&nbsp;
+              <span><EyeOutlined /> <a-tag color="blue">{{doc.viewCount}}</a-tag></span>
+              <span><LikeOutlined/><a-tag color="red">{{doc.voteCount}}</a-tag></span>
             </div>
             <a-divider style="height: 2px; background-color: #1890ff"/>
           </div>

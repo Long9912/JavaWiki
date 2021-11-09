@@ -1,7 +1,7 @@
 <template>
   <a-layout-header class="header" style="padding-left: 20px">
     <div class="logo">
-      <img class="logoImg" src="../../public/image/logo.jpg">
+      <img class="logoImg" src="../../public/image/logo.jpg" alt="logo">
     </div>
     <a-popconfirm
         title="确认退出?"
@@ -44,6 +44,8 @@
 
   <a-modal
       title="登录"
+      okText="登录"
+      cancelText="取消"
       v-model:visible="loginModalVisible"
       :confirm-loading="loginModalLoading"
       @ok="login"

@@ -115,7 +115,7 @@ export default defineComponent({
     const users = ref();
     const pagination = ref({
       current: 1,
-      pageSize: 4,
+      pageSize: 5,
       total: 0
     });
     const loading = ref(false);
@@ -134,7 +134,7 @@ export default defineComponent({
         dataIndex: 'password'
       },
       {
-        title: 'Action',
+        title: '操作',
         key: 'action',
         slots: {customRender: 'action'}
       }

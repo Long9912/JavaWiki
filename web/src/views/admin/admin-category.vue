@@ -92,7 +92,7 @@ export default defineComponent({
         dataIndex: 'sort'
       },
       {
-        title: 'Action',
+        title: '操作',
         key: 'action',
         slots: {customRender: 'action'}
       }

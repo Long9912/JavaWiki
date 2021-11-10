@@ -86,7 +86,7 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值
       logic-not-delete-value: 0 # 逻辑未删除值
 
-#配置URL拦截规则
+#配置哪些URL不用被shiro拦截
 shiro:
   pathList:
    - /user/login
@@ -106,3 +106,4 @@ shiro:
    - /webjars/**
    - /v3/**
    - /doc.html
+   - /search/HighLight/**

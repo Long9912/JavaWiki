@@ -98,7 +98,7 @@ public class UserController {
 
         //登录信息保存到redis,token作为key,登录信息作为value
         stringRedisTemplate.opsForValue()
-                .set(token.toString(), JSONObject.toJSONString(userLoginResp),5, TimeUnit.HOURS);
+                .set(token.toString(), JSONObject.toJSONString(userLoginResp),10, TimeUnit.HOURS);
 
         return userLoginResp;
     }

@@ -1,11 +1,11 @@
 package com.Long.JavaWiki.shiro;
 
-import com.Long.JavaWiki.shiro.AuthFilter;
-import com.Long.JavaWiki.shiro.AuthRealm;
-import com.Long.JavaWiki.shiro.PathProps;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.InvalidRequestFilter;
+import org.apache.shiro.web.filter.mgt.DefaultFilter;
+import org.apache.shiro.web.filter.mgt.FilterChainManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
@@ -48,8 +48,15 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager defaultWebSecurityManager,PathProps pathProps) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(defaultWebSecurityManager);
-        //oauth过滤器
+
+        //过滤器
         Map<String, Filter> filters = new HashMap<>();
+
+        //shiro新版本1.7以上: RESTFul的URL携带中文400，校验bug
+        InvalidRequestFilter invalidRequestFilter = new InvalidRequestFilter();
+        invalidRequestFilter.setBlockNonAscii(false);
+        filters.put(DefaultFilter.invalidRequest.name(),invalidRequestFilter);
+
         //设置自定义过滤器
         filters.put("auth", new AuthFilter());
         shiroFilter.setFilters(filters);

@@ -28,7 +28,11 @@ public enum EnumCode {
 
     NOT_PERMISSIONS(5010,"权限不足"),
 
-    VERIFY_FAIL(5011,"验证码错误或失效");
+    VERIFY_FAIL(5011,"验证码错误或失效"),
+
+    SEARCH_FAIL(5012,"搜索内容过长[15字以内]"),
+
+    SEARCH_EMPTY(5013,"搜索结果为空");
     // 注意上面的是逗号分隔，这里结束是分号
 
     // 定义的枚举常量属性。

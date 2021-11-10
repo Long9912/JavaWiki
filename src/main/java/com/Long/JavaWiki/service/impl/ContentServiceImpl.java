@@ -1,8 +1,11 @@
 package com.Long.JavaWiki.service.impl;
 
+import com.Long.JavaWiki.elasticsearch.DocRepository;
+import com.Long.JavaWiki.elasticsearch.ESDoc;
 import com.Long.JavaWiki.entity.Content;
 import com.Long.JavaWiki.mapper.ContentMapper;
 import com.Long.JavaWiki.service.ContentService;
+import com.Long.JavaWiki.util.CopyUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,9 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private DocRepository docRepository;
+
     @Override
     public void deleteContent(String id) {
         //查出文章内容
@@ -36,6 +42,8 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
             //查出文章中的图片并删除
             fileService.deleteImg(contentDB.getContent());
             contentMapper.deleteById(id);
+            //删除搜索索引中的数据
+            docRepository.deleteById(Long.valueOf(id));
         }
     }
 
@@ -50,6 +58,8 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
                 //查出文章中的图片并删除
                 fileService.deleteImg(contentDB.getContent());
                 contentMapper.deleteById(id);
+                //删除搜索索引中的数据
+                docRepository.deleteById(Long.valueOf(id));
             }
         }
     }
@@ -71,5 +81,13 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
             //文档内容表没有此数据时插入新数据
             contentMapper.insert(content);
         }
+        //使用复制工具类转换到索引类型
+        ESDoc esDoc = CopyUtil.copy(content, ESDoc.class);
+        //数据清洗
+        String richText = esDoc.getContent();
+        String text = richText.replaceAll("(<.*?>|(\\n)|(&nbsp;))", "");
+        esDoc.setContent(text);
+        //保存数据到搜索索引中
+        docRepository.save(esDoc);
     }
 }

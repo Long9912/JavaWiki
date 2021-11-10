@@ -1,6 +1,5 @@
 package com.Long.JavaWiki.webSocket;
 
-import com.Long.JavaWiki.webSocket.WebSocketServer;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;

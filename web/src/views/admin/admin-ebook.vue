@@ -20,6 +20,19 @@
               新增
             </a-button>
           </a-form-item>
+          <a-form-item>
+            <a-popconfirm
+                title="确认更新[搜索索引]?"
+                ok-text="是"
+                cancel-text="否"
+                @confirm="importDoc"
+            >
+              <a-button type="primary">
+                <template #icon><DiffOutlined /></template>
+                更新[搜索索引]
+              </a-button>
+            </a-popconfirm>
+          </a-form-item>
         </a-form>
 
         <a-table
@@ -355,6 +368,18 @@ export default defineComponent({
       return result;
     };
 
+    const importDoc = () => {
+      axios.get("/search/importDoc").then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          let text = data.content;
+          message.success(text);
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    }
+
 
     onMounted(() => {
       handleQueryCategory();
@@ -375,6 +400,7 @@ export default defineComponent({
       beforeUpload,
       getImageUrl,
 
+      importDoc,
       add,
       edit,
       ebook,

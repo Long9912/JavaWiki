@@ -1,4 +1,4 @@
-package com.Long.JavaWiki.config;
+package com.Long.JavaWiki;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -107,3 +107,4 @@ shiro:
    - /v3/**
    - /doc.html
    - /search/HighLight/**
+   - /doc/findDoc/**

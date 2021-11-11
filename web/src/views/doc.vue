@@ -84,7 +84,7 @@ export default defineComponent({
     /**
      * 内容查询
      **/
-    const handleQueryContent = (id: string) => {
+    const handleQueryContent = (id: any) => {
       axios.get("/doc/findContent/" + id).then((response) => {
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
@@ -111,9 +111,12 @@ export default defineComponent({
 
           if (Tool.isNotEmpty(level1)) {
             defaultSelectedKeys.value = [level1.value[0].id];
-            handleQueryContent(level1.value[0].id);
-            // 初始显示文档信息
-            doc.value = level1.value[0];
+            //没有指定文档时显示第一个文档
+            if (docID.value == null){
+              handleQueryContent(level1.value[0].id);
+              // 初始显示文档信息
+              doc.value = level1.value[0];
+            }
           }
         } else {
           message.error(data.content.respMsg);
@@ -144,7 +147,7 @@ export default defineComponent({
 
     /**
      * 点赞
-     **/
+     */
     const vote = () => {
       axios.get("/doc/vote/" + doc.value.id).then((response) => {
         const data = response.data;
@@ -157,10 +160,35 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 指定ID获取文档消息
+     */
+    const handleQueryDoc = (id:any) => {
+      axios.get("/doc/findDoc/" + id).then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          doc.value = data.content;
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    };
+
+    const docID = ref();
+
     onMounted(() => {
       bookName.value = route.query.name;
-      ebookId.value = route.query.ebookId
+      bookName.value = bookName.value.replaceAll(/<.*?>/ig,"");
+      ebookId.value = route.query.ebookId;
       handleQuery();
+      docID.value = route.query.id;
+      console.log(docID.value)
+      //指定文档ID时查询指定文档
+      if (docID.value != null){
+        handleQueryContent(docID.value);
+        //查询文档消息
+        handleQueryDoc(docID.value)
+      }
     });
 
     return {

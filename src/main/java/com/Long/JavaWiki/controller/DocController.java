@@ -1,6 +1,7 @@
 package com.Long.JavaWiki.controller;
 
 
+import com.Long.JavaWiki.entity.Doc;
 import com.Long.JavaWiki.request.DocQueryReq;
 import com.Long.JavaWiki.request.DocSaveReq;
 import com.Long.JavaWiki.response.DocQueryResp;
@@ -92,6 +93,14 @@ public class DocController {
     public String vote(@PathVariable String id) {
         docService.vote(id);
         return "点赞成功";
+    }
+
+    @ApiOperation("通过id查询文档消息")
+    @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
+    @GetMapping("/findDoc/{id}")
+    public Doc findDoc(@PathVariable String id) {
+        Doc doc = docService.getById(id);
+        return doc;
     }
 }
 

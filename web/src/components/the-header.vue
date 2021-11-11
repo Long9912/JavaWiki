@@ -19,6 +19,13 @@
     <a class="login-menu" v-show="!user.id" @click="showLoginModal">
       <span>登录</span>
     </a>
+    <div class="search-box">
+      <a-input-search
+          v-model:value="searchText"
+          placeholder="搜索文档"
+          @search="onSearch"
+      />
+    </div>
     <a-menu
         theme="dark"
         mode="horizontal"
@@ -73,6 +80,7 @@ import {computed, defineComponent, ref} from "vue";
 import axios from "axios";
 import {message} from "ant-design-vue";
 import store from "@/store";
+import {useRouter} from "vue-router";
 
 declare let hexMd5 :any;
 declare let KEY :any;
@@ -156,6 +164,12 @@ export default defineComponent({
       });
     }
 
+    const searchText = ref<string>();
+    const router = useRouter();
+    const onSearch = (searchValue: string) => {
+      router.push({path: '/search', query: { keyword: searchValue}})
+    };
+
     return{
       image,
       getCaptchaCode,
@@ -166,12 +180,23 @@ export default defineComponent({
       user,
       login,
       logout,
+      searchText,
+      onSearch
     }
   }
 })
 </script>
 
 <style>
+.search-box {
+  width: 150px;
+  position: relative;
+  display: flex;
+  float: right;
+  margin-bottom:-50px;
+  padding-top: 18px;
+}
+
 .login-menu {
   float: right;
   color: white;

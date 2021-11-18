@@ -12,6 +12,7 @@
           <li><strong>无限级树设计</strong> 在前端通过递归将数组转为有父子结构的树形结构,并在编辑时禁止将子树作为父类</li>
           <li><strong>AOP</strong> 通过切面打印接口耗时,请求返回参数在日志中,在点赞时获取远程ip</li>
           <li><strong>ECharts</strong> 首页30天数据统计展示</li>
+          <li><strong>文档搜索</strong> 使用ElasticSearch对文档索引进行高亮全文搜索</li>
           <li><strong>定时任务设计</strong> 定时执行复杂SQL统计电子书数据</li>
           <li><strong>登录校验</strong>  用户登录后,在Redis 存储用户 Token 用于Shiro的接口校验</li>
           <li><strong>权限校验</strong>  登录后,对增删改接口进行拦截,使用Shiro的授权来验证当前用户是否管理员</li>
@@ -88,6 +89,11 @@
             <td>hutool-captcha</td>
             <td>5.7.15</td>
             <td>验证码生成工具</td>
+          </tr>
+          <tr>
+            <td>ElasticSearch</td>
+            <td>7.15.1</td>
+            <td>搜索引擎</td>
           </tr>
           <tr>
             <td>Redis</td>

@@ -12,7 +12,9 @@
     - 在application.yml中修改数据库配置
     - 在application.yml中修改file下的localUrl作为本地文件上传地址
     - 安装并启动Redis
+    - 安装并启动ElasticSearch
     - 启动项目:默认端口8090
+    - 登录系统后进入电子书管理页面,更新搜索索引
 
 - 前端
 
@@ -31,6 +33,7 @@
 - **无限级树设计** 在前端通过递归将数组转为有父子结构的树形结构,并在编辑时禁止将子树作为父类
 - **AOP** 通过切面打印接口耗时,请求返回参数在日志中,在点赞时获取远程ip
 - **ECharts** 首页30天数据统计展示
+- **文档搜索** 使用ElasticSearch对文档索引进行高亮全文搜索
 - **定时任务设计** 定时执行复杂SQL统计电子书数据
 - **登录校验**  用户登录后,在Redis 存储用户 Token 用于Shiro的接口校验
 - **权限校验**  登录后,对增删改接口进行拦截,使用Shiro的授权来验证当前用户是否管理员
@@ -61,6 +64,7 @@
 | Fastjson             | 1.2.76  | 处理json格式,解决js中Long精度问题 |
 | Shiro                | 1.8.0   | 安全框架,用于登录校验与权限校验    |
 | hutool-captcha       | 5.7.15  | 验证码生成工具                  |
+| ElasticSearch        | 7.15.1  | 搜索引擎                       |
 | Redis                | ---     | 用于登录校验,接口防重设计         |
 | Devtools             | ---     | 热部署工具                        |
 | Log4j2               | ---     | Log日志                           |
@@ -83,18 +87,19 @@
 
 - 后端
     - **aspect**：AOP切面,打印请求信息日志,点赞时获取远程ip,防止重复点赞,一天只能点赞相同文章一次
-    - **config**：配置:跨域,json转换,SpringMvc登录拦截,静态资源映射,MyBatisPlus,Swagger,线程池,WebSocket,Shiro配置类,还有主启动类**JavaWikiApplication**
+    - **config**：配置:跨域,json转换,SpringMvc静态资源映射,MyBatisPlus,Swagger配置类
     - **controller**：控制层
     - **entity**：实体类
+    - **service**:服务层
     - **exception**：全局异常统一处理模块,自定义异常枚举类,自定义业务异常,自定义异常封装,用于异常处理
     - **interceptor**：Spring拦截器:登录校验,获取前端请求header的Token参数,在Redis中获取是否有效;权限校验,对增删改接口进行拦截,验证当前用户是否管理员,已被Shiro代替
     - **job**:定时任务 定时更新电子书数据,定时更新首页统计数据
     - **mapper**:MyBatis Mapper 接口
+    - **elasticsearch**:Elasticsearch配置类,导入数据库数据到搜索索引,高亮搜索
     - **request**:封装接口请求信息,使用**javax.validation**做后端参数校验
     - **response**:封装接口响应信息,定义标准响应类,通过 **@RestControllerAdvice**进行全局统一接口响应处理,对所有控制器中，被 **@RequestMapping**注解标注的方法，进行增强,用标准响应类包装返回值
-    - **service**:服务层
-    - **webSocket**:放置webSocket连接,点赞时,向所有连接的WebSocket发送通知
-    - **shiro**:放置shiro的权限过滤器,自定义Realm,自定义Token和获取yml中路径的配置类
+    - **webSocket**:shiro配置类,异步调用webSocket连接,点赞时,向所有连接的WebSocket发送通知
+    - **shiro**:shiro配置类,shiro的权限过滤器,自定义Realm,自定义Token和获取yml中路径的配置类
     - **util**:
         - **CodeGenerator**:*MyBatisPlus的代码生成器*,快速生成一张新表的所有基础代码,方便开发
         - **CopyUtil**:*复制工具类*,用于实体类与响应类之间复制属性

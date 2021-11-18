@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-layout>
-      <a-layout-sider width="200" style="background: #fff">
+      <a-layout-sider width="200" style="background: #fff" breakpoint="lg" collapsed-width="0">
         <a-menu
             mode="inline"
             :style="{ height: '100%', borderRight: 0 }"
@@ -165,5 +165,22 @@ export default defineComponent({
     line-height: 50px;
     border-radius: 8%;
     margin: 5px 0;
+  }
+
+  /*滚动条整体样式*/
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+  }
+  /*滚动条滑块*/
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(122, 153, 217)), color-stop(0.72, rgb(73, 125, 189)), color-stop(0.86, rgb(28, 58, 148)));
+  }
+  /*滚动条轨道*/
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+    background-color: #F5F5F5;
+    border-radius: 10px;
   }
 </style>

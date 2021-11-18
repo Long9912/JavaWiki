@@ -18,10 +18,22 @@
                   新增文档
                 </a-button>
               </a-form-item>
+              <a-form-item>
+                <a-button type="primary" @click="handleOpen" size="small">
+                  <template #icon><DownSquareOutlined /></template>
+                  展开
+                </a-button>
+              </a-form-item>
+              <a-form-item>
+                <a-button type="primary" @click="handleClose" size="small">
+                  <template #icon><UpSquareOutlined /></template>
+                  折叠
+                </a-button>
+              </a-form-item>
             </a-form>
 
             <a-table
-                v-if="level1.length > 0"
+                v-if="level1.length > 0 && refreshTable"
                 :columns="columns"
                 :row-key="record => record.id"
                 :data-source="level1"
@@ -29,7 +41,7 @@
                 :pagination="pagination"
                 @change="handleTableChange"
                 size="small"
-                :default-expand-all-rows="true"
+                :default-expand-all-rows="expand"
             >
               <template #name="{ text, record }">
                 {{record.sort}} - {{text}}
@@ -58,14 +70,14 @@
         </a-col>
         <a-col :span="17">
           <div style="margin-left: 20px;margin-top: 20px" v-show="doc.createTime!=null">
-            <span><CalendarOutlined /> <a-tag color="cyan">{{doc.createTime}}</a-tag></span>
+            <span><CalendarOutlined /> <a-tag color="blue">{{doc.createTime}}</a-tag></span>
             <span><FieldTimeOutlined /> <a-tag color="green">{{doc.updateTime}}</a-tag></span>&nbsp;
-            <span><EyeOutlined /> <a-tag color="blue">{{doc.viewCount}}</a-tag></span>
+            <span><EyeOutlined /> <a-tag color="orange">{{doc.viewCount}}</a-tag></span>
             <span><LikeOutlined/><a-tag color="red">{{doc.voteCount}}</a-tag></span>
           </div>
           <a-form :model="doc" layout="vertical" style="margin-top:30px;margin-left: 10px" >
             <a-form-item >
-              <a-tag color="green">标题:</a-tag>
+              <a-tag color="red">标题:</a-tag>
               <a-input v-model:value="doc.name" placeholder="标题" style="width: 90%;margin-left: 10px"/>
             </a-form-item>
             <a-form-item>
@@ -130,7 +142,7 @@
 </template>
 
 <script lang="ts">
-import {createVNode, defineComponent, onMounted, ref} from 'vue';
+import {createVNode, defineComponent, nextTick, onMounted, ref} from 'vue';
 import axios from "axios";
 import {message, Modal} from 'ant-design-vue';
 import {ExclamationCircleOutlined} from '@ant-design/icons-vue';
@@ -455,6 +467,25 @@ export default defineComponent({
       });
     };
 
+    const expand = ref(true); //是否展开
+    const refreshTable = ref(true); //重新渲染表格
+    //表格展开
+    const handleOpen = () => {
+      refreshTable.value = false;
+      expand.value = true;
+      nextTick(() => {
+        refreshTable.value = true;
+      });
+    }
+   //表格收起
+   const handleClose = () => {
+      refreshTable.value = false;
+      expand.value = false;
+      nextTick(() => {
+        refreshTable.value = true;
+      });
+    }
+
     onMounted(() => {
       bookName.value=route.query.name;
       ebookId.value=route.query.ebookId;
@@ -483,6 +514,10 @@ export default defineComponent({
       handleSave,
       handleDelete,
 
+      expand,
+      refreshTable,
+      handleOpen,
+      handleClose,
       drawerVisible,
       previewHtml,
       handlePreviewContent,

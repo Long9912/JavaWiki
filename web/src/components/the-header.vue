@@ -189,7 +189,7 @@ export default defineComponent({
 
 <style>
 .search-box {
-  width: 150px;
+  width: 120px;
   position: relative;
   display: flex;
   float: right;

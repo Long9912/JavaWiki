@@ -4,22 +4,26 @@
       <a-row>
         <a-col :span="5">
           <a-back-top />
-          <a-page-header
-              style="height: 70px"
-              :title="bookName"
-              @back="back"
-          />
-          <h3 v-if="level1.length === 0">对不起，找不到相关文档！</h3>
-          <a-tree
-              v-if="level1.length > 0"
-              :tree-data="level1"
-              @select="onSelect"
-              :replaceFields="{title:'name', key:'id',value:'id'}"
-              :defaultExpandAll="true"
-              :defaultSelectedKeys="defaultSelectedKeys"
-              show-line=true
-          >
-          </a-tree>
+          <a-affix :offset-top="top">
+            <div class="scrollable-container">
+              <a-page-header
+                  style="height: 70px"
+                  :title="bookName"
+                  @back="back"
+              />
+              <h3 v-if="level1.length === 0">对不起，找不到相关文档！</h3>
+              <a-tree
+                  v-if="level1.length > 0"
+                  :tree-data="level1"
+                  @select="onSelect"
+                  :replaceFields="{title:'name', key:'id',value:'id'}"
+                  :defaultExpandAll="true"
+                  :defaultSelectedKeys="defaultSelectedKeys"
+                  show-line=true
+              >
+              </a-tree>
+            </div>
+          </a-affix>
         </a-col>
         <a-col :span="19" v-if="level1.length !== 0">
           <h2>{{doc.name}}</h2>
@@ -281,4 +285,10 @@ export default defineComponent({
   padding: 15px;
   text-align: center;
 }
+
+.scrollable-container {
+  height: 73%;
+  overflow:scroll;
+}
+
 </style>

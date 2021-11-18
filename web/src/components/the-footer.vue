@@ -1,6 +1,6 @@
 <template>
   <a-layout-footer style="text-align: center">
-    <span v-show="user.id">欢迎 : {{user.name}}</span>
+    <span v-show="user.id">欢迎 : <a-tag color="blue">{{user.name}}</a-tag></span>
     <br/>
     Long的知识库
     <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021145207号</a>

@@ -287,7 +287,9 @@ export default defineComponent({
 }
 
 .scrollable-container {
-  height: 73%;
+  position:fixed;
+  height: 100%;
+  width: 20%;
   overflow:scroll;
 }
 

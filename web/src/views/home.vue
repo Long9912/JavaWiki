@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-layout>
-      <a-layout-sider width="200" style="background: #fff" breakpoint="lg" collapsed-width="0">
+      <a-layout-sider width="200" style="background: #fff" breakpoint="sm" collapsed-width="0">
         <a-menu
             mode="inline"
             :style="{ height: '100%', borderRight: 0 }"
@@ -82,6 +82,8 @@ export default defineComponent({
     const isShowWelcome = ref(true);
     let categoryId2 = '0';
     const openKeys =  ref();
+    //浏览器宽度
+    const width =  ref();
 
     const level1 = ref(); // 一级分类树，children属性就是二级分类
     let categorys:any;
@@ -95,9 +97,11 @@ export default defineComponent({
           categorys = data.content;
 
           // 加载完分类后，将侧边栏全部展开
-          openKeys.value = [];
-          for (let i = 0; i < categorys.length; i++) {
-            openKeys.value.push(categorys[i].id)
+          if (width.value > 500) { //浏览器宽度大于500时才展开
+            openKeys.value = [];
+            for (let i = 0; i < categorys.length; i++) {
+              openKeys.value.push(categorys[i].id)
+            }
           }
 
           level1.value = [];
@@ -139,6 +143,8 @@ export default defineComponent({
     }
 
     onMounted(() => {
+      //获取浏览器窗口宽度
+      width.value = window.innerWidth;
       handleQueryCategory();
     });
 

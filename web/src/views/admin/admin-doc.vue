@@ -71,7 +71,7 @@
         <a-col :span="17">
           <div style="margin-left: 20px;margin-top: 20px" v-show="doc.createTime!=null">
             <span><CalendarOutlined /> <a-tag color="blue">{{doc.createTime}}</a-tag></span>
-            <span><FieldTimeOutlined /> <a-tag color="green">{{doc.updateTime}}</a-tag></span>&nbsp;
+            <span v-show="doc.updateTime != null"><FieldTimeOutlined /> <a-tag color="green">{{doc.updateTime}}</a-tag></span>&nbsp;
             <span><EyeOutlined /> <a-tag color="orange">{{doc.viewCount}}</a-tag></span>
             <span><LikeOutlined/><a-tag color="red">{{doc.voteCount}}</a-tag></span>
           </div>
@@ -384,15 +384,46 @@ export default defineComponent({
       addStatus.value=true;
       //清空内容
       editor.txt.clear();
-      doc.value={};
+      //记录父文档
+      const parent = doc.value.parent;
+      console.log(parent)
+      doc.value= {};
+
       doc.value.ebookId=ebookId.value;
       treeSelectData.value = Tool.copy(level1.value) || [];
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
-      // 父文档自动选择 "无"
-      doc.value.parent = 0;
-      // 根据文档数自动填入顺序
-      doc.value.sort = (level1.value.length+1);
+
+      //添加子文档
+      if (parent != 0 && parent != null) {
+        //回填父文档id
+        doc.value.parent = parent;
+        //获取子文档数
+        let count = countChildren(treeSelectData.value,parent);
+        //根据子文档数自动填入顺序
+        doc.value.sort = count + 1;
+      }
+      else {  //添加父文档
+        //父文档自动选择 "无"
+        doc.value.parent = 0;
+        //根据父文档数自动填入顺序
+        doc.value.sort = (level1.value.length+1);
+      }
+    };
+
+    /**
+     * 计算子文档节点个数
+     */
+    const countChildren = (treeSelectData: any, id: any) => {
+      let count = 0;
+      for (let i = 0; i < treeSelectData.length; i++) {
+        const node = treeSelectData[i];
+        if (node.id == id) {
+          // 获取子节点个数
+          count = node.children.length;
+        }
+      }
+      return count;
     };
 
     /**

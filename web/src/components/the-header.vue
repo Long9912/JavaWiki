@@ -130,7 +130,12 @@ export default defineComponent({
           loginUser.value.password = '';
           loginUser.value.code = '';
         } else {
-          loginUser.value.password = '';
+          //测试用户登录失败时自动重填密码
+          if (loginUser.value.loginName == 'test') {
+            loginUser.value.password = 'test123';
+          } else {
+            loginUser.value.password = '';
+          }
           //刷新验证码
           getCaptchaCode();
           message.error(data.content.respMsg);

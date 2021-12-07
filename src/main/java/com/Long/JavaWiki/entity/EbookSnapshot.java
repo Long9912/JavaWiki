@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 /**
  * <p>
- * 电子书快照
+ * 笔记快照
  * </p>
  *
  * @author Long9912
@@ -20,7 +20,7 @@ import java.time.LocalDate;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="EbookSnapshot对象", description="电子书快照")
+@ApiModel(value="EbookSnapshot对象", description="笔记快照")
 public class EbookSnapshot implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public class EbookSnapshot implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "电子书id")
+    @ApiModelProperty(value = "笔记id")
     private Long ebookId;
 
     @ApiModelProperty(value = "快照日期")

@@ -19,13 +19,13 @@ import java.util.List;
 
 /**
  * <p>
- * 电子书 前端控制器
+ * 笔记 前端控制器
  * </p>
  *
  * @author Long9912
  * @since 2021-09-07
  */
-@Api("电子书控制类")
+@Api("笔记控制类")
 @RestController
 @RequestMapping("/ebook")
 public class EbookController {
@@ -36,15 +36,15 @@ public class EbookController {
     @Autowired
     private DocService docService;
 
-    @ApiOperation("默认查询全部电子书,传入分类id时查询分类下电子书")
+    @ApiOperation("默认查询全部笔记,传入分类id时查询分类下笔记")
     @GetMapping("/all")
     public List<EbookQueryResp> all(EbookQueryReq req) {
         List<EbookQueryResp> list = ebookService.all(req);
         return list.isEmpty() ? null : list;
     }
 
-    @ApiOperation("分页查询电子书,按照id降序排序")
-    @ApiImplicitParam(name = "req", value = "传入分页参数,如果有传入书名则模糊查询电子书", required = true, dataType = "EbookQueryReq", paramType = "query")
+    @ApiOperation("分页查询笔记,按照id降序排序")
+    @ApiImplicitParam(name = "req", value = "传入分页参数,如果有传入笔记名则模糊查询笔记", required = true, dataType = "EbookQueryReq", paramType = "query")
     @GetMapping("/list")
     public PageResp<EbookQueryResp> list(@Validated EbookQueryReq req) {
         PageResp<EbookQueryResp> list = ebookService.getList(req);
@@ -52,7 +52,7 @@ public class EbookController {
     }
 
     @RequiresRoles("admin")
-    @ApiOperation("编辑或新增电子书")
+    @ApiOperation("编辑或新增笔记")
     @PostMapping("/save")
     public String save(@Validated @RequestBody EbookSaveReq req) {
         ebookService.saveOrUpdate(req);
@@ -60,7 +60,7 @@ public class EbookController {
     }
 
     @RequiresRoles("admin")
-    @ApiOperation("通过id逻辑删除电子书")
+    @ApiOperation("通过id逻辑删除笔记")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "Long", paramType = "path")
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {

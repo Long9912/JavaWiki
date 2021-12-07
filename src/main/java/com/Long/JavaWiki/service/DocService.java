@@ -19,8 +19,8 @@ import java.util.List;
  */
 public interface DocService extends IService<Doc> {
     /**
-     * 根据电子书id查询所有文档
-     * @param ebookId 电子书id
+     * 根据笔记id查询所有文档
+     * @param ebookId 笔记id
      * @return  返回文档列表
      */
     List<DocQueryResp> all(String ebookId);
@@ -37,7 +37,7 @@ public interface DocService extends IService<Doc> {
     void saveOrUpdate(DocSaveReq req);
 
     /**
-     * 删除电子书下的全部文档
+     * 删除笔记下的全部文档
      */
     void deleteEbookDoc(Long ebookId);
 
@@ -63,7 +63,7 @@ public interface DocService extends IService<Doc> {
     void vote(String id);
 
     /**
-     * 通过定时任务更新电子书数据
+     * 通过定时任务更新笔记数据
      */
     void updateEbookInfo();
 }

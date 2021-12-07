@@ -28,7 +28,7 @@ public class Doc implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "电子书id")
+    @ApiModelProperty(value = "笔记id")
     private Long ebookId;
 
     @ApiModelProperty(value = "父id")
@@ -53,6 +53,7 @@ public class Doc implements Serializable {
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+
 
     @ApiModelProperty(value = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)

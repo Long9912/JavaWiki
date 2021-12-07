@@ -19,12 +19,12 @@
     </sql>
 
     <update id="genSnapshot">
-        #尝试插入每个电子书今日的新快照表
+        #尝试插入每个笔记今日的新快照表
         insert into ebook_snapshot(ebook_id, `date`, view_count, vote_count, view_increase, vote_increase)
-        #获取要插入新数据的电子书id和今日日期
+        #获取要插入新数据的笔记id和今日日期
         select t1.id, curdate(), 0, 0, 0, 0
         from ebook t1
-        #当不存在其中一个电子书今日的快照表时,就能查询出今天要新插入的电子书id
+        #当不存在其中一个笔记今日的快照表时,就能查询出今天要新插入的笔记id
         where not exists(select 1
                          from ebook_snapshot t2
                          where t1.id = t2.ebook_id
@@ -77,5 +77,11 @@
         #根据日期排序
         order by `date` asc;
     </select>
+
+    <delete id="delete30DayAgoData">
+        delete from ebook_snapshot
+        #查出30天前的数据 &lt;为特殊处理的小于符号
+        where `date` &lt; date_sub(curdate(), interval 30 day);
+    </delete>
 
 </mapper>

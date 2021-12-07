@@ -14,13 +14,13 @@ import java.util.List;
 
 /**
  * <p>
- * 电子书快照 前端控制器
+ * 笔记快照 前端控制器
  * </p>
  *
  * @author Long9912
  * @since 2021-09-22
  */
-@Api("电子书快照控制类")
+@Api("笔记快照控制类")
 @RestController
 @RequestMapping("/ebookSnapshot")
 public class EbookSnapshotController {
@@ -40,5 +40,11 @@ public class EbookSnapshotController {
         return ebookSnapshotService.get30DayStatistic();
     }
 
+    @ApiOperation("删除30天前的统计数据")
+    @GetMapping("/delete30DayAgoData")
+    private String delete30DayAgoData() {
+        Integer count = ebookSnapshotService.delete30DayAgoData();
+        return "删除30天前[统计数据]:" + count + "条";
+    }
 }
 

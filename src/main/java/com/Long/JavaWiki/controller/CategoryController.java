@@ -39,7 +39,7 @@ public class CategoryController {
     }
 
     @ApiOperation("分页查询分类")
-    @ApiImplicitParam(name = "req", value = "传入分页参数,如果有传入书名则模糊查询分类", required = true, dataType = "CategoryQueryReq", paramType = "query")
+    @ApiImplicitParam(name = "req", value = "传入分页参数,如果有传入笔记名则模糊查询分类", required = true, dataType = "CategoryQueryReq", paramType = "query")
     @GetMapping("/list")
     public PageResp<CategoryQueryResp> list(@Validated CategoryQueryReq req) {
         PageResp<CategoryQueryResp> list = categoryService.list(req);

@@ -37,7 +37,7 @@ public class DocController {
     @Autowired
     private ContentService contentService;
 
-    @ApiOperation("传入电子书id查询电子书的文档")
+    @ApiOperation("传入笔记id查询笔记的文档")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/all/{ebookId}")
     public List<DocQueryResp> all(@PathVariable String ebookId) {

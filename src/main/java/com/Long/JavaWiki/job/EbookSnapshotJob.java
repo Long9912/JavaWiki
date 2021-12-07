@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * 定时任务:更新电子书快照
+ * 定时任务:更新笔记快照
  */
 @Component
 public class EbookSnapshotJob {
@@ -24,16 +24,16 @@ public class EbookSnapshotJob {
     private SnowFlake snowFlake;
 
     /**
-     * 每分钟更新一次电子书快照
+     * 每分钟更新一次笔记快照
      */
     @Scheduled(cron = "0 */1 * * * ?")
     public void cron() {
         //加入日志流水号
         MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
-        //使用复杂sql收集电子书数据和每日新增阅读量和点赞数
-        LOG.info("生成今日电子书快照开始");
+        //使用复杂sql收集笔记数据和每日新增阅读量和点赞数
+        LOG.info("生成今日笔记快照开始");
         long start = System.currentTimeMillis();
         ebookSnapshotService.genSnapshot();
-        LOG.info("生成今日电子书快照结束，耗时：{}毫秒", System.currentTimeMillis() - start);
+        LOG.info("生成今日笔记快照结束，耗时：{}毫秒", System.currentTimeMillis() - start);
     }
 }

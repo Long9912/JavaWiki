@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- * 电子书快照 服务实现类
+ * 笔记快照 服务实现类
  * </p>
  *
  * @author Long9912
@@ -43,5 +43,14 @@ public class EbookSnapshotServiceImpl extends ServiceImpl<EbookSnapshotMapper, E
     @Override
     public List<StatisticResp> get30DayStatistic() {
         return ebookSnapshotMapper.get30DayStatistic();
+    }
+
+    /**
+     * 删除30天前的统计数据
+     * @return
+     */
+    @Override
+    public Integer delete30DayAgoData() {
+        return ebookSnapshotMapper.delete30DayAgoData();
     }
 }

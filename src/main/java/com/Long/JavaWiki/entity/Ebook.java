@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 电子书
+ * 笔记
  * </p>
  *
  * @author Long9912
@@ -28,7 +28,7 @@ public class Ebook implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "书名")
+    @ApiModelProperty(value = "笔记主题")
     private String name;
 
     @ApiModelProperty(value = "分类1")

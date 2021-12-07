@@ -95,7 +95,8 @@ shiro:
    - /category/all
    - /ebook/list
    - /ebook/all
-   - /ebookSnapshot/**
+   - /ebookSnapshot/getStatistic
+   - /ebookSnapshot/get30Statistic
    - /doc/all/**
    - /doc/vote/**
    - /doc/findContent/**

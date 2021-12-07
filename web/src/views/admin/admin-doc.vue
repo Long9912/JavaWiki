@@ -317,8 +317,8 @@ export default defineComponent({
     const editor = new Editor('#content');
     // 取消自动 focus
     editor.config.focus = false
-    // 设置编辑区域高度为 500px
-    editor.config.height = 500
+    // 设置编辑区域高度为 450px
+    editor.config.height = 450
     editor.config.zIndex=0;
     //自定义上传方法
     editor.config.customUploadImg = function (resultFiles, insertImgFn) {

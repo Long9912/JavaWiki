@@ -29,7 +29,7 @@ public class Content implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "电子书ID")
+    @ApiModelProperty(value = "笔记ID")
     private Long ebookId;
 
     @ApiModelProperty(value = "标题")

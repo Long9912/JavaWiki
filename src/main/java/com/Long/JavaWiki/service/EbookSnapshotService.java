@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- * 电子书快照 服务类
+ * 笔记快照 服务类
  * </p>
  *
  * @author Long9912
@@ -17,7 +17,7 @@ import java.util.List;
 public interface EbookSnapshotService extends IService<EbookSnapshot> {
 
     /**
-     * 通过定时任务,生成电子书快照,得到总量,今日增长量
+     * 通过定时任务,生成笔记快照,得到总量,今日增长量
      */
     void genSnapshot();
 
@@ -31,4 +31,10 @@ public interface EbookSnapshotService extends IService<EbookSnapshot> {
      * 获得30天新增数据统计
      */
     List<StatisticResp> get30DayStatistic();
+
+    /**
+     * 删除30天前的统计数据
+     * @return
+     */
+    Integer delete30DayAgoData();
 }

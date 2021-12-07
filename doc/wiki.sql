@@ -32,7 +32,7 @@ INSERT INTO `category` VALUES (1446472705908756481, 200, '中间件', 202);
 DROP TABLE IF EXISTS `content`;
 CREATE TABLE `content`  (
     `id` bigint NOT NULL COMMENT '文档id',
-    `ebook_id` bigint NULL DEFAULT NULL COMMENT '电子书id',
+    `ebook_id` bigint NULL DEFAULT NULL COMMENT '笔记id',
     `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',
     `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
     `deleted` int NOT NULL DEFAULT 0 COMMENT '逻辑删除',
@@ -54,7 +54,7 @@ INSERT INTO `content` VALUES (1438000644823724034, 2, '关于ant-design-vue', '<
 DROP TABLE IF EXISTS `doc`;
 CREATE TABLE `doc`  (
     `id` bigint NOT NULL COMMENT '主键ID',
-    `ebook_id` bigint NOT NULL DEFAULT 0 COMMENT '电子书id',
+    `ebook_id` bigint NOT NULL DEFAULT 0 COMMENT '笔记id',
     `parent` bigint NOT NULL DEFAULT 0 COMMENT '父id',
     `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
     `sort` int NULL DEFAULT NULL COMMENT '顺序',
@@ -85,7 +85,7 @@ INSERT INTO `doc` VALUES (1438000644823724034, 2, 1438000187241934850, '关于an
 DROP TABLE IF EXISTS `ebook`;
 CREATE TABLE `ebook`  (
       `id` bigint NOT NULL COMMENT '主键ID',
-      `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '书名',
+      `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '笔记名',
       `category1_id` bigint NULL DEFAULT NULL COMMENT '分类1',
       `category2_id` bigint NULL DEFAULT NULL COMMENT '分类2',
       `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
@@ -96,7 +96,7 @@ CREATE TABLE `ebook`  (
       `deleted` int NULL DEFAULT 0 COMMENT '逻辑删除',
       `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
       PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电子书' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '笔记' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ebook
@@ -120,14 +120,14 @@ INSERT INTO `ebook` VALUES (1454357816893370370, 'Elasticsearch笔记', 200, 144
 DROP TABLE IF EXISTS `ebook_snapshot`;
 CREATE TABLE `ebook_snapshot`  (
        `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-       `ebook_id` bigint NOT NULL DEFAULT 0 COMMENT '电子书id',
+       `ebook_id` bigint NOT NULL DEFAULT 0 COMMENT '笔记id',
        `date` date NOT NULL COMMENT '快照日期',
        `view_count` int NOT NULL DEFAULT 0 COMMENT '阅读数',
        `vote_count` int NOT NULL DEFAULT 0 COMMENT '点赞数',
        `view_increase` int NOT NULL DEFAULT 0 COMMENT '阅读增长',
        `vote_increase` int NOT NULL DEFAULT 0 COMMENT '点赞增长',
        PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 585 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电子书快照' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 585 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '笔记快照' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ebook_snapshot

@@ -57,7 +57,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     @Override
     public List<DocQueryResp> all(String ebookId) {
         QueryWrapper<Doc> wrapper = new QueryWrapper<>();
-        //根据电子书id查询
+        //根据笔记id查询
         wrapper.eq("ebook_id", ebookId);
         //根据sort排序
         wrapper.orderByAsc("sort");
@@ -101,9 +101,9 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     @Override
     public void deleteEbookDoc(Long ebookId) {
         QueryWrapper<Doc> wrapper = new QueryWrapper<>();
-        //根据电子书id查询
+        //根据笔记id查询
         wrapper.eq("ebook_id", ebookId);
-        log.info("删除电子书:{}",ebookId);
+        log.info("删除笔记:{}",ebookId);
         List<Doc> docList = docMapper.selectList(wrapper);
         for (Doc doc : docList) {
             log.info("删除文档:{}",doc.getName());
@@ -152,7 +152,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
     /**
-     * 按电子书分组统计文档数据,并更新到对应的电子书中
+     * 按笔记分组统计文档数据,并更新到对应的笔记中
      */
     @Override
     public void updateEbookInfo() {

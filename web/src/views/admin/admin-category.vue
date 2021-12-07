@@ -12,12 +12,13 @@
         </a-form>
 
         <a-table
+            v-if="level1.length > 0"
             :columns="columns"
             :row-key="record => record.id"
             :data-source="level1"
             :loading="loading"
             :pagination="false"
-            @change="handleTableChange"
+            :defaultExpandAllRows="true"
         >
           <template v-slot:action="{ text, record }">
             <a-space size="small">

@@ -3,7 +3,7 @@
     <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
       <div class="about">
         <h2>JavaWiki</h2>
-        <p>可以管理电子书,支持无限级树文档的wiki知识库系统</p>
+        <p>可以管理笔记,支持无限级树文档的wiki知识库系统</p>
         <p>使用Spring Boot + Vue3 &amp; Ant Design Vue 搭建</p>
         <h2>技术点</h2>
         <ul>
@@ -13,7 +13,7 @@
           <li><strong>AOP</strong> 通过切面打印接口耗时,请求返回参数在日志中,在点赞时获取远程ip</li>
           <li><strong>ECharts</strong> 首页30天数据统计展示</li>
           <li><strong>文档搜索</strong> 使用ElasticSearch对文档索引进行高亮全文搜索</li>
-          <li><strong>定时任务设计</strong> 定时执行复杂SQL统计电子书数据</li>
+          <li><strong>定时任务设计</strong> 定时执行复杂SQL统计笔记数据</li>
           <li><strong>登录校验</strong>  用户登录后,在Redis 存储用户 Token 用于Shiro的接口校验</li>
           <li><strong>权限校验</strong>  登录后,对增删改接口进行拦截,使用Shiro的授权来验证当前用户是否管理员</li>
           <li><strong>接口防重</strong> 点赞时通过AOP获取到用户远程IP,保存在ThreadLocal中,在Redis中将文章id与远程ip作为key,一天只能对一篇文章点赞一次</li>

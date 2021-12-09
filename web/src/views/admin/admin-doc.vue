@@ -291,7 +291,7 @@ export default defineComponent({
         const node = treeSelectData[i];
         if (node.id === id) {
           // 如果当前节点就是目标节点
-          console.log("delete", node);
+          // console.log("delete", node);
           // 将目标ID放入结果集ids
           deleteIds.push(id);
           deleteNames.push(node.name);
@@ -386,7 +386,7 @@ export default defineComponent({
       editor.txt.clear();
       //记录父文档
       const parent = doc.value.parent;
-      console.log(parent)
+      //console.log(parent)
       doc.value= {};
 
       doc.value.ebookId=ebookId.value;

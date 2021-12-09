@@ -25,7 +25,7 @@
             </div>
           </a-affix>
         </a-col>
-        <a-col :span="19" v-if="level1.length !== 0">
+        <a-col :span="15" v-if="level1.length !== 0">
           <h2>{{doc.name}}</h2>
           <div>
             <div>
@@ -36,12 +36,28 @@
             </div>
             <a-divider style="height: 2px; background-color: #1890ff"/>
           </div>
-          <div class="wangEditor" :innerHTML="html"></div>
+          <div class="wangEditor" ref="docContent" :innerHTML="html"></div>
           <div class="vote">
             <a-button size="large" type="primary" shape="round" @click="vote">
                 <template #icon><LikeOutlined/>&nbsp;点赞:{{doc.voteCount}}</template>
             </a-button>
           </div>
+        </a-col>
+        <a-col :span="4">
+          <a-affix :offset-top="top">
+            <div class="catalogs">
+              <div class="catalog-title">文章目录</div>
+              <a-anchor>
+                <template v-for="(item,index) in catalog" :key="index">
+                  <a-anchor-link
+                      :style="{ paddingLeft:item.level * 22 -33 +'px'}"
+                      :href="'#'+item.id"
+                      :title=item.title
+                  />
+                </template>
+              </a-anchor>
+            </div>
+          </a-affix>
         </a-col>
       </a-row>
     </a-layout-content>
@@ -49,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue';
+import {defineComponent, nextTick, onMounted, ref} from 'vue';
 import axios from "axios";
 import {message} from 'ant-design-vue';
 import {Tool} from "@/util/tool";
@@ -86,13 +102,15 @@ export default defineComponent({
     level1.value = [];
 
     /**
-     * 内容查询
+     * 文档内容查询
      **/
     const handleQueryContent = (id: any) => {
       axios.get("/doc/findContent/" + id).then((response) => {
         const data = response.data;
         if (data.code == process.env.VUE_APP_SUCCESS) {
           html.value = data.content;
+          //生成文档目录
+          generateCatalog();
         } else {
           html.value = null;
           message.error(data.content.respMsg);
@@ -100,8 +118,45 @@ export default defineComponent({
       });
     };
 
+    const docContent:any = ref(null);//获取文档内容
+    const catalog = ref();//生成的目录
     /**
-     * 数据查询
+     * 生成文档目录
+     **/
+    const generateCatalog = () => {
+      nextTick(() => { //等待视图渲染
+        //获取DOM元素
+        const article_content = docContent.value.childNodes;
+        const titleTag = ["H1", "H2", "H3"];
+        let titles:any = [];
+        //正则表达式，获取html标签
+        const reg = new RegExp("<.*?(>|/>)","g");
+        let text:any = "";
+
+        article_content.forEach((e, index) => {
+          if (titleTag.includes(e.nodeName)) {
+            const id = "header-" + index;
+            //获取标签id,设置跳转
+            e.setAttribute("id", id);
+            //替换标签
+            text = e.innerHTML.replace(reg, '');
+            text = text.replace("&nbsp;", '');
+            //判断非空字符串
+            if (text != 'undefined' && text && /[^\s]/.test(text)) {
+              titles.push({
+                id: id,
+                title: text,
+                level: Number(e.nodeName.substring(1, 2)),
+                nodeName: e.nodeName
+              });
+            }
+          }
+        })
+        catalog.value = titles;
+      });
+    }
+    /**
+     * 获取笔记列表，没有指定文档时显示第一个文档
      **/
     const handleQuery = () => {
       axios.get("/doc/all/" + ebookId.value).then((response) => {
@@ -165,7 +220,7 @@ export default defineComponent({
     };
 
     /**
-     * 指定ID获取文档消息
+     * 指定ID获取文档数据
      */
     const handleQueryDoc = (id:any) => {
       axios.get("/doc/findDoc/" + id).then((response) => {
@@ -186,7 +241,6 @@ export default defineComponent({
       ebookId.value = route.query.ebookId;
       handleQuery();
       docID.value = route.query.id;
-      console.log(docID.value)
       //指定文档ID时查询指定文档
       if (docID.value != null){
         handleQueryContent(docID.value);
@@ -204,6 +258,8 @@ export default defineComponent({
       back,
       onSelect,
       vote,
+      docContent,
+      catalog,
     }
   },
 });
@@ -291,6 +347,24 @@ export default defineComponent({
   height: 100%;
   width: 20%;
   overflow:scroll;
+}
+
+.catalog-title {
+  margin-bottom: 0.5rem;
+  border-bottom: 0.1rem solid #0184bb;
+  min-height: 1.625rem;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.catalogs {
+  position: sticky;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0.25rem;
+  padding: 0.5rem;
+  box-shadow: 0 0 1rem lightgrey;
 }
 
 </style>

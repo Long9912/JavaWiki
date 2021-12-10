@@ -129,12 +129,31 @@
               </a-button>
             </a-form-item>
           </a-form>
-
         </a-col>
       </a-row>
 
-      <a-drawer width="900" placement="right" :closable="false" :visible="drawerVisible" @close="onDrawerClose">
-        <div class="wangEditor" :innerHTML="previewHtml"></div>
+      <a-drawer width="1000" placement="right" :closable="true" :visible="drawerVisible" @close="onDrawerClose">
+        <a-row>
+          <a-col :span="18">
+            <div class="wangEditor" ref="docContent"  :innerHTML="previewHtml"></div>
+          </a-col>
+          <a-col :span="6">
+            <a-affix :offset-top="top">
+              <div class="catalogs">
+                <div class="catalog-title">文章目录</div>
+                <a-anchor>
+                  <template v-for="(item,index) in catalog" :key="index">
+                    <a-anchor-link
+                        :style="{ paddingLeft:item.level * 22 -33 +'px'}"
+                        :href="'#'+item.id"
+                        :title=item.title
+                    />
+                  </template>
+                </a-anchor>
+              </div>
+            </a-affix>
+          </a-col>
+        </a-row>
       </a-drawer>
 
     </a-layout>
@@ -372,6 +391,7 @@ export default defineComponent({
       const html = editor.txt.html();
       previewHtml.value = html;
       drawerVisible.value = true;
+      generateCatalog();
     };
     const onDrawerClose = () => {
       drawerVisible.value = false;
@@ -517,6 +537,43 @@ export default defineComponent({
       });
     }
 
+    const docContent:any = ref(null);//获取文档内容
+    const catalog = ref();//生成的目录
+    /**
+     * 生成文档目录
+     **/
+    const generateCatalog = () => {
+      nextTick(() => { //等待视图渲染
+        //获取DOM元素
+        const article_content = docContent.value.childNodes;
+        const titleTag = ["H1", "H2", "H3"];
+        let titles:any = [];
+        //正则表达式，获取html标签
+        const reg = new RegExp("<.*?(>|/>)","g");
+        let text:any = "";
+
+        article_content.forEach((e, index) => {
+          if (titleTag.includes(e.nodeName)) {
+            const id = "header-" + index;
+            //获取标签id,设置跳转
+            e.setAttribute("id", id);
+            //替换标签
+            text = e.innerHTML.replace(reg, '');
+            text = text.replace("&nbsp;", '');
+            //判断非空字符串
+            if (text != 'undefined' && text && /[^\s]/.test(text)) {
+              titles.push({
+                id: id,
+                title: text,
+                level: Number(e.nodeName.substring(1, 2)),
+              });
+            }
+          }
+        })
+        catalog.value = titles;
+      });
+    }
+
     onMounted(() => {
       bookName.value=route.query.name;
       ebookId.value=route.query.ebookId;
@@ -553,6 +610,8 @@ export default defineComponent({
       previewHtml,
       handlePreviewContent,
       onDrawerClose,
+      catalog,
+      docContent,
     }
   },
 });

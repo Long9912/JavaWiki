@@ -147,7 +147,6 @@ export default defineComponent({
                 id: id,
                 title: text,
                 level: Number(e.nodeName.substring(1, 2)),
-                nodeName: e.nodeName
               });
             }
           }

@@ -50,7 +50,7 @@
               <a-anchor>
                 <template v-for="(item,index) in catalog" :key="index">
                   <a-anchor-link
-                      :style="{ paddingLeft:item.level * 22 -33 +'px'}"
+                      :style="{ paddingLeft:item.level * 15 -10 +'px'}"
                       :href="'#'+item.id"
                       :title=item.title
                   />

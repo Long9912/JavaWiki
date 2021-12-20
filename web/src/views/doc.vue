@@ -245,6 +245,8 @@ export default defineComponent({
         handleQueryContent(docID.value);
         //查询文档消息
         handleQueryDoc(docID.value)
+        //生成文档目录
+        generateCatalog();
       }
     });
 

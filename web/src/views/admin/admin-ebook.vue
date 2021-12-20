@@ -41,7 +41,7 @@
                 @confirm="delete30DayAgoData"
             >
               <a-button type="primary">
-                <template #icon><DiffOutlined /></template>
+                <template #icon><DeleteOutlined /></template>
                 删除30天前的[统计数据]
               </a-button>
             </a-popconfirm>

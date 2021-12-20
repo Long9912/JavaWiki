@@ -6,7 +6,6 @@ import Search from '../views/search.vue'
 import AdminUser from '../views/admin/admin-user.vue'
 import AdminEbook from '../views/admin/admin-ebook.vue'
 import AdminCategory from '../views/admin/admin-category.vue'
-import AdminDoc from '../views/admin/admin-doc.vue'
 import store from "@/store";
 import {Tool} from "@/util/tool";
 
@@ -25,10 +24,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/about',
     name: 'About',
     component: About
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    //component: () => import(/* webpackChunkName: "about" */ '../views/about.vue')
   },
   {
     path: '/search',
@@ -62,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/admin/doc',
     name: 'AdminDoc',
-    component: AdminDoc,
+    component: () => import(/* webpackChunkName: "admin-doc" */ '../views/admin/admin-doc.vue'),
     meta:{
       loginRequire : true
     }

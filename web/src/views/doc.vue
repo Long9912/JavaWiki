@@ -1,6 +1,6 @@
 <template>
   <a-layout>
-    <a-layout-content :style="{ background: '#fff',marginLeft:'20px',marginRight:'20px', minHeight: '280px' }">
+    <a-layout-content :style="{ background: '#fff', minHeight: '280px' }">
       <a-row>
         <a-col :span="5">
           <a-back-top />
@@ -19,13 +19,12 @@
                   :replaceFields="{title:'name', key:'id',value:'id'}"
                   :defaultExpandAll="true"
                   :defaultSelectedKeys="defaultSelectedKeys"
-                  show-line=true
               >
               </a-tree>
             </div>
           </a-affix>
         </a-col>
-        <a-col :span="15" v-if="level1.length !== 0">
+        <a-col :span="15" v-if="level1.length !== 0" :style="{ paddingLeft:'15px' }">
           <h2>{{doc.name}}</h2>
           <div>
             <div>
@@ -348,6 +347,7 @@ export default defineComponent({
   height: 100%;
   width: 20%;
   overflow:scroll;
+  background-color: #f7f7f7;
 }
 
 .catalog-title {

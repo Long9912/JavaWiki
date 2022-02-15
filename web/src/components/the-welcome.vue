@@ -78,8 +78,8 @@
                 :value-style="statistic.todayViewIncreaseRate < 0 ? { color: '#3f8600' } : { color: '#cf1322' }"
             >
               <template #prefix>
-                <arrow-down-outlined v-if="statistic.todayViewIncreaseRate < 0"/>
-                <arrow-up-outlined v-if="statistic.todayViewIncreaseRate >= 0"/>
+                <ArrowDownOutlined v-if="statistic.todayViewIncreaseRate < 0"/>
+                <ArrowUpOutlined v-if="statistic.todayViewIncreaseRate >= 0"/>
               </template>
             </a-statistic>
           </a-col>

@@ -29,6 +29,8 @@ import {
     BookOutlined,
     ReadOutlined,
     FileOutlined,
+    ArrowDownOutlined,
+    ArrowUpOutlined,
 } from '@ant-design/icons-vue';
 
 import {
@@ -149,3 +151,5 @@ app.component("HomeOutlined", HomeOutlined);
 app.component("BookOutlined", BookOutlined);
 app.component("ReadOutlined", ReadOutlined);
 app.component("FileOutlined", FileOutlined);
+app.component("ArrowDownOutlined", ArrowDownOutlined);
+app.component("ArrowUpOutlined", ArrowUpOutlined);

@@ -107,7 +107,7 @@
           </tr>
           <tr>
             <td>Log4j2</td>
-            <td>---</td>
+            <td>2.15</td>
             <td>Log日志</td>
           </tr>
           <tr>
@@ -118,7 +118,7 @@
           <tr>
             <td>Validation</td>
             <td>---</td>
-            <td>数据验证</td>
+            <td>接口参数校验</td>
           </tr>
           <tr>
             <td>WebSocket</td>
@@ -128,7 +128,7 @@
           <tr>
             <td>Aop</td>
             <td>---</td>
-            <td>开启Aop功能,日志记录</td>
+            <td>开启Aop功能,用于日志记录 </td>
           </tr>
           </tbody>
         </table>
@@ -172,12 +172,21 @@
             <td>4.6.3</td>
             <td>富文本编辑器</td>
           </tr>
+          <tr>
+            <td>Echarts</td>
+            <td>5.2.2</td>
+            <td>图表展示</td>
+          </tr>
+          <tr>
+            <td>Highlightjs</td>
+            <td>11.3.1</td>
+            <td>代码高亮</td>
+          </tr>
           </tbody>
         </table>
 
         <h2>Long9912 </h2>
         <div><b>QQ:792516830</b></div>
-        <div><b>微信：longlong991231</b></div>
       </div>
     </a-layout-content>
   </a-layout>

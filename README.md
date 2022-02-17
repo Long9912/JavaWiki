@@ -67,11 +67,11 @@
 | ElasticSearch        | 7.15.1  | 搜索引擎                       |
 | Redis                | ---     | 用于登录校验,接口防重设计         |
 | Devtools             | ---     | 热部署工具                        |
-| Log4j2               | ---     | Log日志                           |
+| Log4j2               | 2.15    | Log日志                           |
 | Lombok               | ---     | 减少模板代码工具类                |
-| Validation           | ---     | 数据验证                          |
+| Validation           | ---     | 接口参数校验                          |
 | WebSocket            | ---     | 向浏览器发送通知                  |
-| Aop                  | ---     | 开启Aop功能,日志记录              |
+| Aop                  | ---     | 开启Aop功能,用于日志记录              |
 
 
 | 前端依赖项     | 版本   | 说明                   |
@@ -82,6 +82,8 @@
 | Vue-router     | 4.0    | 前端路由               |
 | Vuex           | 4.0    | 保存用户状态           |
 | WangEditor     | 4.6.3  | 富文本编辑器           |
+| Echarts        | 5.2.2  | 图表展示              |
+| Highlightjs    | 11.3.1 | 代码高亮              |
 
 ## 结构
 
@@ -98,7 +100,7 @@
     - **elasticsearch**:Elasticsearch配置类,导入数据库数据到搜索索引,高亮搜索
     - **request**:封装接口请求信息,使用**javax.validation**做后端参数校验
     - **response**:封装接口响应信息,定义标准响应类,通过 **@RestControllerAdvice**进行全局统一接口响应处理,对所有控制器中，被 **@RequestMapping**注解标注的方法，进行增强,用标准响应类包装返回值
-    - **webSocket**:shiro配置类,异步调用webSocket连接,点赞时,向所有连接的WebSocket发送通知
+    - **webSocket**:webSocket配置类,异步调用webSocket连接,点赞时,向所有连接的WebSocket发送通知
     - **shiro**:shiro配置类,shiro的权限过滤器,自定义Realm,自定义Token和获取yml中路径的配置类
     - **util**:
         - **CodeGenerator**:*MyBatisPlus的代码生成器*,快速生成一张新表的所有基础代码,方便开发

@@ -20,32 +20,6 @@
               新增
             </a-button>
           </a-form-item>
-          <a-form-item>
-            <a-popconfirm
-                title="确认更新[搜索索引]?"
-                ok-text="是"
-                cancel-text="否"
-                @confirm="importDoc"
-            >
-              <a-button type="primary">
-                <template #icon><DiffOutlined /></template>
-                更新[搜索索引]
-              </a-button>
-            </a-popconfirm>
-          </a-form-item>
-          <a-form-item>
-            <a-popconfirm
-                title="确认删除30天前的[统计数据]?"
-                ok-text="是"
-                cancel-text="否"
-                @confirm="delete30DayAgoData"
-            >
-              <a-button type="primary">
-                <template #icon><DeleteOutlined /></template>
-                删除30天前的[统计数据]
-              </a-button>
-            </a-popconfirm>
-          </a-form-item>
         </a-form>
 
         <a-table
@@ -67,7 +41,7 @@
               <router-link :to="'/admin/doc?ebookId=' + record.id+ '&name=' +record.name">
                 <a-button type="primary">
                   <template #icon><FileTextOutlined /></template>
-                  文档管理
+                  文章管理
                 </a-button>
               </router-link>
               <a-button type="primary" @click="edit(record)">
@@ -75,7 +49,7 @@
                 编辑
               </a-button>
               <a-popconfirm
-                  title="确认删除笔记?"
+                  title="确认删除专栏?"
                   ok-text="是"
                   cancel-text="否"
                   @confirm="handleDelete(record.id)"
@@ -91,7 +65,7 @@
       </a-layout-content>
     </a-layout>
     <a-modal
-        title="笔记表单"
+        title="专栏表单"
         v-model:visible="modalVisible"
         :confirm-loading="modalLoading"
         @ok="handleModalOk"
@@ -171,7 +145,7 @@ export default defineComponent({
         slots: {customRender: 'category'}
       },
       {
-        title: '文档数',
+        title: '文章数',
         dataIndex: 'docCount'
       },
       {
@@ -359,7 +333,7 @@ export default defineComponent({
           //使用递归将数组转为树形结构
           level1.value = Tool.array2Tree(categorys, 0);
 
-          // 加载完分类后，再加载笔记，否则如果分类树加载很慢，则笔记渲染会报错
+          // 加载完分类后，再加载专栏，否则如果分类树加载很慢，则专栏渲染会报错
           handleQuery({
             page: 1,
             size: pagination.value.pageSize
@@ -381,31 +355,6 @@ export default defineComponent({
       return result;
     };
 
-    const importDoc = () => {
-      axios.get("/search/importDoc").then((response) => {
-        const data = response.data;
-        if (data.code == process.env.VUE_APP_SUCCESS) {
-          let text = data.content;
-          message.success(text);
-        } else {
-          message.error(data.content.respMsg);
-        }
-      });
-    }
-
-    const delete30DayAgoData = () => {
-      axios.get("/ebookSnapshot/delete30DayAgoData").then((response) => {
-        const data = response.data;
-        if (data.code == process.env.VUE_APP_SUCCESS) {
-          let text = data.content;
-          message.success(text);
-        } else {
-          message.error(data.content.respMsg);
-        }
-      });
-    }
-
-
     onMounted(() => {
       handleQueryCategory();
     });
@@ -425,8 +374,6 @@ export default defineComponent({
       beforeUpload,
       getImageUrl,
 
-      importDoc,
-      delete30DayAgoData,
       add,
       edit,
       ebook,

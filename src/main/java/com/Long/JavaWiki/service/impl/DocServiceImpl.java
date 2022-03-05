@@ -30,7 +30,7 @@ import java.util.Optional;
 
 /**
  * <p>
- * 文档 服务实现类
+ * 文章 服务实现类
  * </p>
  *
  * @author Long9912
@@ -57,7 +57,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     @Override
     public List<DocQueryResp> all(String ebookId) {
         QueryWrapper<Doc> wrapper = new QueryWrapper<>();
-        //根据笔记id查询
+        //根据专栏id查询
         wrapper.eq("ebook_id", ebookId);
         //根据sort排序
         wrapper.orderByAsc("sort");
@@ -90,23 +90,23 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     public void saveOrUpdate(DocSaveReq req) {
         Doc doc = CopyUtil.copy(req, Doc.class);
         Content content = CopyUtil.copy(req, Content.class);
-        //保存文档消息
+        //保存文章消息
         super.saveOrUpdate(doc);
-        //获取到文档的雪花id,再保存到单独文档内容表
+        //获取到文章的雪花id,再保存到单独文章内容表
         content.setId(doc.getId());
-        //保存文档内容,对比文本在服务器删除对应图片
+        //保存文章内容,对比文本在服务器删除对应图片
         contentService.saveContent(content);
     }
 
     @Override
     public void deleteEbookDoc(Long ebookId) {
         QueryWrapper<Doc> wrapper = new QueryWrapper<>();
-        //根据笔记id查询
+        //根据专栏id查询
         wrapper.eq("ebook_id", ebookId);
-        log.info("删除笔记:{}",ebookId);
+        log.info("删除专栏:{}",ebookId);
         List<Doc> docList = docMapper.selectList(wrapper);
         for (Doc doc : docList) {
-            log.info("删除文档:{}",doc.getName());
+            log.info("删除文章:{}",doc.getName());
             docMapper.deleteById(doc.getId());
             contentService.deleteContent(String.valueOf(doc.getId()));
         }
@@ -114,7 +114,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
 
     @Override
     public String findContent(String id) {
-        //文档阅读数加1
+        //文章阅读数加1
         docMapper.increaseViewCount(Long.valueOf(id));
         //使用Optional包装处理 null
         return Optional.ofNullable(contentMapper.selectById(id))
@@ -132,7 +132,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
 
     @Override
     public void vote(String id) {
-        //远程ip+文档Id作为key,24小时不能重复
+        //远程ip+文章Id作为key,24小时不能重复
         String key = RequestContext.getRemoteAddr();
         if (redisUtil.validateRepeat("DOC_VOTE_" + id + "_" + key, 24)) {
             //使用完ThreadLocal后移除数据,防止内存泄漏
@@ -152,7 +152,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
     /**
-     * 按笔记分组统计文档数据,并更新到对应的笔记中
+     * 按专栏分组统计文章数据,并更新到对应的专栏中
      */
     @Override
     public void updateEbookInfo() {

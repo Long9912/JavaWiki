@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- * 笔记 服务类
+ * 专栏 服务类
  * </p>
  *
  * @author Long9912
@@ -19,20 +19,20 @@ import java.util.List;
  */
 public interface EbookService extends IService<Ebook> {
     /**
-     * 根据分类id查询笔记
+     * 根据分类id查询专栏
      * @param req 分类id
-     * @return  返回分类下笔记列表
+     * @return  返回分类下专栏列表
      */
     List<EbookQueryResp> all(EbookQueryReq req);
 
     /**
-     * 分页查询笔记,按照id降序排序
+     * 分页查询专栏,按照id降序排序
      * @return  分页数据
      */
     PageResp<EbookQueryResp> getList(EbookQueryReq req);
 
     /**
-     * 保存或更新笔记
+     * 保存或更新专栏
      */
     boolean saveOrUpdate(EbookSaveReq req);
 

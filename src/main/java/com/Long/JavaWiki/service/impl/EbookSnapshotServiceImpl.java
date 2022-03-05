@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- * 笔记快照 服务实现类
+ * 专栏快照 服务实现类
  * </p>
  *
  * @author Long9912

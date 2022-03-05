@@ -23,7 +23,7 @@ public class SearchController {
     private SearchService searchService;
 
     @RequiresRoles("admin")
-    @ApiOperation("导入数据库中的全部文档到搜索引擎索引中")
+    @ApiOperation("导入数据库中的全部文章到搜索引擎索引中")
     @GetMapping("/importDoc")
     public String importDoc() {
         String text = searchService.importDoc();

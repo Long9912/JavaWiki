@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- * 笔记快照 Mapper 接口
+ * 专栏快照 Mapper 接口
  * </p>
  *
  * @author Long9912
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface EbookSnapshotMapper extends BaseMapper<EbookSnapshot> {
     /**
-     * 通过定时任务,生成笔记快照,得到总量,今日增长量
+     * 通过定时任务,生成专栏快照,得到总量,今日增长量
      */
     void genSnapshot();
 

@@ -21,7 +21,7 @@ import java.util.Objects;
 
 /**
  * <p>
- * 笔记 服务实现类
+ * 专栏 服务实现类
  * </p>
  *
  * @author Long9912

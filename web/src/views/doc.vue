@@ -11,7 +11,7 @@
                   :title="bookName"
                   @back="back"
               />
-              <h3 v-if="level1.length === 0">对不起，找不到相关文档！</h3>
+              <h3 v-if="level1.length === 0">对不起，找不到相关文章！</h3>
               <a-tree
                   v-if="level1.length > 0"
                   :tree-data="level1"
@@ -82,12 +82,12 @@ export default defineComponent({
     const html = ref();
     const defaultSelectedKeys = ref();
     defaultSelectedKeys.value = [];
-    // 当前选中的文档
+    // 当前选中的文章
     const doc = ref();
     doc.value = {};
 
     /**
-     * 一级文档树，children属性就是二级文档
+     * 一级文章树，children属性就是二级文档
      * [{
      *   id: "",
      *   name: "",
@@ -154,7 +154,7 @@ export default defineComponent({
       });
     }
     /**
-     * 获取笔记列表，没有指定文档时显示第一个文档
+     * 获取专栏列表，没有指定文档时显示第一个文档
      **/
     const handleQuery = () => {
       axios.get("/doc/all/" + ebookId.value).then((response) => {

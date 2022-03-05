@@ -6,7 +6,7 @@
           <a-back-top />
           <a-page-header
               style="height: 60px"
-              title="文档管理"
+              title="文章管理"
               :sub-title="bookName"
               @back="back"
           />
@@ -15,7 +15,7 @@
               <a-form-item>
                 <a-button type="primary" @click="add" size="small">
                   <template #icon><PlusSquareOutlined /></template>
-                  新增文档
+                  新增文章
                 </a-button>
               </a-form-item>
               <a-form-item>
@@ -53,7 +53,7 @@
                     编辑
                   </a-button>
                   <a-popconfirm
-                      title="确认删除文档及其子文档?"
+                      title="确认删除文章及其子文章?"
                       ok-text="是"
                       cancel-text="否"
                       @confirm="handleDelete(record.id)"
@@ -81,13 +81,13 @@
               <a-input v-model:value="doc.name" placeholder="标题" style="width: 90%;margin-left: 10px"/>
             </a-form-item>
             <a-form-item>
-              <a-tag color="cyan">父文档:</a-tag>
+              <a-tag color="cyan">父文章:</a-tag>
               <a-tree-select
                   v-model:value="doc.parent"
                   style="width: 90%"
                   :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
                   :tree-data="treeSelectData"
-                  placeholder="请选择父文档"
+                  placeholder="请选择父文章"
                   tree-default-expand-all
                   :replaceFields="{title: 'name', key:'id',value:'id'}"
               >
@@ -100,7 +100,7 @@
             <a-form-item>
                 <a-button v-show="addStatus" type="primary" @click="handleAdd()">
                   <template #icon><FileAddOutlined /></template>
-                  新增文档
+                  新增文章
                 </a-button>
                 <a-button v-show="!addStatus" type="primary" @click="handleSave()">
                   <template #icon><SaveOutlined/></template>
@@ -119,7 +119,7 @@
             <a-form-item>
               <a-button v-show="addStatus" type="primary" @click="handleAdd()">
                 <template #icon><FileAddOutlined /></template>
-                新增文档
+                新增文章
               </a-button>
             </a-form-item>
             <a-form-item>
@@ -205,7 +205,7 @@ export default defineComponent({
     ];
 
     /**
-     * 一级文档树，children属性就是二级文档
+     * 一级文章树，children属性就是二级文章
      * [{
      *   id: "",
      *   name: "",
@@ -215,7 +215,7 @@ export default defineComponent({
      *   }]
      * }]
      */
-    const level1 = ref(); // 一级文档树，children属性就是二级文档完成文档表基本增删改查功能
+    const level1 = ref(); // 一级文章树，children属性就是二级文章完成文章表基本增删改查功能
     level1.value = [];
 
     /**
@@ -233,7 +233,7 @@ export default defineComponent({
           //使用递归将数组转为树形结构
           level1.value = Tool.array2Tree(docs.value, 0);
 
-          //父文档下拉框初始化
+          //父文章下拉框初始化
           treeSelectData.value = Tool.copy(level1.value);
           // 为选择树添加一个"无"
           treeSelectData.value.unshift({id: 0, name: '无'});
@@ -246,7 +246,7 @@ export default defineComponent({
     };
 
     /**
-     * 文档查询
+     * 文章查询
      **/
     const handleQueryContent = () => {
       axios.get("/doc/editContent/"+doc.value.id).then((response) => {
@@ -404,7 +404,7 @@ export default defineComponent({
       addStatus.value=true;
       //清空内容
       editor.txt.clear();
-      //记录父文档
+      //记录父文章
       const parent = doc.value.parent;
       //console.log(parent)
       doc.value= {};
@@ -414,9 +414,9 @@ export default defineComponent({
       // 为选择树添加一个"无"
       treeSelectData.value.unshift({id: 0, name: '无'});
 
-      //添加子文档
+      //添加子文章
       if (parent != 0 && parent != null) {
-        //回填父文档id
+        //回填父文章id
         doc.value.parent = parent;
         //获取子文档数
         let count = countChildren(treeSelectData.value,parent);

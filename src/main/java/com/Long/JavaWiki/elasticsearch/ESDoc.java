@@ -7,9 +7,9 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
- * 定义elasticsearch中的文档索引
- * Document作用: 将doc的对象映射成ES中一条json格式文档
- * indexName: 用来指定这个对象的转为json文档存入那个索引中
+ * 定义elasticsearch中的文章索引
+ * Document作用: 将doc的对象映射成ES中一条json格式文章
+ * indexName: 用来指定这个对象的转为json文章存入那个索引中
  */
 @Document(indexName = "doc")
 @Data

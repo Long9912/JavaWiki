@@ -13,16 +13,43 @@
         <span>退出登录</span>
       </a>
     </a-popconfirm>
-    <a class="login-menu" v-show="user.id">
-      <span>欢迎: {{ user.name }}</span>
-    </a>
+    <a-dropdown>
+      <a class="login-menu" @click.prevent v-show="user.id">
+        <span>欢迎: {{ user.name }}</span>
+        <UserOutlined />
+      </a>
+      <template #overlay>
+        <a-menu v-show="user.isAdmin === 'true' ">
+          <a-menu-item>
+            <a-popconfirm
+                title="确认更新[搜索索引]?"
+                ok-text="是"
+                cancel-text="否"
+                @confirm="importDoc"
+            >
+              <DiffOutlined />更新[搜索索引]
+            </a-popconfirm>
+          </a-menu-item>
+          <a-menu-item>
+            <a-popconfirm
+                title="确认删除30天前的[统计数据]?"
+                ok-text="是"
+                cancel-text="否"
+                @confirm="delete30DayAgoData"
+            >
+              <DeleteOutlined /> 删除30天前的[统计数据]
+            </a-popconfirm>
+          </a-menu-item>
+        </a-menu>
+      </template>
+    </a-dropdown>
     <a class="login-menu" v-show="!user.id" @click="showLoginModal">
       <span>登录</span>
     </a>
     <div class="search-box">
       <a-input-search
           v-model:value="searchText"
-          placeholder="搜索文档"
+          placeholder="搜索文章"
           @search="onSearch"
       />
     </div>
@@ -41,10 +68,10 @@
         <router-link to="/admin/user">用户管理</router-link>
       </a-menu-item>
       <a-menu-item key="admin-ebook" :style="user.id? {} : {display:'none'}">
-        <router-link to="/admin/ebook">笔记管理</router-link>
+        <router-link to="/admin/ebook">专栏管理</router-link>
       </a-menu-item>
       <a-menu-item key="admin-category" :style="user.id? {} : {display:'none'}">
-        <router-link to="/admin/category">分类管理</router-link>
+        <router-link to="/admin/category">专栏分类管理</router-link>
       </a-menu-item>
     </a-menu>
   </a-layout-header>
@@ -175,6 +202,30 @@ export default defineComponent({
       router.push({path: '/search', query: { keyword: searchValue}})
     };
 
+    const importDoc = () => {
+      axios.get("/search/importDoc").then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          let text = data.content;
+          message.success(text);
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    }
+
+    const delete30DayAgoData = () => {
+      axios.get("/ebookSnapshot/delete30DayAgoData").then((response) => {
+        const data = response.data;
+        if (data.code == process.env.VUE_APP_SUCCESS) {
+          let text = data.content;
+          message.success(text);
+        } else {
+          message.error(data.content.respMsg);
+        }
+      });
+    }
+
     return{
       image,
       getCaptchaCode,
@@ -186,7 +237,9 @@ export default defineComponent({
       login,
       logout,
       searchText,
-      onSearch
+      onSearch,
+      importDoc,
+      delete30DayAgoData
     }
   }
 })

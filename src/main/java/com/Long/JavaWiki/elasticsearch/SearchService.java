@@ -42,7 +42,7 @@ public class SearchService {
      */
     public String importDoc(){
         long startTime = System.currentTimeMillis();
-        //从数据库获取所有Doc文档内容
+        //从数据库获取所有Doc文章内容
         QueryWrapper<Content> wrapper = new QueryWrapper<>();
         List<Content> contentList = contentMapper.selectList(wrapper);
         //清洗富文本数据,获得纯文本
@@ -56,7 +56,7 @@ public class SearchService {
         //更新搜索引擎索引
         docRepository.saveAll(esDocList);
         long runTime = System.currentTimeMillis() - startTime;
-        return "更新[搜索索引]文档数:"+esDocList.size()+" 处理时间:"+runTime+"ms";
+        return "更新[搜索索引]文章数:"+esDocList.size()+" 处理时间:"+runTime+"ms";
     }
 
     /**
@@ -99,7 +99,7 @@ public class SearchService {
 
         SearchHit[] hits = searchResponse.getHits().getHits();
         for (SearchHit hit : hits) {
-            //原文档
+            //原文章
             System.out.println(hit.getSourceAsString());
             //使用Fastjson转换后返回对象
             Content content = JSON.parseObject(hit.getSourceAsString(), Content.class);

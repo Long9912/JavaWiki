@@ -5,7 +5,7 @@
         <a-input-search
             style="width: 80%;margin-left: 10%;margin-top: 10px;"
             v-model:value="searchText"
-            placeholder="搜索文档"
+            placeholder="搜索文章"
             enter-button
             @search="onSearch"
         />

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 文档
+ * 文章
  * </p>
  *
  * @author Long9912
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="Doc对象", description="文档")
+@ApiModel(value="Doc对象", description="文章")
 public class Doc implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,7 +28,7 @@ public class Doc implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "笔记id")
+    @ApiModelProperty(value = "专栏id")
     private Long ebookId;
 
     @ApiModelProperty(value = "父id")

@@ -22,7 +22,7 @@ public enum EnumCode {
 
     CATEGORY_EMPTY(5007,"该分类下还没有数据"),
 
-    DOC_EMPTY(5008,"文档内容为空"),
+    DOC_EMPTY(5008,"文章内容为空"),
 
     PICTURE_FORMAT_ERROR(5009,"图片格式不正确! 使用.jpg/.png/.jpeg后缀的图片"),
 

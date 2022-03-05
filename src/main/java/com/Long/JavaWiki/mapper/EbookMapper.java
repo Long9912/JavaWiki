@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 笔记 Mapper 接口
+ * 专栏 Mapper 接口
  * </p>
  *
  * @author Long9912

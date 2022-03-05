@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
- * 笔记 Mapper 接口
+ * 专栏 Mapper 接口
  * </p>
  *
  * @author Long9912
@@ -27,7 +27,7 @@ public interface DocMapper extends BaseMapper<Doc> {
     void increaseVoteCount(@Param("id") Long id);
 
     /**
-     * 统计笔记下的文档数据,然后更新笔记的文档数,阅读数,点赞数
+     * 统计专栏下的文档数据,然后更新专栏的文档数,阅读数,点赞数
      */
     void updateEbookInfo();
 }

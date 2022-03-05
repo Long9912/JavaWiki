@@ -11,7 +11,7 @@ public class DocSaveReq {
 
     private Long id;
 
-    @NotNull(message = "[笔记Id]不能为空")
+    @NotNull(message = "[专栏Id]不能为空")
     private Long ebookId;
 
     @NotNull(message = "[父文档]不能为空")

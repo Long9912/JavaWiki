@@ -21,13 +21,13 @@ import java.util.List;
 
 /**
  * <p>
- * 文档 前端控制器
+ * 文章 前端控制器
  * </p>
  *
  * @author Long9912
  * @since 2021-09-13
  */
-@Api("文档控制类")
+@Api("文章控制类")
 @RestController
 @RequestMapping("/doc")
 public class DocController {
@@ -37,7 +37,7 @@ public class DocController {
     @Autowired
     private ContentService contentService;
 
-    @ApiOperation("传入笔记id查询笔记的文档")
+    @ApiOperation("传入专栏id查询专栏的文章")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/all/{ebookId}")
     public List<DocQueryResp> all(@PathVariable String ebookId) {
@@ -45,8 +45,8 @@ public class DocController {
         return list.isEmpty() ? null : list;
     }
 
-    @ApiOperation("分页查询文档")
-    @ApiImplicitParam(name = "req", value = "传入分页参数,如果有传入参数则模糊查询文档", required = true, dataType = "DocQueryReq", paramType = "query")
+    @ApiOperation("分页查询文章")
+    @ApiImplicitParam(name = "req", value = "传入分页参数,如果有传入参数则模糊查询文章", required = true, dataType = "DocQueryReq", paramType = "query")
     @GetMapping("/list")
     public PageResp<DocQueryResp> list(@Validated DocQueryReq req) {
         PageResp<DocQueryResp> list = docService.list(req);
@@ -54,7 +54,7 @@ public class DocController {
     }
 
     @RequiresRoles("admin")
-    @ApiOperation("编辑或新增文档")
+    @ApiOperation("编辑或新增文章")
     @PostMapping("/save")
     public String save(@Validated @RequestBody DocSaveReq req) {
         docService.saveOrUpdate(req);
@@ -62,7 +62,7 @@ public class DocController {
     }
 
     @RequiresRoles("admin")
-    @ApiOperation("通过一个或多个id逻辑删除文档")
+    @ApiOperation("通过一个或多个id逻辑删除文章")
     @ApiImplicitParam(name = "id", value = "传入一个或多个ID", required = true, dataType = "String", paramType = "path")
     @DeleteMapping("/delete/{idsStr}")
     public String delete(@PathVariable String idsStr) {
@@ -73,21 +73,21 @@ public class DocController {
         return "删除成功";
     }
 
-    @ApiOperation("通过id查找文档内容,点赞数加1")
+    @ApiOperation("通过id查找文章内容,点赞数加1")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/findContent/{id}")
     public String findContent(@PathVariable String id) {
         return docService.findContent(id);
     }
 
-    @ApiOperation("编辑时通过id查找文档内容")
+    @ApiOperation("编辑时通过id查找文章内容")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/editContent/{id}")
     public String editContent(@PathVariable String id) {
         return docService.editContent(id);
     }
 
-    @ApiOperation("通过id对文档点赞")
+    @ApiOperation("通过id对文章点赞")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/vote/{id}")
     public String vote(@PathVariable String id) {
@@ -95,7 +95,7 @@ public class DocController {
         return "点赞成功";
     }
 
-    @ApiOperation("通过id查询文档消息")
+    @ApiOperation("通过id查询文章消息")
     @ApiImplicitParam(name = "id", value = "传入一个ID", required = true, dataType = "String", paramType = "path")
     @GetMapping("/findDoc/{id}")
     public Doc findDoc(@PathVariable String id) {

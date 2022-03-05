@@ -14,13 +14,13 @@ import java.util.List;
 
 /**
  * <p>
- * 笔记快照 前端控制器
+ * 专栏快照 前端控制器
  * </p>
  *
  * @author Long9912
  * @since 2021-09-22
  */
-@Api("笔记快照控制类")
+@Api("专栏快照控制类")
 @RestController
 @RequestMapping("/ebookSnapshot")
 public class EbookSnapshotController {

@@ -110,12 +110,25 @@ export default defineComponent({
           html.value = data.content;
           //生成文档目录
           generateCatalog();
+          //回到页面顶部
+          scrollToTop();
         } else {
           html.value = null;
           message.error(data.content.respMsg);
         }
       });
     };
+
+    const scrollToTop = () => {
+      //增加计时器实现顺滑过度
+      let timer = setInterval(() => {
+        let distance = Math.floor(document.documentElement.scrollTop / 5); //每次移动剩余高度的5分之一距离
+        document.documentElement.scrollTop -= distance;
+        if (document.documentElement.scrollTop < 5) {   //在剩余高度为5以下时停止，避免死循环
+          clearInterval(timer);
+        }
+      }, 20)
+    }
 
     const docContent:any = ref(null);//获取文档内容
     const catalog = ref();//生成的目录
